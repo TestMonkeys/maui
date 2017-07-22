@@ -1,10 +1,9 @@
 package playground.atf.tests.pageObjects;
 
-import org.testmonkeys.selenium.engine.pageobjects.ElementAccessor;
-import org.testmonkeys.selenium.engine.pageobjects.PageAccessor;
-import org.testmonkeys.selenium.engine.pageobjects.AbstractPage;
-import org.testmonkeys.selenium.engine.pageobjects.elements.GroupComponent;
-import org.testmonkeys.selenium.engine.pageobjects.elements.GroupItem;
+import org.testmonkeys.koshmar.pageobjects.ElementAccessor;
+import org.testmonkeys.koshmar.pageobjects.PageAccessor;
+import org.testmonkeys.koshmar.pageobjects.AbstractPage;
+import org.testmonkeys.koshmar.pageobjects.elements.GroupComponent;
 
 /**
  * Created by cpascal on 3/29/2017.
