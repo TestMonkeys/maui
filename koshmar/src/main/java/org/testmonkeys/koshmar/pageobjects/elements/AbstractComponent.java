@@ -31,6 +31,10 @@ public abstract class AbstractComponent implements Component {
 
     }
 
+    public void setWebElement(WebElement webElement){
+        this.webElement=webElement;
+    }
+
     public String getName() {
         return name;
     }

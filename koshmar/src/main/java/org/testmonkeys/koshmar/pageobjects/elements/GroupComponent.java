@@ -1,6 +1,7 @@
 package org.testmonkeys.koshmar.pageobjects.elements;
 
 import org.openqa.selenium.WebElement;
+import org.testmonkeys.koshmar.core.elements.location.Locator;
 import org.testmonkeys.koshmar.core.factory.PageInitializer;
 import org.testmonkeys.koshmar.core.elements.Component;
 
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Created by cpascal on 3/30/2017.
  */
-public class GroupComponent<T extends GroupItem> extends AbstractComponent {
+public class GroupComponent<T extends AbstractComponent> extends AbstractComponent {
 
     private Type type;
     private PageInitializer pageInitializer;
@@ -22,16 +23,17 @@ public class GroupComponent<T extends GroupItem> extends AbstractComponent {
         pageInitializer=new PageInitializer();
     }
 
-
-    public WebElement find(int position){
-        return findElements(this.getLocator()).get(position);
+    @Override
+    public WebElement findElement(Locator locator){
+        return findElements(this.getLocator()).get(locator.getPosition());
 
     }
 
     public T get(int position){
+        Locator itemLocator = new Locator(getLocator().getLocatorType(),getLocator().getLocatorValue());
+        itemLocator.setPosition(position);
         T t= (T) (
-        pageInitializer.createComponent(getBrowser(), (Class<? extends Component>) type,this,this.getLocator(),this.getName()+"["+position+"]"));
-        t.setPosition(position);
+        pageInitializer.createComponent(getBrowser(), (Class<? extends Component>) type,this,itemLocator,this.getName()+"["+position+"]"));
         return t;
     }
 

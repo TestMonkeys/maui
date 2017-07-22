@@ -15,6 +15,8 @@ public class Locator {
 
     private String locatorValue;
 
+    private int position;
+
     public Locator(LocatorType locatorType, String locatorValue) {
         this.locatorType = locatorType;
         this.locatorValue = locatorValue;
@@ -34,6 +36,14 @@ public class Locator {
 
     public void setLocatorValue(String locatorValue) {
         this.locatorValue = locatorValue;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public By getSeleniumLocator() {
@@ -59,5 +69,4 @@ public class Locator {
         }
         return new By.ByXPath(locatorValue);
     }
-
 }

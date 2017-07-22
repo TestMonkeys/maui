@@ -11,5 +11,12 @@
 
     <artifactId>app-demoqa</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.testmonkeys</groupId>
+            <artifactId>koshmar</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>
