@@ -20,7 +20,7 @@ public class RadioComponentTest {
 
         RegistrationPage registrationPage=pageFactory.createPage(RegistrationPage.class);
         registrationPage.open();
-        registrationPage.getMaritalStatus().selectByIndex(2);
+        registrationPage.getMaritalStatus().selectByIndex(5);
         registrationPage.getMaritalStatus().selectByValue("married");
         for (String s:registrationPage.getMaritalStatus().getValues())
             System.out.println(s);
