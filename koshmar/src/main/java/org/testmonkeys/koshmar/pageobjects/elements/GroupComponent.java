@@ -38,7 +38,7 @@ public class GroupComponent<T extends AbstractComponent> extends AbstractCompone
     }
 
     public List<T> getAll(){
-        List<WebElement> elements=this.findElements(getLocator());
+        List<WebElement> elements=getParent().findElements(getLocator());
         List<T> itemList=new ArrayList<>();
         for (int i=0;i<elements.size();i++){
             T item = get(i);
