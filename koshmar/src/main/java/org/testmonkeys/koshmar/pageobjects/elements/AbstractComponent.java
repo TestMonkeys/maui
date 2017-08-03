@@ -7,6 +7,7 @@ import org.testmonkeys.koshmar.core.browser.Browser;
 import org.testmonkeys.koshmar.core.elements.Component;
 import org.testmonkeys.koshmar.core.elements.location.LocatesElements;
 import org.testmonkeys.koshmar.core.elements.location.Locator;
+import org.testmonkeys.koshmar.pageobjects.elements.html.HtmlElement;
 import org.testmonkeys.koshmar.pageobjects.modules.LazyLoading;
 
 import java.util.List;
@@ -29,6 +30,10 @@ public abstract class AbstractComponent implements Component {
 
     public AbstractComponent() {
 
+    }
+
+    public HtmlElement getHtmlElement(){
+        return new HtmlElement(this);
     }
 
     public void setWebElement(WebElement webElement){
