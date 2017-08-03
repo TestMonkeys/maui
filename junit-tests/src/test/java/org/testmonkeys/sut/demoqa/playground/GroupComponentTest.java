@@ -8,6 +8,8 @@ import org.testmonkeys.koshmar.core.factory.PageScanner;
 import org.testmonkeys.koshmar.pageobjects.elements.html.HtmlAttribute;
 import org.testmonkeys.sut.demoqa.HomePage;
 
+import javax.swing.text.html.HTML;
+
 public class GroupComponentTest {
 
     @Test
@@ -19,10 +21,10 @@ public class GroupComponentTest {
 
         HomePage home = pageFactory.createPage(HomePage.class);
         home.open();
+
         for (HtmlAttribute attr : home.getInteractions().get(4).getHtmlElement().getAttributes()) {
             System.out.println(attr);
         }
         browser.quit();
-
     }
 }
