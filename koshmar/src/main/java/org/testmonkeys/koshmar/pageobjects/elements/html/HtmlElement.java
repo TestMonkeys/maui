@@ -7,30 +7,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * HtmlElement provides access to functionality available for any Element present in DOM
+ */
 public class HtmlElement {
 
     private AbstractComponent component;
 
     public HtmlElement(AbstractComponent component){
-
         this.component = component;
     }
 
-    public List<HtmlAttribute> getAttributes(){
-        Object result = new ExecuteJSAction(component,"return arguments[0].attributes;").execute();
+    /**
+     * Gets all attributes declared on this DOM element with their values.
+     *
+     * @return List of {@link=HtmlAttribute}
+     */
+    public List<HtmlAttribute> getAttributes() {
+        Object result = new ExecuteJSAction(component, "return arguments[0].attributes;").execute();
+
         List<HtmlAttribute> attributes = new ArrayList<>();
-        if (result instanceof ArrayList){
-            ArrayList<Map<String,String>> htmlAttributes=(ArrayList<Map<String,String>>)result;
-            for(Map<String,String> htlmAttribute : htmlAttributes){
+        try {
+            ArrayList<Map<String, String>> elementAttributes = (ArrayList<Map<String, String>>) result;
+            for (Map<String, String> elementAttribute : elementAttributes) {
                 HtmlAttribute attribute = new HtmlAttribute();
-                if (htlmAttribute.containsKey("name")){
-                    attribute.setName(htlmAttribute.get("name"));
+                if (elementAttribute.containsKey("name")) {
+                    attribute.setName(elementAttribute.get("name"));
                 }
-                if (htlmAttribute.containsKey("value")){
-                    attribute.setValue(htlmAttribute.get("value"));
+                if (elementAttribute.containsKey("value")) {
+                    attribute.setValue(elementAttribute.get("value"));
                 }
                 attributes.add(attribute);
             }
+        }catch (Exception e){
+            //TODO: log error
         }
 
         return attributes;
