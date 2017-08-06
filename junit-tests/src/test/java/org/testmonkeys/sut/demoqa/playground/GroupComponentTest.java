@@ -5,7 +5,10 @@ import org.testmonkeys.koshmar.core.browser.Browser;
 import org.testmonkeys.koshmar.core.browser.DriverFactory;
 import org.testmonkeys.koshmar.core.factory.PageFactory;
 import org.testmonkeys.koshmar.core.factory.PageScanner;
+import org.testmonkeys.koshmar.pageobjects.elements.html.HtmlAttribute;
 import org.testmonkeys.sut.demoqa.HomePage;
+
+import javax.swing.text.html.HTML;
 
 public class GroupComponentTest {
 
@@ -19,8 +22,8 @@ public class GroupComponentTest {
 
         HomePage home=pageFactory.createPage(HomePage.class);
         home.open();
-        home.getInteractions().get(4).click();
-
+        for(HtmlAttribute attr : home.getInteractions().get(4).getHtmlElement().getAttributes())
+        System.out.println(attr);
         home.getUrl();
 
     }

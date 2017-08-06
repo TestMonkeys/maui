@@ -16,7 +16,7 @@ public abstract class AbstractAction<T> {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private AbstractComponent component;
+    protected AbstractComponent component;
     private FluentWait<AbstractComponent> retryMech;
 
     public AbstractAction(AbstractComponent component) {
