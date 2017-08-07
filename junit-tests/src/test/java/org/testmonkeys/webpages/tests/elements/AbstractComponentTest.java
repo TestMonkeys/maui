@@ -1,4 +1,4 @@
-package org.testmonkeys.sut.demoqa.playground;
+package org.testmonkeys.webpages.tests.elements;
 
 import org.junit.After;
 import org.springframework.core.io.ClassPathResource;
