@@ -1,4 +1,4 @@
-package org.testmonkeys.sut.demoqa.playground;
+package org.testmonkeys.webpages.tests.elements;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class CheckBoxComponentTest extends AbstractComponentTest {
     @Before
     public void beforeScenario() throws IOException {
         PageFactory pageFactory = new PageFactory(browser, new PageScanner("org.testmonkeys.sut"),
-                htmlPage.getFile().getAbsolutePath());
+                "file:///"+htmlPage.getFile().getAbsolutePath());
         registrationPage = pageFactory.createPage(RegistrationPage.class);
         registrationPage.open();
     }
