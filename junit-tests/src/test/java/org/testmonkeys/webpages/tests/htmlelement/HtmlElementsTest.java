@@ -33,7 +33,6 @@ public class HtmlElementsTest {
         browser= new Browser(df.initDriver("chrome",cap));
         File file = new File("src/test/resources/WebPages/HtmlElementsPage.html");
         String absolutePath = file.getAbsolutePath();
-        System.out.println(absolutePath);
         pageFactory=new PageFactory(browser,new PageScanner("org.testmonkeys.webpages"),"file:///"+absolutePath);
     }
 

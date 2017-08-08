@@ -11,9 +11,6 @@ public class DriverFactory {
         switch (type.toLowerCase()) {
             case "chrome":
                 DesiredCapabilities cap=DesiredCapabilities.chrome();
-                ChromeOptions options = new ChromeOptions();
-                options.addArguments("--headless");
-                cap.setCapability(ChromeOptions.CAPABILITY,options);
                 return new ChromeDriver(cap);
 
             default:
