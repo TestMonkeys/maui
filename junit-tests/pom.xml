@@ -81,6 +81,7 @@
                     <configuration>
                         <includes>
                             <include>org/testmonkeys/webpages/tests/htmlelement/*.java</include>
+                            <include>org/testmonkeys/webpages/tests/popups/*.java</include>
                             <include>org/testmonkeys/webpages/tests/elements/*.java</include>
                         </includes>
                     </configuration>
