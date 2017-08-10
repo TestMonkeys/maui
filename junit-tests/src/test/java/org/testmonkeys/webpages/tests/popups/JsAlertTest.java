@@ -2,6 +2,7 @@ package org.testmonkeys.webpages.tests.popups;
 
 import org.junit.Test;
 import org.testmonkeys.koshmar.core.browser.popups.JsAlert;
+import org.testmonkeys.koshmar.core.browser.popups.NoPopUpFoundException;
 import org.testmonkeys.webpages.pageObjects.JsPopUpPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -41,7 +42,7 @@ public class JsAlertTest extends AbstractJsPopUpTest {
 
     @Test
     public void alert_noAlert_get(){
-        expectedException.expect(RuntimeException.class);
+        expectedException.expect(NoPopUpFoundException.class);
         JsPopUpPage page = pageFactory.createPage(JsPopUpPage.class);
         page.open();
         browser.getPopUps().getAlert();

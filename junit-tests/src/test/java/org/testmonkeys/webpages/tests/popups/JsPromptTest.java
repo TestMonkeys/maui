@@ -2,6 +2,7 @@ package org.testmonkeys.webpages.tests.popups;
 
 import org.junit.Test;
 import org.testmonkeys.koshmar.core.browser.popups.JsPrompt;
+import org.testmonkeys.koshmar.core.browser.popups.NoPopUpFoundException;
 import org.testmonkeys.webpages.pageObjects.JsPopUpPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -77,7 +78,7 @@ public class JsPromptTest extends AbstractJsPopUpTest {
 
     @Test
     public void prompt_noPrompt_get(){
-        expectedException.expect(RuntimeException.class);
+        expectedException.expect(NoPopUpFoundException.class);
         JsPopUpPage page = pageFactory.createPage(JsPopUpPage.class);
         page.open();
         browser.getPopUps().getPrompt();
