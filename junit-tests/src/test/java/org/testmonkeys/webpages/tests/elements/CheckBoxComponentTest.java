@@ -1,6 +1,9 @@
 package org.testmonkeys.webpages.tests.elements;
 
+import com.automation.remarks.junit.VideoRule;
+import com.automation.remarks.video.annotations.Video;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -17,9 +20,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 public class CheckBoxComponentTest extends AbstractComponentTest {
 
     private RegistrationPage registrationPage;
+
+    @Rule
+    public VideoRule videoRule = new VideoRule();
 
     @Before
     public void beforeScenario() throws IOException {
@@ -32,9 +39,11 @@ public class CheckBoxComponentTest extends AbstractComponentTest {
     }
 
     @Test
+    @Video
     public void check() {
         GroupComponent<CheckBox> checkBoxGroupComponent = registrationPage.hobbyCheckBoxes();
         List<CheckBox> hobbies = checkBoxGroupComponent.getAll();
+        checkBoxGroupComponent.get(0);
         assertThat(hobbies).hasSize(3);
         hobbies.forEach(h -> assertThat(h.isChecked()).isFalse());
         hobbies.forEach(CheckBox::check);
@@ -42,6 +51,7 @@ public class CheckBoxComponentTest extends AbstractComponentTest {
     }
 
     @Test
+    @Video
     public void checkAlreadyChecked() {
         GroupComponent<CheckBox> checkBoxGroupComponent = registrationPage.hobbyCheckBoxes();
         List<CheckBox> hobbies = checkBoxGroupComponent.getAll();
@@ -54,6 +64,7 @@ public class CheckBoxComponentTest extends AbstractComponentTest {
     }
 
     @Test
+    @Video
     public void uncheck() {
         GroupComponent<CheckBox> checkBoxGroupComponent = registrationPage.hobbyCheckBoxes();
         List<CheckBox> hobbies = checkBoxGroupComponent.getAll();
@@ -65,6 +76,7 @@ public class CheckBoxComponentTest extends AbstractComponentTest {
     }
 
     @Test
+    @Video
     public void uncheckAlreadyUnchecked() {
         GroupComponent<CheckBox> checkBoxGroupComponent = registrationPage.hobbyCheckBoxes();
         List<CheckBox> hobbies = checkBoxGroupComponent.getAll();
