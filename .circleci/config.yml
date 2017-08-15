@@ -120,6 +120,8 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
+      - store_artifacts:
+          path: ~/repo/junit-tests/target
       # run tests!
       #- run: mvn integration-test
 
