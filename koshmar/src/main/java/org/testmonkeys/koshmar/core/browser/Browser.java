@@ -21,14 +21,14 @@ public class Browser implements LocatesElements {
     public Browser(WebDriver driver) {
         this.driver = driver;
         //TODO maximize based on external parameter
-        this.driver.manage().window().maximize();
+        //this.driver.manage().window().maximize();
         dynamicWaiter = initWaitter(10, 1, TimeUnit.SECONDS);
     }
 
     public Browser(WebDriver driver, int timeout, int step, TimeUnit unit) {
         this.driver = driver;
         //TODO maximize based on external parameter
-        this.driver.manage().window().maximize();
+        //this.driver.manage().window().maximize();
         dynamicWaiter = initWaitter(timeout, step, unit);
     }
 
