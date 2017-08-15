@@ -2,6 +2,10 @@ package org.testmonkeys.webpages.tests.elements;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testmonkeys.koshmar.core.browser.Browser;
+import org.testmonkeys.koshmar.core.browser.DriverFactory;
 import org.testmonkeys.koshmar.core.factory.PageFactory;
 import org.testmonkeys.koshmar.core.factory.PageScanner;
 import org.testmonkeys.koshmar.pageobjects.elements.CheckBox;
@@ -19,6 +23,8 @@ public class CheckBoxComponentTest extends AbstractComponentTest {
 
     @Before
     public void beforeScenario() throws IOException {
+        DriverFactory df = new DriverFactory();
+        browser = new Browser(df.initDriver("chrome"));//, cap));
         PageFactory pageFactory = new PageFactory(browser, new PageScanner("org.testmonkeys.sut"),
                 "file:///"+htmlPage.getFile().getAbsolutePath());
         registrationPage = pageFactory.createPage(RegistrationPage.class);

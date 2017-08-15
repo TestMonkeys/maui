@@ -7,8 +7,8 @@ import org.testmonkeys.koshmar.core.browser.DriverFactory;
 
 abstract public class AbstractComponentTest {
 
-    protected DriverFactory df = new DriverFactory();
-    protected Browser browser = new Browser(df.initDriver("chrome"));
+    protected DriverFactory df;//= new DriverFactory();
+    protected Browser browser;//= new Browser(df.initDriver("chrome"));
 
     protected ClassPathResource htmlPage = new ClassPathResource("/WebPages/HtmlElementsPage.html");
 
