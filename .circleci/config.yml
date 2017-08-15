@@ -122,6 +122,9 @@ jobs:
 
       - store_artifacts:
           path: ~/repo/junit-tests/target
+
+      - store_test_results:
+          path: ~/repo/junit-tests/target/surefire-reports
       # run tests!
       #- run: mvn integration-test
 
