@@ -29,12 +29,8 @@ public abstract class AbstractJsPopUpTest {
     @Before
     public void init(){
         DriverFactory df = new DriverFactory();
-        DesiredCapabilities cap=DesiredCapabilities.chrome();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        cap.setCapability(ChromeOptions.CAPABILITY,options);
 
-        browser= new Browser(df.initDriver("chrome",cap));
+        browser= new Browser(df.initDriver("chrome"));
         File file = new File("src/test/resources/WebPages/JSPopUpPage.html");
         String absolutePath = file.getAbsolutePath();
         pageFactory=new PageFactory(browser,new PageScanner("org.testmonkeys.webpages"),"file:///"+absolutePath);
