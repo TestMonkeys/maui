@@ -1,6 +1,7 @@
 package org.testmonkeys.koshmar.pageobjects.elements.html;
 
 import org.testmonkeys.koshmar.core.elements.actions.ExecuteJSAction;
+import org.testmonkeys.koshmar.core.elements.actions.ExecuteJSScript;
 import org.testmonkeys.koshmar.pageobjects.elements.AbstractComponent;
 
 import java.io.File;
@@ -27,7 +28,7 @@ public class HtmlElement {
      * @return List of {@link=HtmlAttribute}
      */
     public List<HtmlAttribute> getAttributes() {
-        Object result = new ExecuteJSAction(component, "return arguments[0].attributes;").execute();
+        Object result = new ExecuteJSScript(component, "javaScript/htmlElement/getAttributes.js").execute();
 
         List<HtmlAttribute> attributes = new ArrayList<>();
         try {
@@ -50,33 +51,10 @@ public class HtmlElement {
     }
 
     public String getStyle() {
-        Object result = new ExecuteJSAction(component,getScript("javaScript/htmlElement/getComputedStyle.js")
+        Object result = new ExecuteJSScript(component, "javaScript/htmlElement/getComputedStyle.js"
                 ).execute();
         return result.toString();
     }
 
-    private String getScript(String fileName) {
 
-        StringBuilder result = new StringBuilder("");
-
-        //Get file from resources folder
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(fileName).getFile());
-
-        try (Scanner scanner = new Scanner(file)) {
-
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                result.append(line).append("\n");
-            }
-
-            scanner.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return result.toString();
-
-    }
 }
