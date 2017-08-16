@@ -5,6 +5,7 @@ import org.testmonkeys.koshmar.pageobjects.elements.html.HtmlAttribute;
 import org.testmonkeys.webpages.pageObjects.HtmlElementsPageObject;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -17,7 +18,9 @@ public class StyleTest extends HtmlElementsTest {
     public void get_hasStyle() {
         HtmlElementsPageObject page = pageFactory.createPage(HtmlElementsPageObject.class);
         page.open();
-        String style = page.styledInput().getHtmlElement().getStyle();
+        Map<String, String> style = page.styledInput().getHtmlElement().getStyle();
+        assertThat(style.getOrDefault("border-right-width", ""), is("2px"));
+        assertThat(style.getOrDefault("border-right-color", ""), is("rgb(0, 0, 255)"));
     }
 
     @Test

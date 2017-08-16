@@ -50,10 +50,17 @@ public class HtmlElement {
         return attributes;
     }
 
-    public String getStyle() {
-        Object result = new ExecuteJSScript(component, "javaScript/htmlElement/getComputedStyle.js"
+    public Map<String, String> getStyle() {
+        Map<String, String> result = null;
+
+        Object jsResult = new ExecuteJSScript(component, "javaScript/htmlElement/getComputedStyle.js"
                 ).execute();
-        return result.toString();
+        try {
+            result = (Map<String, String>) jsResult;
+        } catch (ClassCastException e) {
+            //todo: log and throw new exception
+        }
+        return result;
     }
 
 
