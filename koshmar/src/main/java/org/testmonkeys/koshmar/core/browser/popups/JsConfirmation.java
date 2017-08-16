@@ -15,7 +15,7 @@ public class JsConfirmation extends JsAlert {
     /**
      * Dismisses the pop-up by pressing Cancel
      */
-    public void dismiss(){
+    public void dismiss() {
         alert.dismiss();
     }
 }

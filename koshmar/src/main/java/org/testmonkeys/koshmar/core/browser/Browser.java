@@ -18,6 +18,7 @@ public class Browser implements LocatesElements {
     private int timeout;
     private int step;
     private TimeUnit unit;
+    private BrowserPopUps browserPopUps = new BrowserPopUps(this);
 
     public Browser(WebDriver driver) {
         this.driver = driver;
@@ -54,8 +55,13 @@ public class Browser implements LocatesElements {
                 .ignoring(NoSuchElementException.class);
     }
 
+    /**
+     * Gets the browser popup handler
+     *
+     * @return BrowserPopUps instance
+     */
     public BrowserPopUps getPopUps() {
-        return new BrowserPopUps(this);
+        return browserPopUps;
     }
 
     public String getTitle() {

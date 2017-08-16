@@ -9,7 +9,7 @@ public class JsAlert {
     protected Alert alert;
 
     public JsAlert(Alert alert) {
-        this.alert=alert;
+        this.alert = alert;
     }
 
     /**
@@ -17,7 +17,7 @@ public class JsAlert {
      *
      * @return text displayed in pop-up
      */
-    public String getText(){
+    public String getText() {
         return alert.getText();
     }
 
@@ -25,7 +25,7 @@ public class JsAlert {
      * Accepts the pop-up, usually would press OK button, but depending on web page
      * could be Confirm, Accept.
      */
-    public void accept(){
+    public void accept() {
         alert.accept();
     }
 }

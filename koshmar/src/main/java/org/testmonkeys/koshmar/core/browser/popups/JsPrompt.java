@@ -17,7 +17,7 @@ public class JsPrompt extends JsConfirmation {
      *
      * @param text to be provided to the prompt
      */
-    public void sendKeys(String text){
+    public void sendKeys(String text) {
         alert.sendKeys(text);
     }
 }

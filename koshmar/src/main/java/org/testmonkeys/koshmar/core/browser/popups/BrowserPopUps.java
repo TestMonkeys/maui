@@ -12,7 +12,7 @@ public class BrowserPopUps {
     private Browser browser;
 
     public BrowserPopUps(Browser browser) {
-        this.browser=browser;
+        this.browser = browser;
     }
 
     /**
@@ -20,13 +20,13 @@ public class BrowserPopUps {
      *
      * @return boolean result
      */
-    public boolean hasPopUp(){
-        boolean hasPopup=false;
+    public boolean hasPopUp() {
+        boolean hasPopup = false;
         try {
             Alert a = browser.getDriver().switchTo().alert();
             if (a != null)
                 hasPopup = true;
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         return hasPopup;
@@ -36,13 +36,13 @@ public class BrowserPopUps {
      * Gets the JsAlert box displayed on page
      *
      * @return instance of JsAlert class
-     * @throws NoAlertPresentException if no alert is displayed
+     * @throws NoPopUpFoundException if no alert is displayed
      */
-    public JsAlert getAlert(){
+    public JsAlert getAlert() {
         try {
             Alert a = browser.getDriver().switchTo().alert();
             return new JsAlert(a);
-        }catch (NoAlertPresentException e){
+        } catch (NoAlertPresentException e) {
             throw new NoPopUpFoundException(e);
         }
     }
@@ -51,13 +51,13 @@ public class BrowserPopUps {
      * Gets the JsConfirmation box displayed on page
      *
      * @return instance of JsConfirmation class
-     * @throws NoAlertPresentException if no alert is displayed
+     * @throws NoPopUpFoundException if no alert is displayed
      */
-    public JsConfirmation getConfirmation(){
+    public JsConfirmation getConfirmation() {
         try {
             Alert a = browser.getDriver().switchTo().alert();
             return new JsConfirmation(a);
-        }catch (NoAlertPresentException e){
+        } catch (NoAlertPresentException e) {
             throw new NoPopUpFoundException(e);
         }
     }
@@ -66,13 +66,13 @@ public class BrowserPopUps {
      * Gets the JsPrompt box displayed on page
      *
      * @return instance of JsPrompt class
-     * @throws NoAlertPresentException if no alert is displayed
+     * @throws NoPopUpFoundException if no alert is displayed
      */
-    public JsPrompt getPrompt(){
+    public JsPrompt getPrompt() {
         try {
             Alert a = browser.getDriver().switchTo().alert();
             return new JsPrompt(a);
-        }catch (NoAlertPresentException e){
+        } catch (NoAlertPresentException e) {
             throw new NoPopUpFoundException(e);
         }
     }
