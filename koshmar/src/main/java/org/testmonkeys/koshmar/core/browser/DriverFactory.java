@@ -10,12 +10,14 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import static org.openqa.selenium.remote.BrowserType.CHROME;
+
 public class DriverFactory {
 
-    public WebDriver initDriver(String type) {
+    public static WebDriver initDriver(String browser) {
         DesiredCapabilities cap;
-        switch (type.toLowerCase()) {
-            case "chrome":
+        switch (browser.toLowerCase()) {
+            case CHROME:
                 cap = DesiredCapabilities.chrome();
                 return new ChromeDriver(cap);
             case "phantomjs":
@@ -33,17 +35,25 @@ public class DriverFactory {
 
                 return new FirefoxDriver(cap);
             default:
-                throw new RuntimeException("Unsupported browser[" + type + "]");
+                throw new RuntimeException("Unsupported browser[" + browser + "]");
         }
     }
 
-    public WebDriver initDriver(String type,DesiredCapabilities caps) {
-        switch (type.toLowerCase()) {
-            case "chrome":
-                return new ChromeDriver(caps);
-
+    public static WebDriver initDriver(String browser, String mode, DesiredCapabilities caps) {
+        switch (browser.toLowerCase()) {
+            case CHROME:
+                return initChromeDriver(mode, caps);
             default:
-                throw new RuntimeException("Unsupported browser[" + type + "]");
+                throw new RuntimeException("Unsupported browser[" + browser + "]");
         }
+    }
+
+    public static WebDriver initChromeDriver(String mode, DesiredCapabilities capabilities) {
+        if (mode != null && mode.equals("headless")) {
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless");
+            capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+        }
+        return new ChromeDriver(capabilities);
     }
 }

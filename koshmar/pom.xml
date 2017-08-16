@@ -17,6 +17,7 @@
         <reflections.version>0.9.10</reflections.version>
         <maven.compiler.version>3.6.1</maven.compiler.version>
         <slf4jVersion>1.7.25</slf4jVersion>
+        <logback.version>1.2.3</logback.version>
     </properties>
 
     <dependencies>
@@ -42,27 +43,5 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4jVersion}</version>
-        </dependency>
     </dependencies>
-
-
-    <build>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.version}</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-
-    </build>
 </project>
