@@ -21,7 +21,6 @@
         <spring.version>4.3.10.RELEASE</spring.version>
     </properties>
 
-
     <dependencies>
         <dependency>
             <groupId>org.assertj</groupId>
@@ -73,12 +72,22 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.logback-extensions</groupId>
+            <artifactId>logback-ext-spring</artifactId>
+            <version>0.1.4</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
-            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
 
         <dependency>
             <groupId>com.automation-remarks</groupId>
@@ -89,34 +98,18 @@
 
 
     <build>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.version}</version>
+                <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <includes>
+                        <include>org/testmonkeys/webpages/tests/htmlelement/*.java</include>
+                        <include>org/testmonkeys/webpages/tests/popups/*.java</include>
+                            <include>org/testmonkeys/webpages/tests/elements/*.java</include>
+                    </includes>
                 </configuration>
             </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <configuration>
-                        <includes>
-                            <include>org/testmonkeys/webpages/tests/htmlelement/*.java</include>
-                            <include>org/testmonkeys/webpages/tests/popups/*.java</include>
-                            <include>org/testmonkeys/webpages/tests/elements/*.java</include>
-                        </includes>
-                    </configuration>
-                </plugin>
-
-
         </plugins>
-
     </build>
-
-
 </project>

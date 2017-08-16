@@ -3,6 +3,7 @@ package org.testmonkeys.webpages.tests.htmlelement;
 import org.junit.Test;
 import org.testmonkeys.koshmar.pageobjects.elements.html.HtmlAttribute;
 import org.testmonkeys.webpages.pageObjects.HtmlElementsPageObject;
+import org.testmonkeys.webpages.tests.AbstractRegistrationPageTest;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
 
-public class AttributesTest extends HtmlElementsTest {
+public class AttributesTest extends AbstractRegistrationPageTest {
 
     //    <input
     //      value=""
