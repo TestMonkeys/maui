@@ -22,7 +22,7 @@ public class HtmlElementsTest {
     public void init(){
         DriverFactory df = new DriverFactory();
         browser= new Browser(df.initDriver("chrome"));
-        File file = new File("src/test/resources/WebPages/HtmlElementsPage.html");
+        File file = new File("src/test/resources/WebPages/HtmlStyleElementsPage.html");
         String absolutePath = file.getAbsolutePath();
         pageFactory=new PageFactory(browser,new PageScanner("org.testmonkeys.webpages"),absolutePath);
     }

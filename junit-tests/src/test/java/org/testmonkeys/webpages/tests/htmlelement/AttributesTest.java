@@ -3,6 +3,7 @@ package org.testmonkeys.webpages.tests.htmlelement;
 import org.junit.Test;
 import org.testmonkeys.koshmar.pageobjects.elements.html.HtmlAttribute;
 import org.testmonkeys.webpages.pageObjects.HtmlElementsPageObject;
+import org.testmonkeys.webpages.tests.AbstractHtmlElementPageTest;
 import org.testmonkeys.webpages.tests.AbstractRegistrationPageTest;
 
 
@@ -12,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
 
-public class AttributesTest extends AbstractRegistrationPageTest {
+public class AttributesTest extends AbstractHtmlElementPageTest {
 
 
     //    <input
@@ -25,8 +26,6 @@ public class AttributesTest extends AbstractRegistrationPageTest {
     //    <input/>
     @Test
     public void get_hasAttributes() {
-        HtmlElementsPageObject page = pageFactory.createPage(HtmlElementsPageObject.class);
-        page.open();
         List<HtmlAttribute> attrs = page.firstName().getHtmlElement().getAttributes();
         assertThat("value attr",attrs, hasItem(new HtmlAttribute("value", "")));
         assertThat("id attr",attrs, hasItem(new HtmlAttribute("id", "name_3_firstname")));
@@ -37,8 +36,6 @@ public class AttributesTest extends AbstractRegistrationPageTest {
 
     @Test
     public void get_noAttributes() {
-        HtmlElementsPageObject page = pageFactory.createPage(HtmlElementsPageObject.class);
-        page.open();
         List<HtmlAttribute> attrs = page.firstName2().getHtmlElement().getAttributes();
         assertThat("attributes size", attrs.size(), is(0));
     }
