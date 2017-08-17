@@ -96,10 +96,11 @@ jobs:
       - run:
           name: start xvfb
           command: |
-            export DISPLAY=:99
-            Xvfb :99 -ac -screen 1 1024x768x24 & fluxbox &
+            Xvfb :1 -ac -screen 1 1024x768x24 & fluxbox &
+            Xvfb :2 -ac -screen 2 1024x768x24 & fluxbox &
+            Xvfb :3 -ac -screen 3 1024x768x24 & fluxbox &
           background: true
-
+#            export DISPLAY=:99
       - run:
           name: Install phantomJS
           command: |
