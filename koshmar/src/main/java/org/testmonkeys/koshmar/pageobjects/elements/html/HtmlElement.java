@@ -43,7 +43,7 @@ public class HtmlElement {
                 }
                 attributes.add(attribute);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             //TODO: log error
         }
 
@@ -54,7 +54,7 @@ public class HtmlElement {
         Map<String, String> result = null;
 
         Object jsResult = new ExecuteJSScript(component, "javaScript/htmlElement/getComputedStyle.js"
-                ).execute();
+        ).execute();
         try {
             result = (Map<String, String>) jsResult;
         } catch (ClassCastException e) {
