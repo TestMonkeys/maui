@@ -4,6 +4,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.testmonkeys.koshmar.core.browser.popups.BrowserPopUps;
 import org.testmonkeys.koshmar.core.elements.location.LocatesElements;
 import org.testmonkeys.koshmar.core.elements.location.Locator;
 
@@ -17,6 +18,7 @@ public class Browser implements LocatesElements {
     private int timeout;
     private int step;
     private TimeUnit unit;
+    private BrowserPopUps browserPopUps = new BrowserPopUps(this);
 
     public Browser(WebDriver driver) {
         this.driver = driver;
@@ -51,6 +53,15 @@ public class Browser implements LocatesElements {
                 .withTimeout(timeout, unit)
                 .pollingEvery(step, unit)
                 .ignoring(NoSuchElementException.class);
+    }
+
+    /**
+     * Gets the browser popup handler
+     *
+     * @return BrowserPopUps instance
+     */
+    public BrowserPopUps getPopUps() {
+        return browserPopUps;
     }
 
     public String getTitle() {
