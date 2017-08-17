@@ -2,7 +2,12 @@ package org.testmonkeys.koshmar.core.browser.popups;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.testmonkeys.koshmar.core.browser.Browser;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class contains logic of checking and retrieving pop-up boxes.
@@ -15,21 +20,33 @@ public class BrowserPopUps {
         this.browser = browser;
     }
 
-    /**
-     * Checks if on the current window a pop up box is displayed.
-     *
-     * @return boolean result
-     */
-    public boolean hasPopUp() {
+    private FluentWait<WebDriver> getFluentWait() {
+        return browser.initWaitter(500, 100, TimeUnit.MILLISECONDS);
+    }
+
+    private boolean popUpPresent(WebDriver webDriver) {
         boolean hasPopup = false;
         try {
-            Alert a = browser.getDriver().switchTo().alert();
+            Alert a = webDriver.switchTo().alert();
             if (a != null)
                 hasPopup = true;
         } catch (Exception e) {
 
         }
         return hasPopup;
+    }
+
+    /**
+     * Checks if on the current window a pop up box is displayed.
+     *
+     * @return boolean result
+     */
+    public boolean hasPopUp() {
+        try {
+            return getFluentWait().until(this::popUpPresent);
+        } catch (TimeoutException e) {
+            return false;
+        }
     }
 
     /**

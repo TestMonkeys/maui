@@ -48,7 +48,7 @@ public class Browser implements LocatesElements {
         return dynamicWaiter.until(webDriver -> webDriver.findElements(locator.getSeleniumLocator()));
     }
 
-    private FluentWait<WebDriver> initWaitter(int timeout, int step, TimeUnit unit) {
+    public FluentWait<WebDriver> initWaitter(int timeout, int step, TimeUnit unit) {
         return new FluentWait<>(this.driver)
                 .withTimeout(timeout, unit)
                 .pollingEvery(step, unit)
