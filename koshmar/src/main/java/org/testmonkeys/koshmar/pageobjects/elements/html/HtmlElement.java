@@ -28,7 +28,7 @@ public class HtmlElement {
      * @return List of {@link=HtmlAttribute}
      */
     public List<HtmlAttribute> getAttributes() {
-        Object result = new ExecuteJSScript(component, "javaScript/htmlElement/getAttributes.js").execute();
+        Object result = new ExecuteJSScript(component, "/javaScript/htmlElement/getAttributes.js").execute();
 
         List<HtmlAttribute> attributes = new ArrayList<>();
         try {
@@ -53,7 +53,7 @@ public class HtmlElement {
     public Map<String, String> getStyle() {
         Map<String, String> result = null;
 
-        Object jsResult = new ExecuteJSScript(component, "javaScript/htmlElement/getComputedStyle.js"
+        Object jsResult = new ExecuteJSScript(component, "/javaScript/htmlElement/getComputedStyle.js"
         ).execute();
         try {
             result = (Map<String, String>) jsResult;
