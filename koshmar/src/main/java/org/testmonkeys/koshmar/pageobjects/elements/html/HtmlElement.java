@@ -26,6 +26,7 @@ public class HtmlElement {
     public List<HtmlAttribute> getAttributes() {
         Object result = new ExecuteJSAction(component, "return arguments[0].attributes;").execute();
 
+
         List<HtmlAttribute> attributes = new ArrayList<>();
         try {
             ArrayList<Map<String, String>> elementAttributes = (ArrayList<Map<String, String>>) result;
@@ -45,4 +46,5 @@ public class HtmlElement {
 
         return attributes;
     }
+
 }
