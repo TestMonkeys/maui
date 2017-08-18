@@ -97,8 +97,8 @@ jobs:
           name: start xvfb
           command: |
             Xvfb :1 -ac -screen 1 1024x768x24 & fluxbox &
-#            Xvfb :2 -ac -screen 2 1024x768x24 & fluxbox &
-#            Xvfb :3 -ac -screen 3 1024x768x24 & fluxbox &
+            Xvfb :2 -ac -screen 2 1024x768x24 & fluxbox &
+            Xvfb :3 -ac -screen 3 1024x768x24 & fluxbox &
           background: true
 #            export DISPLAY=:99
       - run:
@@ -114,7 +114,7 @@ jobs:
 
       - run:
           name: UI Tests
-          command: mvn test -Dwebdriver.chrome.driver=/usr/bin/chromedriver -Dwebdriver.gecko.driver=/usr/bin/geckodriver
+          command: mvn verify -Dwebdriver.chrome.driver=/usr/bin/chromedriver -Dwebdriver.gecko.driver=/usr/bin/geckodriver
 
       - save_cache:
           paths:
