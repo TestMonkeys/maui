@@ -1,5 +1,6 @@
 package org.testmonkeys.koshmar.core.browser;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,23 +16,25 @@ public class Browser implements LocatesElements {
 
     private WebDriver driver;
     private FluentWait<WebDriver> dynamicWaiter;
-    private int timeout;
-    private int step;
+    private int pageTimeout;
+    private int elementTimeout;
     private TimeUnit unit;
+    private int step = 1;
     private BrowserPopUps browserPopUps = new BrowserPopUps(this);
 
     public Browser(WebDriver driver) {
         this.driver = driver;
         //TODO maximize based on external parameter
         //this.driver.manage().window().maximize();
-        dynamicWaiter = initWaitter(10, 1, TimeUnit.SECONDS);
+        dynamicWaiter = initWaitter(10, step, TimeUnit.SECONDS);
     }
 
-    public Browser(WebDriver driver, int timeout, int step, TimeUnit unit) {
+    public Browser(WebDriver driver, TimeUnit unit, int elementTimeout, int pageTimeout) {
         this.driver = driver;
+        this.driver.manage().timeouts().pageLoadTimeout(pageTimeout, unit);
         //TODO maximize based on external parameter
         //this.driver.manage().window().maximize();
-        dynamicWaiter = initWaitter(timeout, step, unit);
+        dynamicWaiter = initWaitter(elementTimeout, 1, unit);
     }
 
     public FluentWait<WebDriver> getDynamicWaiter() {
@@ -86,5 +89,9 @@ public class Browser implements LocatesElements {
 
     public void goBack() {
         driver.navigate().back();
+    }
+
+    public void waitForPageToLoad() {
+        initWaitter(pageTimeout, step, unit).until(d -> ((JavascriptExecutor) d).executeScript("return document.readyState").equals("complete"));
     }
 }
