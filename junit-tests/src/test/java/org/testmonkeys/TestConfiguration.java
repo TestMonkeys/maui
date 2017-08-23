@@ -11,6 +11,7 @@ import org.testmonkeys.koshmar.core.browser.DriverFactory;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import static java.io.File.separator;
 
@@ -20,12 +21,6 @@ import static java.io.File.separator;
         value = {"file:properties/driver.properties"},
         ignoreResourceNotFound = true)
 public class TestConfiguration {
-
-    @Value("${browser}")
-    private String browser;
-
-    @Value("${browser.mode}")
-    private String mode;
 
     //TODO remove this ugly stuff when the defect on video library will be fixed
     @Bean
@@ -42,7 +37,8 @@ public class TestConfiguration {
 
     @Bean
     @Scope("prototype")
-    public WebDriver webDriver() throws IOException {
+    public WebDriver webDriver(@Value("${browser}") String browser,
+                               @Value("${browser.mode}") String mode) throws IOException {
         Properties properties = new Properties();
         properties.load(new FileInputStream("properties/driver.properties"));
 
@@ -56,7 +52,10 @@ public class TestConfiguration {
 
     @Bean
     @Scope("prototype")
-    public Browser browser(WebDriver webDriver) {
-        return new Browser(webDriver);
+    public Browser browser(WebDriver webDriver,
+                           @Value("${browser.timeout.unit}") TimeUnit unit,
+                           @Value("${browser.element.timeout}") int elementTimeout,
+                           @Value("${browser.page.timeout}") int pageTimeout) {
+        return new Browser(webDriver, unit, elementTimeout, pageTimeout);
     }
 }
