@@ -1,9 +1,9 @@
 package org.testmonkeys.webpages.tests.htmlelement;
 
 import org.junit.Test;
+import org.testmonkeys.AbstractRegistrationPageTest;
 import org.testmonkeys.koshmar.pageobjects.elements.html.HtmlAttribute;
 import org.testmonkeys.webpages.pageObjects.HtmlElementsPageObject;
-import org.testmonkeys.webpages.tests.AbstractRegistrationPageTest;
 
 import java.util.List;
 

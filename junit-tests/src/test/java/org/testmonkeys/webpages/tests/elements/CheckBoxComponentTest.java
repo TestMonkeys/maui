@@ -1,9 +1,9 @@
 package org.testmonkeys.webpages.tests.elements;
 
 import org.junit.Test;
+import org.testmonkeys.AbstractRegistrationPageTest;
 import org.testmonkeys.koshmar.pageobjects.elements.CheckBox;
 import org.testmonkeys.koshmar.pageobjects.elements.GroupComponent;
-import org.testmonkeys.webpages.tests.AbstractRegistrationPageTest;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.testmonkeys.webpages.tests;
+package org.testmonkeys;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -6,7 +6,6 @@ import org.junit.rules.ExpectedException;
 import org.springframework.core.io.ClassPathResource;
 import org.testmonkeys.koshmar.core.factory.PageFactory;
 import org.testmonkeys.koshmar.core.factory.PageScanner;
-import org.testmonkeys.sut.demoqa.RegistrationPage;
 import org.testmonkeys.webpages.pageObjects.JsPopUpPage;
 
 import java.io.IOException;

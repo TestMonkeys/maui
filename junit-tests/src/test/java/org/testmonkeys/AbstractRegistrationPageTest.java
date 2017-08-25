@@ -1,4 +1,4 @@
-package org.testmonkeys.webpages.tests;
+package org.testmonkeys;
 
 import org.junit.Before;
 import org.springframework.core.io.ClassPathResource;

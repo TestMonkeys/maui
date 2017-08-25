@@ -1,9 +1,8 @@
 package org.testmonkeys.webpages.tests.popups;
 
 import org.junit.Test;
+import org.testmonkeys.AbstractPopUpPageTest;
 import org.testmonkeys.koshmar.core.browser.popups.NoPopUpFoundException;
-import org.testmonkeys.webpages.pageObjects.JsPopUpPage;
-import org.testmonkeys.webpages.tests.AbstractPopUpPageTest;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;

@@ -3,7 +3,7 @@ package org.testmonkeys.sut.demoqa.playground;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.testmonkeys.webpages.tests.AbstractRegistrationPageTest;
+import org.testmonkeys.AbstractRegistrationPageTest;
 
 import java.util.NoSuchElementException;
 
