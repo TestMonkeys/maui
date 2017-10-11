@@ -19,10 +19,10 @@ public class GroupComponentTest {
 
         HomePage home = pageFactory.createPage(HomePage.class);
         home.open();
+
         for (HtmlAttribute attr : home.getInteractions().get(4).getHtmlElement().getAttributes()) {
             System.out.println(attr);
         }
         browser.quit();
-
     }
 }
