@@ -14,10 +14,23 @@ import java.util.Scanner;
 public class ExecuteJSScript extends AbstractAction<Object> {
 
     private String script;
+    private Object[] args;
 
-    public ExecuteJSScript(AbstractComponent component, String script) {
+    public ExecuteJSScript(AbstractComponent component, String script, Object... args) {
         super(component);
-        this.script = getScript(script) + "\nreturn fun(arguments[0]);";
+
+        this.args = args;
+        this.script = createExecutableScript(script, args);
+    }
+
+    private String createExecutableScript(String script, Object[] args) {
+        StringBuilder arguments = new StringBuilder();
+        for (int i = 0; i <= args.length; i++) {
+            arguments.append("arguments[").append(i).append("]");
+            if (i < args.length)
+                arguments.append(",");
+        }
+        return getScript(script) + "\nreturn fun(" + arguments + ");";
     }
 
     @Override
@@ -28,7 +41,15 @@ public class ExecuteJSScript extends AbstractAction<Object> {
             jsExecutor = (JavascriptExecutor) webDriver;
         else
             throw new RuntimeException("Browser can't execute java script");
-        return jsExecutor.executeScript(script, webElement);
+
+        return jsExecutor.executeScript(script, aggregateArgs(webElement));
+    }
+
+    private Object[] aggregateArgs(WebElement webElement) {
+        Object[] aggregatedArgs = new Object[args.length + 1];
+        aggregatedArgs[0] = webElement;
+        System.arraycopy(args, 0, aggregatedArgs, 1, args.length);
+        return aggregatedArgs;
     }
 
     private String getScript(String fileName) {
@@ -36,7 +57,7 @@ public class ExecuteJSScript extends AbstractAction<Object> {
 
         InputStream in = getClass().getResourceAsStream(fileName);
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        String line = null;
+        String line;
         try {
             while ((line = reader.readLine()) != null)
                 result.append(line);

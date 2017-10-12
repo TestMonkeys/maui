@@ -2,7 +2,6 @@ package org.testmonkeys.webpages.tests.htmlelement;
 
 import org.junit.Test;
 import org.testmonkeys.koshmar.pageobjects.elements.html.HtmlAttribute;
-import org.testmonkeys.webpages.pageObjects.HtmlElementsPageObject;
 import org.testmonkeys.webpages.tests.AbstractHtmlElementPageTest;
 
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsCollectionContaining.hasItem;
 
 public class StyleTest extends AbstractHtmlElementPageTest {
 
