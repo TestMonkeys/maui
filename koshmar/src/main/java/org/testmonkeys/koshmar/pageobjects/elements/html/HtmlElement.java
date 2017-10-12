@@ -25,6 +25,8 @@ public class HtmlElement {
     private final String SET_TAB_INDEX_SCRIPT = "/javaScript/htmlElement/setTabIndex.js";
     private final String GET_TITLE_SCRIPT = "/javaScript/htmlElement/getTitle.js";
     private final String SET_TITLE_SCRIPT = "/javaScript/htmlElement/setTitle.js";
+    private final String GET_DRAGGABLE_SCRIPT = "/javaScript/htmlElement/getDraggable.js";
+    private final String SET_DRAGGABLE_SCRIPT = "/javaScript/htmlElement/setDraggable.js";
 
     private AbstractComponent component;
 
@@ -195,5 +197,24 @@ public class HtmlElement {
      */
     public void setTitle(String value) {
         new ExecuteJSScript(component, SET_TITLE_SCRIPT, value).execute();
+    }
+
+    /**
+     * Gets the Draggable property of the element
+     *
+     * @return boolean true if draggable
+     */
+    public boolean getDraggable() {
+        Object jsResult = new ExecuteJSScript(component, GET_DRAGGABLE_SCRIPT).execute();
+        return (boolean) jsResult;
+    }
+
+    /**
+     * Sets the Draggable property of the element
+     *
+     * @param value - boolean true to enable draggable
+     */
+    public void setDraggable(boolean value) {
+        new ExecuteJSScript(component, SET_DRAGGABLE_SCRIPT, value).execute();
     }
 }
