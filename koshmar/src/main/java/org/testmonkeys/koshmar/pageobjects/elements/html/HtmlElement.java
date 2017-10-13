@@ -7,26 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static org.testmonkeys.koshmar.pageobjects.elements.html.JsScripts.*;
+
 /**
  * HtmlElement provides access to functionality available for any Element present in DOM
  */
 public class HtmlElement {
 
-    private final String GET_ATTRIBUTE_SCRIPT = "/javaScript/htmlElement/getAttributes.js";
-    private final String GET_COMPUTED_STYLE_SCRIPT = "/javaScript/htmlElement/getComputedStyle.js";
-    private final String GET_INNER_HTML_SCRIPT = "/javaScript/htmlElement/getInnerHtml.js";
-    private final String SET_INNER_HTML_SCRIPT = "/javaScript/htmlElement/setInnerHtml.js";
-    private final String GET_OUTER_HTML_SCRIPT = "/javaScript/htmlElement/getOuterHtml.js";
-    private final String SET_OUTER_HTML_SCRIPT = "/javaScript/htmlElement/setOuterHtml.js";
-    private final String GET_TAG_NAME_SCRIPT = "/javaScript/htmlElement/getTagName.js";
-    private final String GET_TAG_HIDDEN_SCRIPT = "/javaScript/htmlElement/getHidden.js";
-    private final String SET_TAG_HIDDEN_SCRIPT = "/javaScript/htmlElement/setHidden.js";
-    private final String GET_TAB_INDEX_SCRIPT = "/javaScript/htmlElement/getTabIndex.js";
-    private final String SET_TAB_INDEX_SCRIPT = "/javaScript/htmlElement/setTabIndex.js";
-    private final String GET_TITLE_SCRIPT = "/javaScript/htmlElement/getTitle.js";
-    private final String SET_TITLE_SCRIPT = "/javaScript/htmlElement/setTitle.js";
-    private final String GET_DRAGGABLE_SCRIPT = "/javaScript/htmlElement/getDraggable.js";
-    private final String SET_DRAGGABLE_SCRIPT = "/javaScript/htmlElement/setDraggable.js";
+
 
     private AbstractComponent component;
 
@@ -40,7 +28,7 @@ public class HtmlElement {
      * @return List of HtmlAttribute
      */
     public List<HtmlAttribute> getAttributes() {
-        Object result = new ExecuteJSScript(component, GET_ATTRIBUTE_SCRIPT).execute();
+        Object result = new ExecuteJSScript(component, GET_ATTRIBUTE).execute();
 
         List<HtmlAttribute> attributes = new ArrayList<>();
         try {
@@ -83,7 +71,7 @@ public class HtmlElement {
      * @return Map of style-name to style-value pairs
      */
     public Map<String, String> getStyle() {
-        Object jsResult = new ExecuteJSScript(component, GET_COMPUTED_STYLE_SCRIPT).execute();
+        Object jsResult = new ExecuteJSScript(component, GET_COMPUTED_STYLE).execute();
 
         Map<String, String> result;
         try {
@@ -100,7 +88,7 @@ public class HtmlElement {
      * @return string value of the innerHTML
      */
     public String getInnerHtml() {
-        Object jsResult = new ExecuteJSScript(component, GET_INNER_HTML_SCRIPT).execute();
+        Object jsResult = new ExecuteJSScript(component, GET_INNER_HTML).execute();
         return (String) jsResult;
     }
 
@@ -110,7 +98,7 @@ public class HtmlElement {
      * @param value - new value of the innerHTML
      */
     public void setInnerHtml(String value) {
-        new ExecuteJSScript(component, SET_INNER_HTML_SCRIPT, value).execute();
+        new ExecuteJSScript(component, SET_INNER_HTML, value).execute();
     }
 
     /**
@@ -119,7 +107,7 @@ public class HtmlElement {
      * @return string value of the outerHTML
      */
     public String getOuterHtml() {
-        Object jsResult = new ExecuteJSScript(component, GET_OUTER_HTML_SCRIPT).execute();
+        Object jsResult = new ExecuteJSScript(component, GET_OUTER_HTML).execute();
         return (String) jsResult;
     }
 
@@ -129,7 +117,7 @@ public class HtmlElement {
      * @param value - new value of the outerHTML
      */
     public void setOuterHtml(String value) {
-        new ExecuteJSScript(component, SET_OUTER_HTML_SCRIPT, value).execute();
+        new ExecuteJSScript(component, SET_OUTER_HTML, value).execute();
     }
 
     /**
@@ -138,7 +126,7 @@ public class HtmlElement {
      * @return string - name of the tag
      */
     public String getTagName() {
-        Object jsResult = new ExecuteJSScript(component, GET_TAG_NAME_SCRIPT).execute();
+        Object jsResult = new ExecuteJSScript(component, GET_TAG_NAME).execute();
         return (String) jsResult;
     }
 
@@ -148,7 +136,7 @@ public class HtmlElement {
      * @return true if element is hidden
      */
     public boolean getHidden() {
-        Object jsResult = new ExecuteJSScript(component, GET_TAG_HIDDEN_SCRIPT).execute();
+        Object jsResult = new ExecuteJSScript(component, GET_TAG_HIDDEN).execute();
         return (boolean) jsResult;
     }
 
@@ -158,7 +146,7 @@ public class HtmlElement {
      * @param value - boolean value
      */
     public void setHidden(boolean value) {
-        new ExecuteJSScript(component, SET_TAG_HIDDEN_SCRIPT, value).execute();
+        new ExecuteJSScript(component, SET_TAG_HIDDEN, value).execute();
     }
 
     /**
@@ -167,7 +155,7 @@ public class HtmlElement {
      * @return int index or -1 if element does not have a Tab Index
      */
     public int getTabIndex() {
-        Object jsResult = new ExecuteJSScript(component, GET_TAB_INDEX_SCRIPT).execute();
+        Object jsResult = new ExecuteJSScript(component, GET_TAB_INDEX).execute();
         return (int) ((long) jsResult);
     }
 
@@ -177,7 +165,7 @@ public class HtmlElement {
      * @param value - int index
      */
     public void setTabIndex(int value) {
-        new ExecuteJSScript(component, SET_TAB_INDEX_SCRIPT, value).execute();
+        new ExecuteJSScript(component, SET_TAB_INDEX, value).execute();
     }
 
     /**
@@ -186,7 +174,7 @@ public class HtmlElement {
      * @return string title
      */
     public String getTitle() {
-        Object jsResult = new ExecuteJSScript(component, GET_TITLE_SCRIPT).execute();
+        Object jsResult = new ExecuteJSScript(component, GET_TITLE).execute();
         return (String) jsResult;
     }
 
@@ -196,7 +184,7 @@ public class HtmlElement {
      * @param value - string title
      */
     public void setTitle(String value) {
-        new ExecuteJSScript(component, SET_TITLE_SCRIPT, value).execute();
+        new ExecuteJSScript(component, SET_TITLE, value).execute();
     }
 
     /**
@@ -205,7 +193,7 @@ public class HtmlElement {
      * @return boolean true if draggable
      */
     public boolean getDraggable() {
-        Object jsResult = new ExecuteJSScript(component, GET_DRAGGABLE_SCRIPT).execute();
+        Object jsResult = new ExecuteJSScript(component, GET_DRAGGABLE).execute();
         return (boolean) jsResult;
     }
 
@@ -215,6 +203,6 @@ public class HtmlElement {
      * @param value - boolean true to enable draggable
      */
     public void setDraggable(boolean value) {
-        new ExecuteJSScript(component, SET_DRAGGABLE_SCRIPT, value).execute();
+        new ExecuteJSScript(component, SET_DRAGGABLE, value).execute();
     }
 }
