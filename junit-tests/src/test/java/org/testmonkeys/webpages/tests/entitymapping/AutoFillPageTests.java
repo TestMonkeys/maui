@@ -36,7 +36,7 @@ public class AutoFillPageTests extends AbstractComponentTest {
         ue.setUsername("user1");
 
         page.fillEntity(ue);
-        System.out.println(page.getPhone().getText());
+        System.out.println(page.phone().getText());
     }
 
 }
