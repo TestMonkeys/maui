@@ -4,10 +4,14 @@ import org.testmonkeys.koshmar.core.page.Page;
 import org.testmonkeys.koshmar.pageobjects.AbstractPage;
 import org.testmonkeys.koshmar.pageobjects.ElementAccessor;
 import org.testmonkeys.koshmar.pageobjects.PageAccessor;
+import org.testmonkeys.koshmar.pageobjects.elements.GenericWebElement;
 import org.testmonkeys.koshmar.pageobjects.elements.Input;
 
 @PageAccessor(name="HtmlElements",url = "")
 public class HtmlElementsPageObject extends AbstractPage {
+
+    @ElementAccessor(elementName = "header", byXPath = "//h1")
+    private GenericWebElement header;
 
     @ElementAccessor(elementName="input",byId = "name_3_firstname")
     private Input firstName;
@@ -28,5 +32,9 @@ public class HtmlElementsPageObject extends AbstractPage {
 
     public Input styledInput(){
         return styledInput;
+    }
+
+    public GenericWebElement header() {
+        return header;
     }
 }
