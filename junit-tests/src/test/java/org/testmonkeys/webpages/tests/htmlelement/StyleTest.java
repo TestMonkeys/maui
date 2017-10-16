@@ -9,6 +9,7 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.nullValue;
 
 public class StyleTest extends AbstractHtmlElementPageTest {
 
@@ -21,8 +22,20 @@ public class StyleTest extends AbstractHtmlElementPageTest {
     }
 
     @Test
+    public void get_hasStyle_specific() {
+        String style = page.styledInput().getHtmlElement().getStyle("border-right-width");
+        assertThat(style, is("2px"));
+    }
+
+    @Test
     public void get_noAttributes() {
         List<HtmlAttribute> attrs = page.firstName2().getHtmlElement().getAttributes();
         assertThat("attributes size", attrs.size(), is(0));
+    }
+
+    @Test
+    public void get_invalidKeyStyle_specific() {
+        String style = page.styledInput().getHtmlElement().getStyle("bor1der-right-width");
+        assertThat(style, is(nullValue()));
     }
 }

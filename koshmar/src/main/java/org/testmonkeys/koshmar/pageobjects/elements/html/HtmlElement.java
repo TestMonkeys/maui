@@ -83,6 +83,19 @@ public class HtmlElement {
     }
 
     /**
+     * Gets the style value by a specific key
+     *
+     * @param key to get style for
+     * @return string value representing the style or null if key not found
+     */
+    public String getStyle(String key) {
+        Map<String, String> styles = getStyle();
+        if (!styles.containsKey(key))
+            return null;
+        return styles.get(key);
+    }
+
+    /**
      * Gets the innerHTML property of the element
      *
      * @return string value of the innerHTML
