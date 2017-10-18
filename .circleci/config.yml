@@ -71,7 +71,9 @@ jobs:
           name: Install latest version of ChromeDriver Sample
           command: |
             sudo wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE
-            sudo lastVersion=&(cat LATEST_RELEASE)
+            sudo cat LATEST_RELEASE
+            sudo lastVersion=cat LATEST_RELEASE
+            sudo echo $lastVersion
             sudo wget https://chromedriver.storage.googleapis.com/$lastVersion/chromedriver_linux64.zip
             sudo unzip chromedriver_linux64.zip
             sudo rm chromedriver_linux64.zip
