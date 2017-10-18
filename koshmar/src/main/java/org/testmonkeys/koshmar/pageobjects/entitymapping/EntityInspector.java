@@ -9,6 +9,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,12 +29,16 @@ public class EntityInspector {
         return instance;
     }
 
-    public EntityLink inspectLink(Object entity, AbstractPage page) {
+    public EntityLink inspectLink(Type type, AbstractPage page) {
+        return inspectLink(type.getClass(), page);
+    }
+
+    public EntityLink inspectLink(Class<?> entityClazz, AbstractPage page) {
 
         EntityLink link = new EntityLink();
         BeanInfo beanInfo = null;
         try {
-            beanInfo = Introspector.getBeanInfo(entity.getClass(), Object.class);
+            beanInfo = Introspector.getBeanInfo(entityClazz, Object.class);
         } catch (IntrospectionException e) {
             e.printStackTrace();
         }
@@ -41,7 +46,7 @@ public class EntityInspector {
         Method[] pageMethods = page.getClass().getMethods();
         Map<String, Method> customLinkDictionary = new HashMap<>();
         for (Method method : pageMethods) {
-            String fieldName = getCustomMapping(method, entity.getClass());
+            String fieldName = getCustomMapping(method, entityClazz);
             if (fieldName != null) {
                 customLinkDictionary.put(fieldName, method);
             }

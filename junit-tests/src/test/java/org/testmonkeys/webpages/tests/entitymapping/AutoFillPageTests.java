@@ -1,5 +1,6 @@
 package org.testmonkeys.webpages.tests.entitymapping;
 
+import com.sun.jna.platform.win32.Netapi32Util;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,9 +35,13 @@ public class AutoFillPageTests extends AbstractComponentTest {
         UserEntity ue = new UserEntity();
         ue.setPhone("89760");
         ue.setUsername("user1");
+        ue.setReadingHobby(true);
 
         page.fillEntity(ue);
         System.out.println(page.phone().getText());
+        UserEntity readUsr = page.readEntity(UserEntity.class);
+        System.out.println(readUsr);
+
     }
 
 }

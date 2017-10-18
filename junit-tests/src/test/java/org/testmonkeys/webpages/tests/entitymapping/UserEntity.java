@@ -4,6 +4,7 @@ public class UserEntity {
 
     private String phone;
     private String username;
+    private boolean readingHobby;
 
     public String getPhone() {
         return phone;
@@ -19,5 +20,13 @@ public class UserEntity {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public boolean isReadingHobby() {
+        return readingHobby;
+    }
+
+    public void setReadingHobby(boolean readingHobby) {
+        this.readingHobby = readingHobby;
     }
 }

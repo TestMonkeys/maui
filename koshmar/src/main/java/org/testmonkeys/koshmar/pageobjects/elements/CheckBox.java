@@ -3,7 +3,7 @@ package org.testmonkeys.koshmar.pageobjects.elements;
 import org.openqa.selenium.WebElement;
 import org.testmonkeys.koshmar.core.elements.actions.ClickAction;
 
-public class CheckBox extends AbstractComponent {
+public class CheckBox extends AbstractComponent implements FillableComponent<Boolean>, ReadableComponent<Boolean> {
 
     public boolean isChecked() {
         return this.find().isSelected();
@@ -38,5 +38,19 @@ public class CheckBox extends AbstractComponent {
      */
     public String getValue() {
         return this.find().getAttribute("value");
+    }
+
+    @Override
+    public void fill(Boolean data) {
+        if (data) {
+            check();
+        } else {
+            uncheck();
+        }
+    }
+
+    @Override
+    public Boolean read() {
+        return isChecked();
     }
 }
