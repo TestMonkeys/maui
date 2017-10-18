@@ -74,7 +74,11 @@ jobs:
             sudo cat LATEST_RELEASE
             sudo lastVersion=&(cat LATEST_RELEASE)
             sudo echo $lastVersion
-            sudo wget "https://chromedriver.storage.googleapis.com/${lastVersion}/chromedriver_linux64.zip"
+            sudo firstPart="https://chromedriver.storage.googleapis.com/"
+            sudo lastPart="/chromedriver_linux64.zip"
+            sudo url=$firstPart$lastVersion$lastPart
+            sudo echo $url
+            sudo wget $url
             sudo unzip chromedriver_linux64.zip
             sudo rm chromedriver_linux64.zip
             sudo mv chromedriver /usr/bin/
