@@ -1,5 +1,6 @@
 package org.testmonkeys.koshmar.pageobjects;
 
+import com.sun.webkit.InspectorClient;
 import org.testmonkeys.koshmar.pageobjects.entitymapping.EntityInspector;
 import org.testmonkeys.koshmar.pageobjects.entitymapping.EntityLink;
 import org.testmonkeys.koshmar.pageobjects.entitymapping.MapsToField;
