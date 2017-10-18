@@ -72,7 +72,7 @@ jobs:
           command: |
             sudo wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE
             sudo cat LATEST_RELEASE
-            sudo lastVersion=&(cat LATEST_RELEASE)
+            sudo lastVersion=$(cat LATEST_RELEASE)
             sudo echo $lastVersion
             firstPart="https://chromedriver.storage.googleapis.com/"
             lastPart="/chromedriver_linux64.zip"
