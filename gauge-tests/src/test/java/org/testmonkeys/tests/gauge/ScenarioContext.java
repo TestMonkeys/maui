@@ -30,7 +30,7 @@ public class ScenarioContext extends ExecutionContext {
         if (url == null) {
             throw new RuntimeException("Static pages folder not found");
         }
-        this.baseUrl = new File(url.getFile()).getAbsolutePath();
+        this.baseUrl = new File("file:///" + url.getFile()).getAbsolutePath();
     }
 
     synchronized public static ScenarioContext getInstance() {
