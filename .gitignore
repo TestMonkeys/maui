@@ -29,3 +29,4 @@ local.properties
 gauge-tests/reports
 gauge-tests/logs
 */target
+.gauge/

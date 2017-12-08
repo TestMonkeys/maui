@@ -8,11 +8,7 @@ import org.testmonkeys.koshmar.core.factory.PageScanner;
 import org.testmonkeys.koshmar.core.page.Page;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URL;
-import java.util.Properties;
 
 public class ScenarioContext extends ExecutionContext {
 
@@ -25,26 +21,19 @@ public class ScenarioContext extends ExecutionContext {
 
     private String baseUrl;
 
-    private Properties projectProperties;
     private Page currentPage;
 
     private ScenarioContext() {
-        projectProperties = new Properties();
-        try (FileInputStream propertiesStream = new FileInputStream("properties/project.properties")) {
-            projectProperties.load(propertiesStream);
-            projectProperties.forEach((key, value) -> System.setProperty(String.valueOf(key), String.valueOf(value)));
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load project properties from properties/project.properties", e);
-        }
-        browserType = System.getenv("browser");
+        System.getenv().forEach(System::setProperty);
+        browserType = System.getProperty("browser");
         URL url = this.getClass().getClassLoader().getResource("WebPages");
-        if (url == null){
+        if (url == null) {
             throw new RuntimeException("Static pages folder not found");
         }
         this.baseUrl = new File(url.getFile()).getAbsolutePath();
     }
 
-    public static ScenarioContext getInstance() {
+    synchronized public static ScenarioContext getInstance() {
         if (instance == null) {
             instance = new ScenarioContext();
         }
@@ -54,7 +43,7 @@ public class ScenarioContext extends ExecutionContext {
 
 
     public void reset() {
-
+        //TODO add to this method the logic of resetting the environment related resources: browser, storage.
     }
 
     public void initBrowser() {
@@ -80,6 +69,7 @@ public class ScenarioContext extends ExecutionContext {
     }
 
     public Page getCurrentPage() {
+
         return currentPage;
     }
 }

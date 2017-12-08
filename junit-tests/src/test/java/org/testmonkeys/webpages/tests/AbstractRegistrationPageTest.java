@@ -13,12 +13,12 @@ public class AbstractRegistrationPageTest extends AbstractComponentTest {
     protected RegistrationPage registrationPage;
     protected PageFactory pageFactory;
 
-    protected ClassPathResource htmlPage = new ClassPathResource("/WebPages/HtmlElementsPage.html");
+    protected ClassPathResource webPagesPath = new ClassPathResource("WebPages");
 
     @Before
     public void beforeScenario() throws IOException {
         pageFactory = new PageFactory(browser, new PageScanner("org.testmonkeys.sut"),
-                "file:///" + htmlPage.getFile().getAbsolutePath());
+                webPagesPath.getFile().getAbsolutePath());
         registrationPage = pageFactory.createPage(RegistrationPage.class);
         registrationPage.open();
     }
