@@ -5,6 +5,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testmonkeys.koshmar.core.browser.popups.BrowserPopUps;
 import org.testmonkeys.koshmar.core.elements.location.LocatesElements;
 import org.testmonkeys.koshmar.core.elements.location.Locator;
@@ -13,6 +15,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Browser implements LocatesElements {
+
+    Logger logger = LoggerFactory.getLogger(Browser.class);
 
     private WebDriver driver;
     private FluentWait<WebDriver> dynamicWaiter;
@@ -72,6 +76,7 @@ public class Browser implements LocatesElements {
     }
 
     public void goTo(String url) {
+        logger.info("Accessing URL:" + url);
         driver.navigate().to(url);
     }
 
