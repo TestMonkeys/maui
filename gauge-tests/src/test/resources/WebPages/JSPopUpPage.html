@@ -1,0 +1,59 @@
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Html PopUps</title>
+
+</head>
+
+<body class="page page-id-49 page-template-default">
+<div id="page" class="hfeed site">
+    <header id="masthead" class="site-header" role="banner">
+    </header><!-- #masthead -->
+
+    <div id="content" class="site-content container" style="min-height: 2050px;">
+        <div id="primary" class="content-area col-md-8">
+            <main id="main" class="site-main" role="main">
+
+                <article id="post-49" class="post-49 page type-page status-publish hentry">
+                    <header class="entry-header page-header">
+                        <h1 class="entry-title">Standard PopUps</h1>
+                    </header><!-- .entry-header -->
+                    <!-- .entry-content -->
+                    <div>
+                        <input id="alertButton" type="button" value="Alert" onclick="alert('alert text');">
+                    </div>
+                    <div>
+                        <input id="confirmationButton" type="button" value="Confirmation" onclick="
+                        if (confirm('Press a button!') == true) {
+                            document.getElementById('confirmationText').value = 'You pressed OK!';
+                        } else {
+                            document.getElementById('confirmationText').value = 'You pressed Cancel!';
+                        }
+                        ">
+                        <input type="text" id="confirmationText" value="none">
+                    </div>
+                    <div>
+                        <input id="promptButton" type="button" value="Prompt" onclick="
+                        var person = prompt('Please enter your name', 'Harry Potter');
+
+                        if (person == null || person == '') {
+                        document.getElementById('promptText').value = 'User cancelled the prompt.';
+                        } else {
+                        document.getElementById('promptText').value = 'Hello '+ person + '! How are you today?';
+                        }
+                        ">
+                        <input type="text" id="promptText" value="none">
+                    </div>
+                </article><!-- #post-## -->
+
+
+            </main><!-- #main -->
+        </div>
+    </div><!-- #content -->
+
+</div>
+
+
+</body>
+</html>

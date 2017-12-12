@@ -7,7 +7,7 @@ import org.testmonkeys.koshmar.pageobjects.elements.CheckBox;
 import org.testmonkeys.koshmar.pageobjects.elements.GroupComponent;
 import org.testmonkeys.koshmar.pageobjects.elements.RadioButtonGroup;
 
-@PageAccessor(name = "Registration Page", url = "")
+@PageAccessor(name = "Registration Page", url = "/HtmlElementsPage.html")
 public class RegistrationPage extends AbstractPage {
 
     @ElementAccessor(elementName = "Interactions", byName = "radio_4[]")
