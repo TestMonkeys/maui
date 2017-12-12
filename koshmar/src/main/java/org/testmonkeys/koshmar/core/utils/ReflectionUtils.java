@@ -7,20 +7,20 @@ import java.util.stream.Collectors;
 
 public class ReflectionUtils {
 
-    public List<Field> extractFieldsByPredicate(Class<?> type, Predicate<Field> predicate) {
+    public static List<Field> extractFieldsByPredicate(Class<?> type, Predicate<Field> predicate) {
         List<Field> fields = Arrays.asList(getAllFields(type));
         return fields.stream()
                 .filter(predicate)
                 .collect(Collectors.toList());
     }
 
-    private Field[] getAllFields(Class<?> clazz) {
+    private static Field[] getAllFields(Class<?> clazz) {
         List<Class<?>> classes = getAllSuperclasses(clazz);
         classes.add(clazz);
         return getAllFields(classes);
     }
 
-    private Field[] getAllFields(List<Class<?>> classes) {
+    private static Field[] getAllFields(List<Class<?>> classes) {
         Set<Field> fields = new HashSet<>();
 
         classes.forEach(c -> fields.addAll(Arrays.asList(c.getDeclaredFields())));
@@ -28,7 +28,7 @@ public class ReflectionUtils {
         return fields.toArray(new Field[fields.size()]);
     }
 
-    private List<Class<?>> getAllSuperclasses(Class<?> clazz) {
+    private static List<Class<?>> getAllSuperclasses(Class<?> clazz) {
         ArrayList<Class<?>> classes = new ArrayList<>();
 
         Class<?> superclass = clazz.getSuperclass();
