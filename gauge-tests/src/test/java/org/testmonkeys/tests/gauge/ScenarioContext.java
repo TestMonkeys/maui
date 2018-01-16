@@ -7,9 +7,6 @@ import org.testmonkeys.koshmar.core.factory.PageFactory;
 import org.testmonkeys.koshmar.core.factory.PageScanner;
 import org.testmonkeys.koshmar.core.page.Page;
 
-import java.io.File;
-import java.net.URL;
-
 public class ScenarioContext extends ExecutionContext {
 
     private static ScenarioContext instance = null;
@@ -20,17 +17,15 @@ public class ScenarioContext extends ExecutionContext {
     private PageScanner pageScanner;
 
     private String baseUrl;
+    private String pagesPackage;
 
     private Page currentPage;
 
     private ScenarioContext() {
         System.getenv().forEach(System::setProperty);
         browserType = System.getProperty("browser");
-        URL url = this.getClass().getClassLoader().getResource("WebPages");
-        if (url == null) {
-            throw new RuntimeException("Static pages folder not found");
-        }
-        this.baseUrl = new File("file:///" + url.getFile()).getAbsolutePath();
+        this.baseUrl = System.getProperty("base.url");
+        this.pagesPackage = System.getProperty("pageobjects.package");
     }
 
     synchronized public static ScenarioContext getInstance() {
@@ -48,12 +43,12 @@ public class ScenarioContext extends ExecutionContext {
 
     public void initBrowser() {
         this.browser = new Browser(DriverFactory.initDriver(browserType));
-        pageScanner = new PageScanner("org.testmonkeys.sut.demoqa");
+        pageScanner = new PageScanner(pagesPackage);
         this.pageFactory = new PageFactory(this.browser, pageScanner, baseUrl);
     }
 
     public void quitBrowser() {
-        this.browser.quit();
+        if (this.browser != null) this.browser.quit();
     }
 
     public Page getPage(String pageName) {

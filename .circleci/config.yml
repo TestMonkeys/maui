@@ -8,6 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8u141-browsers
+#      - image: mark5561/opencartimage:version1
       #- image: selenium/standalone-chrome:3.1.0
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -24,7 +25,7 @@ jobs:
 
     steps:
       - checkout
-
+      - setup_remote_docker
       - run:
           name: Install Firfox
           command: |
@@ -111,6 +112,21 @@ jobs:
             sudo cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
             phantomjs -v
 
+#      - run:
+#          name: Install Docker client
+#          command: |
+#            curl -L -o /tmp/docker-17.03.0-ce.tgz https://download.docker.com/linux/static/stable/x86_64/docker-17.03.0-ce.tgz
+#            tar -xz -C /tmp -f /tmp/docker-17.03.0-ce.tgz
+#            mv /tmp/docker/* /usr/bin
+
+      - run:
+          name: Start Docker container
+          command: docker run --name opc -p 41061:22 -p 41062:80 -d mark5561/opencartimage:version1
+
+      - run:
+          name: Restart web server
+          command: docker exec opc /opt/lampp/lampp restart
+
       - run: mvn install -DskipTests=true -DfailIfNoTests=false
 
       - run:
@@ -134,6 +150,13 @@ jobs:
 
       - store_test_results:
           path: ~/junit
+
+      - run:
+          name: Stop Docker container
+          command: |
+            docker stop opc
+            docker rm opc
+
       # run tests!
       #- run: mvn integration-test
 
