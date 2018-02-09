@@ -13,7 +13,6 @@
         <module>appdemoqa</module>
         <module>junit-tests</module>
         <module>koshmar</module>
-        <module>gauge-tests</module>
     </modules>
 
     <properties>

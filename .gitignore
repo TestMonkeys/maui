@@ -26,7 +26,5 @@ hs_err_pid*
 !gradle/wrapper/gradle-wrapper.jar
 local.properties
 
-gauge-tests/reports
-gauge-tests/logs
 */target
-.gauge/
+
