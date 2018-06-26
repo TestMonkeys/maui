@@ -7,18 +7,17 @@ import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.testmonkeys.maui.core.page.Page;
 import org.testmonkeys.maui.pageobjects.PageAccessor;
-import org.testmonkeys.koshmar.core.elements.Component;
-import org.testmonkeys.koshmar.core.page.Page;
-import org.testmonkeys.koshmar.pageobjects.ElementAccessor;
-import org.testmonkeys.koshmar.pageobjects.PageAccessor;
-import org.testmonkeys.koshmar.pageobjects.elements.AbstractComponent;
+import org.testmonkeys.maui.pageobjects.ElementAccessor;
+import org.testmonkeys.maui.pageobjects.elements.AbstractComponent;
 
+import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import static org.testmonkeys.koshmar.core.utils.ReflectionUtils.extractFieldsByPredicate;
+import static org.testmonkeys.maui.core.utils.ReflectionUtils.extractFieldsByPredicate;
 
 public class PageScanner {
 

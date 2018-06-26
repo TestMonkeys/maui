@@ -1,4 +1,4 @@
-package org.testmonkeys.koshmar.core.browser;
+package org.testmonkeys.maui.core.browser;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.FluentWait;
