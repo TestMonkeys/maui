@@ -5,6 +5,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.testmonkeys.maui.core.browser.popups.BrowserPopUps;
 import org.testmonkeys.maui.core.elements.location.LocatesElements;
 import org.testmonkeys.maui.core.elements.location.Locator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
