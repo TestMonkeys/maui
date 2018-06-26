@@ -1,8 +1,8 @@
 package org.testmonkeys.webpages.tests.popups;
 
 import org.junit.Test;
-import org.testmonkeys.koshmar.core.browser.popups.JsAlert;
-import org.testmonkeys.koshmar.core.browser.popups.NoPopUpFoundException;
+import org.testmonkeys.maui.core.browser.popups.JsAlert;
+import org.testmonkeys.maui.core.browser.popups.NoPopUpFoundException;
 import org.testmonkeys.webpages.pageObjects.JsPopUpPage;
 import org.testmonkeys.webpages.tests.AbstractPopUpPageTest;
 

@@ -1,7 +1,7 @@
 package org.testmonkeys.webpages.tests.htmlelement;
 
 import org.junit.Test;
-import org.testmonkeys.koshmar.pageobjects.elements.html.HtmlAttribute;
+import org.testmonkeys.maui.pageobjects.elements.html.HtmlAttribute;
 import org.testmonkeys.webpages.tests.AbstractHtmlElementPageTest;
 
 import java.util.List;

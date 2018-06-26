@@ -1,11 +1,11 @@
 package org.testmonkeys.sut.demoqa;
 
-import org.testmonkeys.koshmar.pageobjects.AbstractPage;
-import org.testmonkeys.koshmar.pageobjects.ElementAccessor;
-import org.testmonkeys.koshmar.pageobjects.PageAccessor;
-import org.testmonkeys.koshmar.pageobjects.elements.CheckBox;
-import org.testmonkeys.koshmar.pageobjects.elements.GroupComponent;
-import org.testmonkeys.koshmar.pageobjects.elements.RadioButtonGroup;
+import org.testmonkeys.maui.pageobjects.AbstractPage;
+import org.testmonkeys.maui.pageobjects.ElementAccessor;
+import org.testmonkeys.maui.pageobjects.PageAccessor;
+import org.testmonkeys.maui.pageobjects.elements.CheckBox;
+import org.testmonkeys.maui.pageobjects.elements.GroupComponent;
+import org.testmonkeys.maui.pageobjects.elements.RadioButtonGroup;
 
 @PageAccessor(name = "Registration Page", url = "")
 public class RegistrationPage extends AbstractPage {
