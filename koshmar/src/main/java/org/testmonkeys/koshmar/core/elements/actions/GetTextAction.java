@@ -16,4 +16,9 @@ public class GetTextAction extends AbstractAction<String> {
     protected String executeAction(WebElement webElement) {
         return webElement.getText();
     }
+
+    @Override
+    protected String describeAction() {
+        return "Getting text from " + component;
+    }
 }

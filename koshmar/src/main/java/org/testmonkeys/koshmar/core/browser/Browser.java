@@ -1,9 +1,6 @@
 package org.testmonkeys.koshmar.core.browser;
 
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +36,10 @@ public class Browser implements LocatesElements {
         //TODO maximize based on external parameter
         //this.driver.manage().window().maximize();
         dynamicWaiter = initWaitter(elementTimeout, 1, unit);
+    }
+
+    public byte[] takeScreenshot() {
+        return ((TakesScreenshot) this.driver).getScreenshotAs(OutputType.BYTES);
     }
 
     public FluentWait<WebDriver> getDynamicWaiter() {
@@ -98,5 +99,9 @@ public class Browser implements LocatesElements {
 
     public void waitForPageToLoad() {
         initWaitter(pageTimeout, step, unit).until(d -> ((JavascriptExecutor) d).executeScript("return document.readyState").equals("complete"));
+    }
+
+    public String getPageHtml() {
+        return driver.getPageSource();
     }
 }

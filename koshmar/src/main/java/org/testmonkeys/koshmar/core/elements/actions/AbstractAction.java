@@ -29,13 +29,18 @@ public abstract class AbstractAction<T> {
     public T execute() {
         ActionHooksContext.getContext().getBeforeHooks().forEach(hook -> hook.accept(component));
         logger.trace("Executing action upon " + component);
+        logger.info(describeAction());
         T actionResult = executeAction(component.find());
-        logger.info("Action result is = " + actionResult);
+        if (actionResult != null)
+            logger.info("Action result is '" + actionResult + "'");
+        logger.trace("Action result is = " + actionResult);
         ActionHooksContext.getContext().getAfterHooks().forEach(hook -> hook.accept(component));
         return actionResult;
     }
 
     protected abstract T executeAction(WebElement webElement);
 
-
+    protected String describeAction() {
+        return "Executing action upon " + component;
+    }
 }

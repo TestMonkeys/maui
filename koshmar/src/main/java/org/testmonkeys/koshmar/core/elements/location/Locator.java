@@ -20,6 +20,7 @@ public class Locator {
     public Locator(LocatorType locatorType, String locatorValue) {
         this.locatorType = locatorType;
         this.locatorValue = locatorValue;
+        this.position = -1;
     }
 
     public LocatorType getLocatorType() {

@@ -1,5 +1,6 @@
 package org.testmonkeys.koshmar.pageobjects.elements;
 
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,7 +72,7 @@ public abstract class AbstractComponent implements Component {
 
     @Override
     public WebElement find() {
-        if (isAlive(webElement)){
+        if (webElement != null && isAlive(webElement)) {
             return webElement;
         }
 
@@ -106,7 +107,14 @@ public abstract class AbstractComponent implements Component {
 
     @Override
     public WebElement findElement(Locator elementLocator) {
-        return find().findElement(elementLocator.getSeleniumLocator());
+        WebElement element = null;
+
+        try {
+            element = find().findElement(elementLocator.getSeleniumLocator());
+        } catch (StaleElementReferenceException e) {
+            element = find().findElement(elementLocator.getSeleniumLocator());
+        }
+        return element;
     }
 
     protected boolean isAlive(WebElement webElement) {
