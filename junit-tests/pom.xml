@@ -30,7 +30,7 @@
         </dependency>
         <dependency>
             <groupId>org.testmonkeys</groupId>
-            <artifactId>koshmar</artifactId>
+            <artifactId>maui-framework</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
