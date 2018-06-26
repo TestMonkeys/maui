@@ -16,4 +16,9 @@ public class ClickAction extends AbstractVoidAction {
     protected void executeVoidAction(WebElement webElement) {
         webElement.click();
     }
+
+    @Override
+    protected String describeAction() {
+        return "Performing Click on " + component;
+    }
 }

@@ -21,4 +21,9 @@ public class SendKeysAction extends AbstractVoidAction {
     protected void executeVoidAction(WebElement webElement) {
         webElement.sendKeys(keys);
     }
+
+    @Override
+    protected String describeAction() {
+        return "Sending text '" + keys + "' to " + component;
+    }
 }

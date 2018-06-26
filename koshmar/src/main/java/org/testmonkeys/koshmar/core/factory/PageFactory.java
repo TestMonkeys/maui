@@ -1,11 +1,14 @@
 package org.testmonkeys.koshmar.core.factory;
 
+import org.testmonkeys.koshmar.core.elements.Component;
 import org.testmonkeys.koshmar.pageobjects.PageAccessor;
 import org.testmonkeys.koshmar.core.browser.Browser;
 import org.testmonkeys.koshmar.core.page.Page;
 import org.testmonkeys.koshmar.core.utils.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -30,6 +33,19 @@ public class PageFactory {
     public Page createPage(String name) {
         Class<? extends Page> page = scanner.getPageByName(name);
         return createPage(page);
+    }
+
+    public <T extends Component> T getElement(Page page, String elementName) {
+        List<Field> fields = reflectionUtils.extractFieldsByPredicate(page.getClass(), field -> field.getName().equalsIgnoreCase(elementName));
+        if (fields.isEmpty())
+            return null;
+        fields.get(0).setAccessible(true);
+        try {
+            return (T) fields.get(0).get(page);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public <T extends Page> T createPage(Class<T> type) {

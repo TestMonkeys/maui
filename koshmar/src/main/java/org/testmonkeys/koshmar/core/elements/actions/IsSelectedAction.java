@@ -16,4 +16,9 @@ public class IsSelectedAction extends AbstractAction<Boolean> {
     protected Boolean executeAction(WebElement webElement) {
         return webElement.isSelected();
     }
+
+    @Override
+    protected String describeAction() {
+        return "Checking if element is selected for " + component;
+    }
 }
