@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testmonkeys.TestConfiguration;
-import org.testmonkeys.koshmar.core.browser.Browser;
+import org.testmonkeys.maui.core.browser.Browser;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = TestConfiguration.class)
