@@ -1,10 +1,10 @@
 package org.testmonkeys.sut.demoqa;
 
-import org.testmonkeys.koshmar.pageobjects.AbstractPage;
-import org.testmonkeys.koshmar.pageobjects.ElementAccessor;
-import org.testmonkeys.koshmar.pageobjects.PageAccessor;
-import org.testmonkeys.koshmar.pageobjects.elements.Button;
-import org.testmonkeys.koshmar.pageobjects.elements.GroupComponent;
+import org.testmonkeys.maui.pageobjects.AbstractPage;
+import org.testmonkeys.maui.pageobjects.ElementAccessor;
+import org.testmonkeys.maui.pageobjects.PageAccessor;
+import org.testmonkeys.maui.pageobjects.elements.Button;
+import org.testmonkeys.maui.pageobjects.elements.GroupComponent;
 
 import java.awt.*;
 

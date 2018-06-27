@@ -2,8 +2,8 @@ package org.testmonkeys.webpages.tests;
 
 import org.junit.Before;
 import org.springframework.core.io.ClassPathResource;
-import org.testmonkeys.koshmar.core.factory.PageFactory;
-import org.testmonkeys.koshmar.core.factory.PageScanner;
+import org.testmonkeys.maui.core.factory.PageFactory;
+import org.testmonkeys.maui.core.factory.PageScanner;
 import org.testmonkeys.sut.demoqa.RegistrationPage;
 
 import java.io.IOException;

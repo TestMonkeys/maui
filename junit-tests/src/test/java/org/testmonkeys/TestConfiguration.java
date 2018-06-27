@@ -5,8 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
-import org.testmonkeys.koshmar.core.browser.Browser;
-import org.testmonkeys.koshmar.core.browser.DriverFactory;
+import org.testmonkeys.maui.core.browser.Browser;
+import org.testmonkeys.DriverFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;

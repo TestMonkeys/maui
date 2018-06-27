@@ -1,11 +1,11 @@
 package org.testmonkeys.webpages.pageObjects;
 
-import org.testmonkeys.koshmar.core.page.Page;
-import org.testmonkeys.koshmar.pageobjects.AbstractPage;
-import org.testmonkeys.koshmar.pageobjects.ElementAccessor;
-import org.testmonkeys.koshmar.pageobjects.PageAccessor;
-import org.testmonkeys.koshmar.pageobjects.elements.GenericWebElement;
-import org.testmonkeys.koshmar.pageobjects.elements.Input;
+import org.testmonkeys.maui.core.page.Page;
+import org.testmonkeys.maui.pageobjects.AbstractPage;
+import org.testmonkeys.maui.pageobjects.ElementAccessor;
+import org.testmonkeys.maui.pageobjects.PageAccessor;
+import org.testmonkeys.maui.pageobjects.elements.GenericWebElement;
+import org.testmonkeys.maui.pageobjects.elements.Input;
 
 @PageAccessor(name="HtmlElements",url = "")
 public class HtmlElementsPageObject extends AbstractPage {
