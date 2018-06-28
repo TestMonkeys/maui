@@ -136,8 +136,7 @@ jobs:
           path: ~/junit
       # run tests!
       #- run: mvn integration-test
-  deploy:
-    steps:
+
       - run:
           command: |
              maui-framework/handle-mvn-release.sh
