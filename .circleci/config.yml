@@ -136,10 +136,10 @@ jobs:
           path: ~/junit
       # run tests!
       #- run: mvn integration-test
+# sudo chmod +x ~/repo/maui-framework/handle-mvn-release.sh
 
       - run:
           command: |
-            sudo chmod +x ~/repo/maui-framework/handle-mvn-release.sh
             cd ~/repo/maui-framework/
             ./handle-mvn-release.sh
 
