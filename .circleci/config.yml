@@ -138,6 +138,7 @@ jobs:
       #- run: mvn integration-test
   deploy:
     steps:
-      commands:
-        - maui-framework/handle-mvn-release.sh
+      - run:
+          command: |
+             maui-framework/handle-mvn-release.sh
 
