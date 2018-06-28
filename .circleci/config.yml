@@ -140,5 +140,6 @@ jobs:
       - run:
           command: |
             sudo chmod +x ~/repo/maui-framework/handle-mvn-release.sh
-            ~/repo/maui-framework/handle-mvn-release.sh
+            cd ~/repo/maui-framework/
+            ./handle-mvn-release.sh
 

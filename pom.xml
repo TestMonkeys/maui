@@ -10,9 +10,10 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
+        <module>maui-framework</module>
         <module>appdemoqa</module>
         <module>junit-tests</module>
-        <module>maui-framework</module>
+
     </modules>
 
 
