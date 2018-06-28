@@ -12,6 +12,13 @@
     <artifactId>maui-framework</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+
+    <distributionManagement>
+        <repository>
+            <id>bintray</id>
+            <url>https://api.bintray.com/maven/testmonkeys/maven-repo/maui-framework/;publish=1</url>
+        </repository>
+    </distributionManagement>
     <properties>
         <selenium.version>3.4.0</selenium.version>
         <reflections.version>0.9.10</reflections.version>
@@ -44,4 +51,13 @@
             </exclusions>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
