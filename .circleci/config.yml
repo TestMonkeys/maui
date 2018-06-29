@@ -1,4 +1,11 @@
-version: 2.0
+version: 2
+references:
+  workspace_root: &workspace_root
+    /tmp/workspace
+
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
 
 workflows:
   version: 2
@@ -21,8 +28,6 @@ workflows:
             - create-package
 
 
-
-version: 2
 jobs:
   build:
     docker:
@@ -257,10 +262,3 @@ jobs:
             export BINTRAY_URL="$MAUI_URL$MAVEN_RELEASE_VERSION"
             jfrog bt u "/tmp/workspace/release/jars/*" $BINTRAY_URL --user=$BINTRAY_USER --password=$BINTRAY_PASSWORD
 
-references:
-  workspace_root: &workspace_root
-    /tmp/workspace
-
-  attach_workspace: &attach_workspace
-    attach_workspace:
-      at: *workspace_root
