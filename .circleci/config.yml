@@ -26,10 +26,11 @@ workflows:
       - bintray-upload:
           requires:
             - create-package
-          tags:
-            only: /^v.*/
-          branches:
-            ignore: /.*/
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
 
 
 jobs:
