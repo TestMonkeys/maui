@@ -6,7 +6,7 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - deploy:
+      - packageRelease:
           requires:
             - build
           filters:
@@ -167,7 +167,7 @@ jobs:
       - store_artifacts:
                 path: ~/repo/junit-tests/target
 
-  deploy:
+  packageRelease:
     docker:
           # specify the version you desire here
           - image: circleci/openjdk:8u141-browsers
@@ -190,14 +190,18 @@ jobs:
             export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
             mvn versions:set -DnewVersion=$MAVEN_RELEASE_VERSION -f maui-framework/pom.xml
             mvn versions:commit
+
       - run:
           name: Building packages
           command: |
             mvn clean package -DskipTests=true
+            mkdir ~/repo/maui-framework/releasePackage
+            mv ~/repo/maui-framework/target/*.jar ~/repo/maui-framework/releasepackage/
 
       - run:
           name: Setting new development version as per tag
           command: |
+            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
             export MAVEN_SNAPSHOT='-SNAPSHOT'
             export DEVELOPMENT_VERSION="$MAVEN_RELEASE_VERSION$MAVEN_SNAPSHOT"
             touch ~/repo/maui-framework/target/devTag.out
