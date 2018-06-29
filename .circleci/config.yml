@@ -144,7 +144,7 @@ jobs:
           command: |
             touch ~/repo/junit-tests/target/mvnrelease.out
             touch ~/repo/junit-tests/target/circleTag.out
-            exho $CIRCLE_TAG > ~/repo/junit-tests/target/circleTag.out
+            echo $CIRCLE_TAG > ~/repo/junit-tests/target/circleTag.out
             export MAVEN_RELEASE_VERSION=echo $CIRCLE_TAG | cut -c 2-
             echo $MAVEN_RELEASE_VERSION > ~/repo/junit-tests/target/mvnrelease.out
 #            curl -fL https://getcli.jfrog.io | sh
