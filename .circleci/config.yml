@@ -58,7 +58,7 @@ jobs:
       - run:
           name: Install Firfox
           command: |
-            curl -fL https://getcli.jfrog.io | sudo -E bash
+            curl -fL https://getcli.jfrog.io | sudo -E bash -
 #            curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
 #            sudo apt-get install -y nodejs
 #            sudo npm install -g jfrog-cli-go
