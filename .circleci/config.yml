@@ -1,3 +1,5 @@
+version: 2.0
+
 workflows:
   version: 2
   build-release:
@@ -6,7 +8,7 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - packageRelease:
+      - create-package:
           requires:
             - build
           filters:
@@ -14,6 +16,10 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
+      - bintray-upload:
+          requires:
+            - create-package
+
 
 
 version: 2
@@ -167,7 +173,7 @@ jobs:
       - store_artifacts:
                 path: ~/repo/junit-tests/target
 
-  packageRelease:
+  create-package:
     docker:
           # specify the version you desire here
           - image: circleci/openjdk:8u141-browsers
@@ -196,7 +202,13 @@ jobs:
           command: |
             mvn clean package -DskipTests=true
             mkdir ~/repo/maui-framework/releasePackage
-            mv ~/repo/maui-framework/target/*.jar ~/repo/maui-framework/releasePackage/
+            mkdir -p /tmp/workspace/release
+            mv ~/repo/maui-framework/target/*.jar /tmp/workspace/release/jars
+
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - release/jars/
 
       - run:
           name: Setting new development version as per tag
@@ -222,3 +234,33 @@ jobs:
 
           #update version of maui-framework
   #mvn versions:set -DnewVersion=2.1.0-SNAPSHOT -f maui-framework/pom.xml
+  bintray-upload:
+    docker:
+            # specify the version you desire here
+      - image: circleci/openjdk:8u141-browsers
+
+    working_directory: ~/repo
+
+    steps:
+      - *attach_workspace
+
+      - run:
+          name: install Bintray CLI
+          command: |
+            curl -fL https://getcli.jfrog.io | sh
+
+      - run:
+          name: upload artifacts to bintray
+          command: |
+            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
+            export MAUI_URL='testmonkeys/maven/maui/'
+            export BINTRAY_URL="$MAUI_URL$MAVEN_RELEASE_VERSION"
+            jfrog bt u "/tmp/workspace/release/jars/*" $BINTRAY_URL --user=$BINTRAY_USER --password=$BINTRAY_PASSWORD
+
+references:
+  workspace_root: &workspace_root
+    /tmp/workspace
+
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
