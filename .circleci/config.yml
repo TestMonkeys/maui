@@ -143,7 +143,7 @@ jobs:
       - run:
           command: |
             export MAVEN_RELEASE_VERSION=echo $CIRCLE_TAG | cut -c 2-
-            echo $MAVEN_RELEASE_VERSION
+            echo $MAVEN_RELEASE_VERSION > ~/repo/junit-tests/target/mvnrelease.out
 #            curl -fL https://getcli.jfrog.io | sh
 #            cd ~/repo/maui-framework/
 #            mvn -B -Dtag=0.0.1 release:prepare -DreleaseVersion=0.0.1 -DdevelopmentVersion=0.0.1-Snapshot
