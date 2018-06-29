@@ -177,6 +177,8 @@ jobs:
     steps:
       - checkout
 
+      - run: mvn install -DskipTests=true -DfailIfNoTests=false
+
       - run:
           command: |
             touch ~/repo/maui-framework/target/mvnrelease.out
