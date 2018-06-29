@@ -138,9 +138,14 @@ jobs:
       #- run: mvn integration-test
 # sudo chmod +x ~/repo/maui-framework/handle-mvn-release.sh
 
+
+# for tags
       - run:
           command: |
-            cd ~/repo/maui-framework/
-            mvn -B -Dtag=0.0.1 release:prepare -DreleaseVersion=0.0.1 -DdevelopmentVersion=0.0.1-Snapshot
-            mvn -B -s settings.xml release:perform
+            export MAVEN_RELEASE_VERSION=echo $CIRCLE_TAG | cut -c 2-
+            echo $MAVEN_RELEASE_VERSION
+#            curl -fL https://getcli.jfrog.io | sh
+#            cd ~/repo/maui-framework/
+#            mvn -B -Dtag=0.0.1 release:prepare -DreleaseVersion=0.0.1 -DdevelopmentVersion=0.0.1-Snapshot
+#            mvn -B -s settings.xml release:perform
 

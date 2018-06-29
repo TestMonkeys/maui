@@ -12,13 +12,12 @@ import java.util.Optional;
  * would be to bind either to the name or with an xPath, binding to type and name.
  * Example usage binding by name:
  * <code>
- *
- * @ElementAccessor(elementName="marital status", byName = "radio_4")
+ * &#064;ElementAccessor(elementName="marital status", byName = "radio_4")
  * private RadioButtonGroup maritalStatus;
  * </code>
  * Example usage binding by xpath:
  * <code>
- * @ElementAccessor(elementName="marital status", byXPath = "/select[@type='radio' and @name='radio_4']")
+ * &#064;ElementAccessor(elementName="marital status", byXPath = "/select[@type='radio' and @name='radio_4']")
  * private RadioButtonGroup maritalStatus;
  * </code>
  */
