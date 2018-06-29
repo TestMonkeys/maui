@@ -1,8 +1,19 @@
 workflows:
   version: 2
-  un-tagged-build:
+  build-release:
     jobs:
-      - build
+      - build:
+        filters:
+          tags:
+            only: /.*/
+      - deploy:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
 
   tagged-build:
     jobs:
@@ -165,3 +176,23 @@ jobs:
       - store_artifacts:
                 path: ~/repo/junit-tests/target
 
+  deploy:
+    docker:
+          # specify the version you desire here
+          - image: circleci/openjdk:8u141-browsers
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run:
+          command: |
+            touch ~/repo/maui-framework/target/mvnrelease.out
+            touch ~/repo/maui-framework/target/circleTag.out
+            echo $CIRCLE_TAG > ~/repo/maui-framework/target/circleTag.out
+            export MAVEN_RELEASE_VERSION=echo $CIRCLE_TAG | cut -c 2-
+            echo $MAVEN_RELEASE_VERSION > ~/repo/maui-framework/target/mvnrelease.out
+
+      - store_artifacts:
+          path: ~/repo/maui-framework/target
