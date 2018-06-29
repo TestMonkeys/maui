@@ -196,7 +196,7 @@ jobs:
           command: |
             mvn clean package -DskipTests=true
             mkdir ~/repo/maui-framework/releasePackage
-            mv ~/repo/maui-framework/target/*.jar ~/repo/maui-framework/releasepackage/
+            mv ~/repo/maui-framework/target/*.jar ~/repo/maui-framework/releasePackage/
 
       - run:
           name: Setting new development version as per tag
