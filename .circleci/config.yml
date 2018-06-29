@@ -6,153 +6,6 @@ workflows:
           filters:
             tags:
               ignore: /^v.*/
-          docker:
-            # specify the version you desire here
-            - image: circleci/openjdk:8u141-browsers
-            #- image: selenium/standalone-chrome:3.1.0
-            # Specify service dependencies here if necessary
-            # CircleCI maintains a library of pre-built images
-            # documented at https://circleci.com/docs/2.0/circleci-images/
-            # - image: circleci/postgres:9.4
-
-          working_directory: ~/repo
-
-          environment:
-            # Customize the JVM maximum heap limit
-            MAVEN_OPTS: -Xmx3200m
-
-
-
-          steps:
-            - checkout
-
-            - run:
-                name: Install Firfox
-                command: |
-                  firefox -v | more
-                  which firefox
-
-
-      #      - restore_cache:
-      #                keys:
-      #                - v1-dependencies-{{ checksum "pom.xml" }}
-      #                # fallback to using the latest cache if no exact match is found
-      #                - v1-dependencies-
-      #
-      #      - run: mvn dependency:go-offline
-      #      # Download and cache dependencies
-      #      - restore_cache:
-      #          keys:
-      #          - v1-dependencies-{{ checksum "pom.xml" }}
-      #          # fallback to using the latest cache if no exact match is found
-      #          - v1-dependencies-
-      #      - run:
-      #          name: Install latest version of ChromeDriver Sample
-      #          command: |
-      #            sudo wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-      #            sudo sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-      #            sudo apt-get update
-      #            sudo apt-get install google-chrome-unstable
-      #           command google-chrome --version
-
-
-
-
-            - run:
-                name: chrome version
-                command: |
-                  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-                  sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-                  sudo apt-get update
-                  sudo apt-get install google-chrome-stable
-                  google-chrome --version
-
-
-            - run:
-                name: Install latest version of ChromeDriver
-                command: |
-                  sudo wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE
-                  lastVersion=$(cat LATEST_RELEASE)
-                  sudo wget "https://chromedriver.storage.googleapis.com/$url${lastVersion}/chromedriver_linux64.zip"
-                  sudo unzip chromedriver_linux64.zip
-                  sudo rm chromedriver_linux64.zip
-                  sudo mv chromedriver /usr/bin/
-                  sudo chmod 777 /usr/bin/chromedriver
-                  sudo apt-get install libxi6 libgconf-2-4
-                  sudo apt-get -y install xvfb gtk2-engines-pixbuf
-                  sudo apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable
-                  sudo apt-get install xvfb
-                  sudo apt-get -y install imagemagick x11-apps
-
-            - run:
-                name: Install gecko driver
-                command: |
-                  sudo wget https://github.com/mozilla/geckodriver/releases/download/v0.17.0/geckodriver-v0.17.0-linux64.tar.gz
-                  sudo tar -xvzf geckodriver*
-                  sudo chmod +x geckodriver
-                  sudo mv geckodriver /usr/bin/
-
-            - run:
-                name: Install fluxbox
-                command: sudo apt-get install fluxbox
-
-            - run:
-                name: start xvfb
-                command: |
-                  export DISPLAY=:99
-                  Xvfb :99 -ac -screen 1 1024x768x24 & fluxbox &
-                background: true
-
-            - run:
-                name: Install phantomJS
-                command: |
-                  wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
-                  bzip2 -d phantomjs-2.1.1-linux-x86_64.tar.bz2
-                  tar -xvf phantomjs-2.1.1-linux-x86_64.tar
-                  sudo cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
-                  phantomjs -v
-
-            - run: mvn install -DskipTests=true -DfailIfNoTests=false
-
-            - run:
-                name: UI Tests
-                command: mvn test -Dwebdriver.chrome.driver=/usr/bin/chromedriver -Dwebdriver.gecko.driver=/usr/bin/geckodriver
-
-            - save_cache:
-                paths:
-                  - ~/.m2
-                key: v1-dependencies-{{ checksum "pom.xml" }}
-
-
-            - run:
-                name: Save test results
-                command: |
-                   mkdir -p ~/junit/
-                   find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/junit/ \;
-                when: always
-
-            - store_test_results:
-                path: ~/junit
-            # run tests!
-            #- run: mvn integration-test
-      # sudo chmod +x ~/repo/maui-framework/handle-mvn-release.sh
-
-
-      # for tags
-            - run:
-                command: |
-                  touch ~/repo/junit-tests/target/mvnrelease.out
-                  touch ~/repo/junit-tests/target/circleTag.out
-                  echo $CIRCLE_TAG > ~/repo/junit-tests/target/circleTag.out
-                  export MAVEN_RELEASE_VERSION=echo $CIRCLE_TAG | cut -c 2-
-                  echo $MAVEN_RELEASE_VERSION > ~/repo/junit-tests/target/mvnrelease.out
-      #            curl -fL https://getcli.jfrog.io | sh
-      #            cd ~/repo/maui-framework/
-      #            mvn -B -Dtag=0.0.1 release:prepare -DreleaseVersion=0.0.1 -DdevelopmentVersion=0.0.1-Snapshot
-      #            mvn -B -s settings.xml release:perform
-
-            - store_artifacts:
-                      path: ~/repo/junit-tests/target
 
   tagged-build:
     jobs:
@@ -163,212 +16,157 @@ workflows:
           tags:
             only: /^v.*/
 
-          docker:
-            # specify the version you desire here
-            - image: circleci/openjdk:8u141-browsers
-            #- image: selenium/standalone-chrome:3.1.0
-            # Specify service dependencies here if necessary
-            # CircleCI maintains a library of pre-built images
-            # documented at https://circleci.com/docs/2.0/circleci-images/
-            # - image: circleci/postgres:9.4
-
-          working_directory: ~/repo
-
-          environment:
-            # Customize the JVM maximum heap limit
-            MAVEN_OPTS: -Xmx3200m
 
 
 
-          steps:
-            - checkout
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8u141-browsers
+      #- image: selenium/standalone-chrome:3.1.0
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/postgres:9.4
 
+    working_directory: ~/repo
 
-            - run: mvn install -DskipTests=true -DfailIfNoTests=false
-
-
-
-            - run:
-                name: Save test results
-                command: |
-                   mkdir -p ~/junit/
-
-                when: always
-
-            - store_test_results:
-                path: ~/junit
-            # run tests!
-            #- run: mvn integration-test
-      # sudo chmod +x ~/repo/maui-framework/handle-mvn-release.sh
-
-
-      # for tags
-            - run:
-                command: |
-                  touch ~/repo/junit-tests/target/mvnrelease.out
-                  touch ~/repo/junit-tests/target/circleTag.out
-                  echo $CIRCLE_TAG > ~/repo/junit-tests/target/circleTag.out
-                  export MAVEN_RELEASE_VERSION=echo $CIRCLE_TAG | cut -c 2-
-                  echo $MAVEN_RELEASE_VERSION > ~/repo/junit-tests/target/mvnrelease.out
-        #            curl -fL https://getcli.jfrog.io | sh
-        #            cd ~/repo/maui-framework/
-        #            mvn -B -Dtag=0.0.1 release:prepare -DreleaseVersion=0.0.1 -DdevelopmentVersion=0.0.1-Snapshot
-        #            mvn -B -s settings.xml release:perform
-
-              - store_artifacts:
-                        path: ~/repo/junit-tests/target
+    environment:
+      # Customize the JVM maximum heap limit
+      MAVEN_OPTS: -Xmx3200m
 
 
 
+    steps:
+      - checkout
 
-#version: 2
-#jobs:
-#  build:
-#    docker:
-#      # specify the version you desire here
-#      - image: circleci/openjdk:8u141-browsers
-#      #- image: selenium/standalone-chrome:3.1.0
-#      # Specify service dependencies here if necessary
-#      # CircleCI maintains a library of pre-built images
-#      # documented at https://circleci.com/docs/2.0/circleci-images/
-#      # - image: circleci/postgres:9.4
+      - run:
+          name: Install Firfox
+          command: |
+            firefox -v | more
+            which firefox
+
+
+#      - restore_cache:
+#                keys:
+#                - v1-dependencies-{{ checksum "pom.xml" }}
+#                # fallback to using the latest cache if no exact match is found
+#                - v1-dependencies-
 #
-#    working_directory: ~/repo
-#
-#    environment:
-#      # Customize the JVM maximum heap limit
-#      MAVEN_OPTS: -Xmx3200m
-#
-#
-#
-#    steps:
-#      - checkout
-#
+#      - run: mvn dependency:go-offline
+#      # Download and cache dependencies
+#      - restore_cache:
+#          keys:
+#          - v1-dependencies-{{ checksum "pom.xml" }}
+#          # fallback to using the latest cache if no exact match is found
+#          - v1-dependencies-
 #      - run:
-#          name: Install Firfox
+#          name: Install latest version of ChromeDriver Sample
 #          command: |
-#            firefox -v | more
-#            which firefox
-#
-#
-##      - restore_cache:
-##                keys:
-##                - v1-dependencies-{{ checksum "pom.xml" }}
-##                # fallback to using the latest cache if no exact match is found
-##                - v1-dependencies-
-##
-##      - run: mvn dependency:go-offline
-##      # Download and cache dependencies
-##      - restore_cache:
-##          keys:
-##          - v1-dependencies-{{ checksum "pom.xml" }}
-##          # fallback to using the latest cache if no exact match is found
-##          - v1-dependencies-
-##      - run:
-##          name: Install latest version of ChromeDriver Sample
-##          command: |
-##            sudo wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-##            sudo sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-##            sudo apt-get update
-##            sudo apt-get install google-chrome-unstable
-##           command google-chrome --version
-#
-#
-#
-#
-#      - run:
-#          name: chrome version
-#          command: |
-#            wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-#            sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+#            sudo wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+#            sudo sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
 #            sudo apt-get update
-#            sudo apt-get install google-chrome-stable
-#            google-chrome --version
-#
-#
-#      - run:
-#          name: Install latest version of ChromeDriver
-#          command: |
-#            sudo wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE
-#            lastVersion=$(cat LATEST_RELEASE)
-#            sudo wget "https://chromedriver.storage.googleapis.com/$url${lastVersion}/chromedriver_linux64.zip"
-#            sudo unzip chromedriver_linux64.zip
-#            sudo rm chromedriver_linux64.zip
-#            sudo mv chromedriver /usr/bin/
-#            sudo chmod 777 /usr/bin/chromedriver
-#            sudo apt-get install libxi6 libgconf-2-4
-#            sudo apt-get -y install xvfb gtk2-engines-pixbuf
-#            sudo apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable
-#            sudo apt-get install xvfb
-#            sudo apt-get -y install imagemagick x11-apps
-#
-#      - run:
-#          name: Install gecko driver
-#          command: |
-#            sudo wget https://github.com/mozilla/geckodriver/releases/download/v0.17.0/geckodriver-v0.17.0-linux64.tar.gz
-#            sudo tar -xvzf geckodriver*
-#            sudo chmod +x geckodriver
-#            sudo mv geckodriver /usr/bin/
-#
-#      - run:
-#          name: Install fluxbox
-#          command: sudo apt-get install fluxbox
-#
-#      - run:
-#          name: start xvfb
-#          command: |
-#            export DISPLAY=:99
-#            Xvfb :99 -ac -screen 1 1024x768x24 & fluxbox &
-#          background: true
-#
-#      - run:
-#          name: Install phantomJS
-#          command: |
-#            wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
-#            bzip2 -d phantomjs-2.1.1-linux-x86_64.tar.bz2
-#            tar -xvf phantomjs-2.1.1-linux-x86_64.tar
-#            sudo cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
-#            phantomjs -v
-#
-#      - run: mvn install -DskipTests=true -DfailIfNoTests=false
-#
-#      - run:
-#          name: UI Tests
-#          command: mvn test -Dwebdriver.chrome.driver=/usr/bin/chromedriver -Dwebdriver.gecko.driver=/usr/bin/geckodriver
-#
-#      - save_cache:
-#          paths:
-#            - ~/.m2
-#          key: v1-dependencies-{{ checksum "pom.xml" }}
-#
-#
-#      - run:
-#          name: Save test results
-#          command: |
-#             mkdir -p ~/junit/
-#             find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/junit/ \;
-#          when: always
-#
-#      - store_test_results:
-#          path: ~/junit
-#      # run tests!
-#      #- run: mvn integration-test
-## sudo chmod +x ~/repo/maui-framework/handle-mvn-release.sh
-#
-#
-## for tags
-#      - run:
-#          command: |
-#            touch ~/repo/junit-tests/target/mvnrelease.out
-#            touch ~/repo/junit-tests/target/circleTag.out
-#            echo $CIRCLE_TAG > ~/repo/junit-tests/target/circleTag.out
-#            export MAVEN_RELEASE_VERSION=echo $CIRCLE_TAG | cut -c 2-
-#            echo $MAVEN_RELEASE_VERSION > ~/repo/junit-tests/target/mvnrelease.out
-##            curl -fL https://getcli.jfrog.io | sh
-##            cd ~/repo/maui-framework/
-##            mvn -B -Dtag=0.0.1 release:prepare -DreleaseVersion=0.0.1 -DdevelopmentVersion=0.0.1-Snapshot
-##            mvn -B -s settings.xml release:perform
-#
-#      - store_artifacts:
-#                path: ~/repo/junit-tests/target
-#
+#            sudo apt-get install google-chrome-unstable
+#           command google-chrome --version
+
+
+
+
+      - run:
+          name: chrome version
+          command: |
+            wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+            sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+            sudo apt-get update
+            sudo apt-get install google-chrome-stable
+            google-chrome --version
+
+
+      - run:
+          name: Install latest version of ChromeDriver
+          command: |
+            sudo wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE
+            lastVersion=$(cat LATEST_RELEASE)
+            sudo wget "https://chromedriver.storage.googleapis.com/$url${lastVersion}/chromedriver_linux64.zip"
+            sudo unzip chromedriver_linux64.zip
+            sudo rm chromedriver_linux64.zip
+            sudo mv chromedriver /usr/bin/
+            sudo chmod 777 /usr/bin/chromedriver
+            sudo apt-get install libxi6 libgconf-2-4
+            sudo apt-get -y install xvfb gtk2-engines-pixbuf
+            sudo apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable
+            sudo apt-get install xvfb
+            sudo apt-get -y install imagemagick x11-apps
+
+      - run:
+          name: Install gecko driver
+          command: |
+            sudo wget https://github.com/mozilla/geckodriver/releases/download/v0.17.0/geckodriver-v0.17.0-linux64.tar.gz
+            sudo tar -xvzf geckodriver*
+            sudo chmod +x geckodriver
+            sudo mv geckodriver /usr/bin/
+
+      - run:
+          name: Install fluxbox
+          command: sudo apt-get install fluxbox
+
+      - run:
+          name: start xvfb
+          command: |
+            export DISPLAY=:99
+            Xvfb :99 -ac -screen 1 1024x768x24 & fluxbox &
+          background: true
+
+      - run:
+          name: Install phantomJS
+          command: |
+            wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
+            bzip2 -d phantomjs-2.1.1-linux-x86_64.tar.bz2
+            tar -xvf phantomjs-2.1.1-linux-x86_64.tar
+            sudo cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
+            phantomjs -v
+
+      - run: mvn install -DskipTests=true -DfailIfNoTests=false
+
+      - run:
+          name: UI Tests
+          command: mvn test -Dwebdriver.chrome.driver=/usr/bin/chromedriver -Dwebdriver.gecko.driver=/usr/bin/geckodriver
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+
+
+      - run:
+          name: Save test results
+          command: |
+             mkdir -p ~/junit/
+             find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/junit/ \;
+          when: always
+
+      - store_test_results:
+          path: ~/junit
+      # run tests!
+      #- run: mvn integration-test
+# sudo chmod +x ~/repo/maui-framework/handle-mvn-release.sh
+
+
+# for tags
+      - run:
+          command: |
+            touch ~/repo/junit-tests/target/mvnrelease.out
+            touch ~/repo/junit-tests/target/circleTag.out
+            echo $CIRCLE_TAG > ~/repo/junit-tests/target/circleTag.out
+            export MAVEN_RELEASE_VERSION=echo $CIRCLE_TAG | cut -c 2-
+            echo $MAVEN_RELEASE_VERSION > ~/repo/junit-tests/target/mvnrelease.out
+#            curl -fL https://getcli.jfrog.io | sh
+#            cd ~/repo/maui-framework/
+#            mvn -B -Dtag=0.0.1 release:prepare -DreleaseVersion=0.0.1 -DdevelopmentVersion=0.0.1-Snapshot
+#            mvn -B -s settings.xml release:perform
+
+      - store_artifacts:
+                path: ~/repo/junit-tests/target
+
