@@ -199,7 +199,7 @@ jobs:
           name: Setting new development version as per tag
           command: |
             export MAVEN_SNAPSHOT='-SNAPSHOT'
-            export DEVELOPMENT_VERSION=$MAVEN_RELEASE_VERSION$MAVEN_SNAPSHOT
+            export DEVELOPMENT_VERSION="$MAVEN_RELEASE_VERSION$MAVEN_SNAPSHOT"
             touch ~/repo/maui-framework/target/devTag.out
                         echo $DEVELOPMENT_VERSION > ~/repo/maui-framework/target/devTag.out
             mvn versions:set -DnewVersion=$DEVELOPMENT_VERSION -f maui-framework/pom.xml
