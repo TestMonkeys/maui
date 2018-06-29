@@ -2,19 +2,14 @@ workflows:
   version: 2
   un-tagged-build:
     jobs:
-      - build:
-          filters:
-            tags:
-              ignore: /^v.*/
+      - build
 
   tagged-build:
     jobs:
       - build:
           filters:
-            branches:
-              ignore: /.*/
-          tags:
-            only: /^v.*/
+            tags:
+              only: /^v.*/
 
 
 
