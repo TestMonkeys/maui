@@ -17,7 +17,6 @@
         <dependency>
             <groupId>org.testmonkeys</groupId>
             <artifactId>maui-framework</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
