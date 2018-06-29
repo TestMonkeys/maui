@@ -160,63 +160,63 @@ workflows:
           filters:
             branches:
               ignore: /.*/
-	    tags:
-	      only: /^v.*/
+          tags:
+            only: /^v.*/
 
-        docker:
-          # specify the version you desire here
-          - image: circleci/openjdk:8u141-browsers
-          #- image: selenium/standalone-chrome:3.1.0
-          # Specify service dependencies here if necessary
-          # CircleCI maintains a library of pre-built images
-          # documented at https://circleci.com/docs/2.0/circleci-images/
-          # - image: circleci/postgres:9.4
+          docker:
+            # specify the version you desire here
+            - image: circleci/openjdk:8u141-browsers
+            #- image: selenium/standalone-chrome:3.1.0
+            # Specify service dependencies here if necessary
+            # CircleCI maintains a library of pre-built images
+            # documented at https://circleci.com/docs/2.0/circleci-images/
+            # - image: circleci/postgres:9.4
 
-        working_directory: ~/repo
+          working_directory: ~/repo
 
-        environment:
-          # Customize the JVM maximum heap limit
-          MAVEN_OPTS: -Xmx3200m
-
-
-
-        steps:
-          - checkout
-
-
-          - run: mvn install -DskipTests=true -DfailIfNoTests=false
+          environment:
+            # Customize the JVM maximum heap limit
+            MAVEN_OPTS: -Xmx3200m
 
 
 
-          - run:
-              name: Save test results
-              command: |
-                 mkdir -p ~/junit/
-
-              when: always
-
-          - store_test_results:
-              path: ~/junit
-          # run tests!
-          #- run: mvn integration-test
-    # sudo chmod +x ~/repo/maui-framework/handle-mvn-release.sh
+          steps:
+            - checkout
 
 
-    # for tags
-          - run:
-              command: |
-                touch ~/repo/junit-tests/target/mvnrelease.out
-                touch ~/repo/junit-tests/target/circleTag.out
-                echo $CIRCLE_TAG > ~/repo/junit-tests/target/circleTag.out
-                export MAVEN_RELEASE_VERSION=echo $CIRCLE_TAG | cut -c 2-
-                echo $MAVEN_RELEASE_VERSION > ~/repo/junit-tests/target/mvnrelease.out
-      #            curl -fL https://getcli.jfrog.io | sh
-      #            cd ~/repo/maui-framework/
-      #            mvn -B -Dtag=0.0.1 release:prepare -DreleaseVersion=0.0.1 -DdevelopmentVersion=0.0.1-Snapshot
-      #            mvn -B -s settings.xml release:perform
+            - run: mvn install -DskipTests=true -DfailIfNoTests=false
 
-            - store_artifacts:
-                      path: ~/repo/junit-tests/target
+
+
+            - run:
+                name: Save test results
+                command: |
+                   mkdir -p ~/junit/
+
+                when: always
+
+            - store_test_results:
+                path: ~/junit
+            # run tests!
+            #- run: mvn integration-test
+      # sudo chmod +x ~/repo/maui-framework/handle-mvn-release.sh
+
+
+      # for tags
+            - run:
+                command: |
+                  touch ~/repo/junit-tests/target/mvnrelease.out
+                  touch ~/repo/junit-tests/target/circleTag.out
+                  echo $CIRCLE_TAG > ~/repo/junit-tests/target/circleTag.out
+                  export MAVEN_RELEASE_VERSION=echo $CIRCLE_TAG | cut -c 2-
+                  echo $MAVEN_RELEASE_VERSION > ~/repo/junit-tests/target/mvnrelease.out
+        #            curl -fL https://getcli.jfrog.io | sh
+        #            cd ~/repo/maui-framework/
+        #            mvn -B -Dtag=0.0.1 release:prepare -DreleaseVersion=0.0.1 -DdevelopmentVersion=0.0.1-Snapshot
+        #            mvn -B -s settings.xml release:perform
+
+              - store_artifacts:
+                        path: ~/repo/junit-tests/target
 
 
 
