@@ -176,9 +176,6 @@ jobs:
 
     steps:
       - checkout
-
-      - run: mvn install -DskipTests=true -DfailIfNoTests=false
-
       - run:
           command: |
             touch ~/repo/maui-framework/target/mvnrelease.out
@@ -187,5 +184,37 @@ jobs:
             export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
             echo $MAVEN_RELEASE_VERSION > ~/repo/maui-framework/target/mvnrelease.out
 
+      - run:
+          name: Updating Maui-Framework version as per tag
+          command: |
+            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
+            mvn versions:set -DnewVersion=$MAVEN_RELEASE_VERSION -f maui-framework/pom.xml
+            mvn versions:commit
+      - run:
+          name: Building packages
+          command: |
+            mvn clean package -DskipTests=true
+
+      - run:
+          name: Setting new development version as per tag
+          command: |
+            export MAVEN_SNAPSHOT='-SNAPSHOT'
+            export DEVELOPMENT_VERSION=$MAVEN_RELEASE_VERSION$MAVEN_SNAPSHOT
+            touch ~/repo/maui-framework/target/devTag.out
+                        echo $DEVELOPMENT_VERSION > ~/repo/maui-framework/target/devTag.out
+            mvn versions:set -DnewVersion=$DEVELOPMENT_VERSION -f maui-framework/pom.xml
+            mvn versions:commit
+
+#      - run:
+#          command: |
+#            touch ~/repo/maui-framework/target/mvnrelease.out
+#            touch ~/repo/maui-framework/target/circleTag.out
+#            echo $CIRCLE_TAG > ~/repo/maui-framework/target/circleTag.out
+#            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
+#            echo $MAVEN_RELEASE_VERSION > ~/repo/maui-framework/target/mvnrelease.out
+
       - store_artifacts:
           path: ~/repo/maui-framework/target
+
+          #update version of maui-framework
+  #mvn versions:set -DnewVersion=2.1.0-SNAPSHOT -f maui-framework/pom.xml
