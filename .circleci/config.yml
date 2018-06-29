@@ -176,13 +176,13 @@ jobs:
 
     steps:
       - checkout
-      - run:
-          command: |
-            touch ~/repo/maui-framework/target/mvnrelease.out
-            touch ~/repo/maui-framework/target/circleTag.out
-            echo $CIRCLE_TAG > ~/repo/maui-framework/target/circleTag.out
-            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-            echo $MAVEN_RELEASE_VERSION > ~/repo/maui-framework/target/mvnrelease.out
+#      - run:
+#          command: |
+#            touch ~/repo/maui-framework/target/mvnrelease.out
+#            touch ~/repo/maui-framework/target/circleTag.out
+#            echo $CIRCLE_TAG > ~/repo/maui-framework/target/circleTag.out
+#            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
+#            echo $MAVEN_RELEASE_VERSION > ~/repo/maui-framework/target/mvnrelease.out
 
       - run:
           name: Updating Maui-Framework version as per tag
