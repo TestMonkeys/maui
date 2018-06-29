@@ -212,8 +212,8 @@ jobs:
           command: |
             mvn clean package -DskipTests=true
             mkdir ~/repo/maui-framework/releasePackage
-            mkdir -p /tmp/workspace/release
-            mv ~/repo/maui-framework/target/*.jar /tmp/workspace/release/jars
+            mkdir -p /tmp/workspace/release/jars
+            mv ~/repo/maui-framework/target/*.jar /tmp/workspace/release/jars/
 
       - persist_to_workspace:
           root: *workspace_root
