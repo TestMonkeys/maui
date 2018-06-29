@@ -122,8 +122,6 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
-      - store_artifacts:
-          path: ~/repo/junit-tests/target
 
       - run:
           name: Save test results
@@ -151,4 +149,7 @@ jobs:
 #            cd ~/repo/maui-framework/
 #            mvn -B -Dtag=0.0.1 release:prepare -DreleaseVersion=0.0.1 -DdevelopmentVersion=0.0.1-Snapshot
 #            mvn -B -s settings.xml release:perform
+
+      - store_artifacts:
+                path: ~/repo/junit-tests/target
 
