@@ -3,9 +3,9 @@ workflows:
   build-release:
     jobs:
       - build:
-        filters:
-          tags:
-            only: /.*/
+          filters:
+            tags:
+              only: /.*/
       - deploy:
           requires:
             - build
