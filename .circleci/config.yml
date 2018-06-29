@@ -59,7 +59,7 @@ jobs:
           name: Install Firfox
           command: |
             sudo curl -fL https://getcli.jfrog.io | sh
-            jrog bt
+            jfrog bt
             firefox -v | more
             which firefox
 
