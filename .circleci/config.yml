@@ -280,6 +280,6 @@ jobs:
             export PATH="$MAUI_PACKAGE$MAVEN_RELEASE_VERSION$SEPARATOR"
             /tmp/jfrog bt config --user=$BINTRAY_USER --key=$BINTRAY_API_KEY --licenses="Licence"
             /tmp/jfrog bt u "/tmp/workspace/release/jars/*" $BINTRAY_URL $PATH
-            /tmp/jfrog bt gsv $BINTRAY_URL --pasphrase=$BINTRAY_GPG_PWD
+            /tmp/jfrog bt gsv $BINTRAY_URL --passphrase=$BINTRAY_GPG_PWD
             /tmp/jfrog bt vp $BINTRAY_URL
 
