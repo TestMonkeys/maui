@@ -203,20 +203,21 @@ jobs:
 #            echo $MAVEN_RELEASE_VERSION > ~/repo/maui-framework/target/mvnrelease.out
 
       - run:
-          name: Updating Maui-Framework version as per tag
+          name: Updating Maui version as per tag
           command: |
             export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-            mvn versions:set -DnewVersion=$MAVEN_RELEASE_VERSION -f maui-framework/pom.xml
+            mvn versions:set -DnewVersion=$MAVEN_RELEASE_VERSION -f maui/pom.xml
             mvn versions:commit
 
       - run:
           name: Building packages
           command: |
+            cd maui
             mvn clean package -DskipTests=true
-            mkdir ~/repo/maui-framework/releasePackage
+            mkdir ~/repo/maui/releasePackage
             mkdir -p /tmp/workspace/release/jars
-            mv ~/repo/maui-framework/target/*.jar /tmp/workspace/release/jars/
-            cp ~/repo/maui-framework/pom.xml /tmp/workspace/release/jars/pom.xml
+            mv ~/repo/maui/target/*.jar /tmp/workspace/release/jars/
+            cp ~/repo/maui/pom.xml /tmp/workspace/release/jars/pom.xml
 
       - persist_to_workspace:
           root: *workspace_root
@@ -229,9 +230,9 @@ jobs:
             export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
             export MAVEN_SNAPSHOT='-SNAPSHOT'
             export DEVELOPMENT_VERSION="$MAVEN_RELEASE_VERSION$MAVEN_SNAPSHOT"
-            touch ~/repo/maui-framework/target/devTag.out
-                        echo $DEVELOPMENT_VERSION > ~/repo/maui-framework/target/devTag.out
-            mvn versions:set -DnewVersion=$DEVELOPMENT_VERSION -f maui-framework/pom.xml
+            touch ~/repo/maui/target/devTag.out
+                        echo $DEVELOPMENT_VERSION > ~/repo/maui/target/devTag.out
+            mvn versions:set -DnewVersion=$DEVELOPMENT_VERSION -f maui/pom.xml
             mvn versions:commit
 
 #      - run:
@@ -243,7 +244,7 @@ jobs:
 #            echo $MAVEN_RELEASE_VERSION > ~/repo/maui-framework/target/mvnrelease.out
 
       - store_artifacts:
-          path: ~/repo/maui-framework/target
+          path: ~/repo/maui/target
 
           #update version of maui-framework
   #mvn versions:set -DnewVersion=2.1.0-SNAPSHOT -f maui-framework/pom.xml
@@ -267,7 +268,7 @@ jobs:
           name: upload artifacts to bintray
           command: |
             export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-            export MAUI_URL='testmonkeys/maven/Maui-framework/'
+            export MAUI_URL='testmonkeys/maven/maui/'
             export BINTRAY_URL="$MAUI_URL$MAVEN_RELEASE_VERSION"
             export SEPARATOR='/'
             export PATH="$MAVEN_RELEASE_VERSION$SEPARATOR"

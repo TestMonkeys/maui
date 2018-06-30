@@ -26,8 +26,8 @@
         </dependency>
         <dependency>
             <groupId>org.testmonkeys</groupId>
-            <artifactId>maui-framework</artifactId>
-            <version>0.0.6-SNAPSHOT</version>
+            <artifactId>maui</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
         <dependency>
