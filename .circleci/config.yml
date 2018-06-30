@@ -58,8 +58,6 @@ jobs:
       - run:
           name: Install Firfox
           command: |
-            curl -fL https://getcli.jfrog.io | sudo -E bash -
-            jfrog bt
             firefox -v | more
             which firefox
 
@@ -261,7 +259,8 @@ jobs:
       - run:
           name: install Bintray CLI
           command: |
-            curl -fL https://getcli.jfrog.io | sh
+            cd /tmp
+            sudo curl -fL https://getcli.jfrog.io | sh
 
       - run:
           name: upload artifacts to bintray
@@ -269,5 +268,5 @@ jobs:
             export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
             export MAUI_URL='testmonkeys/maven/maui/'
             export BINTRAY_URL="$MAUI_URL$MAVEN_RELEASE_VERSION"
-            jfrog bt u "/tmp/workspace/release/jars/*" $BINTRAY_URL --user=$BINTRAY_USER --password=$BINTRAY_PASSWORD
+            /tmp/jfrog bt u "/tmp/workspace/release/jars/*" $BINTRAY_URL --user=$BINTRAY_USER --password=$BINTRAY_API_KEY
 
