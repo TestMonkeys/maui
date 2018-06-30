@@ -216,7 +216,7 @@ jobs:
             mkdir ~/repo/maui-framework/releasePackage
             mkdir -p /tmp/workspace/release/jars
             mv ~/repo/maui-framework/target/*.jar /tmp/workspace/release/jars/
-            mv ~/repo/maui-framework/pom.xml /tmp/workspace/release/jars/
+            cp ~/repo/maui-framework/pom.xml /tmp/workspace/release/jars/pom.xml
 
       - persist_to_workspace:
           root: *workspace_root
