@@ -270,9 +270,9 @@ jobs:
             export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
             export MAUI_URL='testmonkeys/maven/maui/'
             export MAUI_PACKAGE='org/testmonkeys/maui/'
-            export BINTRAY_URL="$MAUI_PACKAGE$MAUI_URL$MAVEN_RELEASE_VERSION"
+            export BINTRAY_URL="$MAUI_URL$MAVEN_RELEASE_VERSION"
             export SEPARATOR='/'
-            export PATH="$MAVEN_RELEASE_VERSION$SEPARATOR"
+            export PATH="$MAUI_PACKAGE$MAVEN_RELEASE_VERSION$SEPARATOR"
             /tmp/jfrog bt config --user=$BINTRAY_USER --key=$BINTRAY_API_KEY --licenses="Licence"
             /tmp/jfrog bt u "/tmp/workspace/release/jars/*" $BINTRAY_URL $PATH
             /tmp/jfrog bt vp $BINTRAY_URL
