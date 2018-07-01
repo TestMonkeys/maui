@@ -316,7 +316,7 @@ jobs:
 
       - run:
           name: UI Tests
-          command: mvn test -Dbrowser=phantomjs -Dtest=*,!org.testmonkeys.webpages.tests.popups.* -DfailIfNoTests=false
+          command: mvn test -Dbrowser=phantomjs -Dtest=!org.testmonkeys.webpages.tests.popups.* -DfailIfNoTests=false
 
       - save_cache:
           paths:
