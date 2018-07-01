@@ -24,12 +24,16 @@ workflows:
           filters:
             tags:
               only: /^v.*/
+            branches:
+              ignore: /.*/
       - test-chrome:
           requires:
             - build
           filters:
             tags:
               only: /^v.*/
+            branches:
+              ignore: /.*/
       - create-package:
           requires:
             - test-chrome
@@ -262,7 +266,7 @@ jobs:
 
       - run:
           name: UI Tests
-          command: mvn test -Dbrowser=phantomjs -Djunit-tests.test.excludes="**/popups/*.java"
+          command: mvn test -Dbrowser=phantomjs -Dtest=!org.testmonkeys.webpages.tests.popups.*
 
       - save_cache:
           paths:
