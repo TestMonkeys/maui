@@ -192,14 +192,14 @@ jobs:
               - source-v1-{{ .Branch }}-
               - source-v1-
 
+      - checkout
+
       - restore_cache:
             keys:
               # when lock file changes, use increasingly general patterns to restore cache
               - maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
               - maven-repo-v1-{{ .Branch }}-
               - maven-repo-v1-
-
-      - checkout
 
       - run:
           name: Install latest Chrome browser
@@ -294,14 +294,14 @@ jobs:
               - source-v1-{{ .Branch }}-
               - source-v1-
 
+      - checkout
+
       - restore_cache:
             keys:
               # when lock file changes, use increasingly general patterns to restore cache
               - maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
               - maven-repo-v1-{{ .Branch }}-
               - maven-repo-v1-
-
-      - checkout
 
       - run:
           name: Install phantomJS
@@ -316,7 +316,7 @@ jobs:
 
       - run:
           name: UI Tests
-          command: mvn test -Dbrowser=phantomjs -DexcludesFile="org/testmonkeys/webpages/tests/popups/*.java"
+          command: mvn test -Dbrowser=phantomjs -Dtest=!org.testmonkeys.webpages.tests.popups.*
 
       - save_cache:
           paths:
@@ -365,6 +365,8 @@ jobs:
               - source-v1-{{ .Branch }}-
               - source-v1-
 
+      - checkout
+
       - restore_cache:
             keys:
               # when lock file changes, use increasingly general patterns to restore cache
@@ -372,7 +374,6 @@ jobs:
               - maven-repo-v1-{{ .Branch }}-
               - maven-repo-v1-
 
-      - checkout
 
       - run:
           name: Updating Maui version as per tag
