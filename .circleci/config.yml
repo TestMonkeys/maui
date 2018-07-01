@@ -258,20 +258,11 @@ jobs:
             sudo cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
             phantomjs -v
 
-      - run:
-          name: Install fluxbox
-          command: sudo apt-get install fluxbox
 
-      - run:
-          name: start xvfb
-          command: |
-            export DISPLAY=:99
-            Xvfb :99 -ac -screen 1 1024x768x24 & fluxbox &
-          background: true
 
       - run:
           name: UI Tests
-          command: mvn test -Dbrowser=phantomjs
+          command: mvn test -Dbrowser=phantomjs -Djunit-tests.test.excludes="**/popups/*.java"
 
       - save_cache:
           paths:
