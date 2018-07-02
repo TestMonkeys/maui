@@ -429,6 +429,6 @@ jobs:
             /tmp/jfrog bt vp $BINTRAY_URL
       - run:
           name: Sync to Maven Central
-            command: |
-              export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-              sudo curl -d '{"username": "$SONATYPE_USER","password": "$SONATYPE_PASSWORD","close": "0"}' -u $BINTRAY_USER:$BINTRAY_API_KEY https://api.bintray.com/maven_central_sync/testmonkeys/maven/maui/versions/$MAVEN_RELEASE_VERSION
+          command: |
+            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
+            sudo curl -d '{"username": "$SONATYPE_USER","password": "$SONATYPE_PASSWORD","close": "0"}' -u $BINTRAY_USER:$BINTRAY_API_KEY https://api.bintray.com/maven_central_sync/testmonkeys/maven/maui/versions/$MAVEN_RELEASE_VERSION
