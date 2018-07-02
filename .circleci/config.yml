@@ -450,3 +450,4 @@ jobs:
             /tmp/jfrog bt u "/tmp/workspace/release/jars/*" $BINTRAY_URL $PATH
             /tmp/jfrog bt gsv $BINTRAY_URL --passphrase=$BINTRAY_GPG_PWD
             /tmp/jfrog bt vp $BINTRAY_URL
+            curl -d '{"username": "$SONATYPE_USER","password": "$SONATYPE_PASSWORD","close": "0"}' -u $BINTRAY_USER:$BINTRAY_API_KEY https://api.bintray.com/maven_central_sync/testmonkeys/maven/maui/versions/$MAVEN_RELEASE_VERSION
