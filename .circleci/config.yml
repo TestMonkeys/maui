@@ -74,18 +74,7 @@ jobs:
 
 
     steps:
-#      - restore_cache:
-#                keys:
-#                  - source-v1-{{ .Branch }}-{{ .Revision }}
-#                  - source-v1-{{ .Branch }}-
-#                  - source-v1-
-
       - checkout
-
-#      - save_cache:
-#                key: source-v1-{{ .Branch }}-{{ .Revision }}
-#                paths:
-#                  - ".git"
 
       - restore_cache:
             keys:
@@ -186,11 +175,6 @@ jobs:
 
 
     steps:
-#      - restore_cache:
-#            keys:
-#              - source-v1-{{ .Branch }}-{{ .Revision }}
-#              - source-v1-{{ .Branch }}-
-#              - source-v1-
 
       - checkout
 
@@ -285,14 +269,7 @@ jobs:
       # Customize the JVM maximum heap limit
       MAVEN_OPTS: -Xmx3200m
 
-
-#
-#    steps:
-#      - restore_cache:
-#            keys:
-#              - source-v1-{{ .Branch }}-{{ .Revision }}
-#              - source-v1-{{ .Branch }}-
-#              - source-v1-
+    steps:
 
       - checkout
 
