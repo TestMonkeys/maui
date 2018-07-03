@@ -367,7 +367,7 @@ jobs:
             mvn clean package -DskipTests=true
             mkdir ~/repo/maui/releasePackage
             mkdir -p /tmp/workspace/release/jars
-            mv ~/repo/maui/target/*.jar /tmp/workspace/release/jars/
+            mv ~/repo/maui/target/*.jar /tmp/release/
             export POM_NAME_1='/tmp/workspace/release/jars/maui-'
             export POM_NAME_2='.pom'
             export POM_FULL_NAME="$POM_NAME_1$MAVEN_RELEASE_VERSION$POM_NAME_2"
@@ -423,7 +423,7 @@ jobs:
             export BINTRAY_URL="$MAUI_URL$MAVEN_RELEASE_VERSION"
             export SEPARATOR='/'
             export PATH="$MAUI_PACKAGE$MAVEN_RELEASE_VERSION$SEPARATOR"
-            /tmp/jfrog bt config --user=$BINTRAY_USER --key=$BINTRAY_API_KEY --licenses="Licence"
+            /tmp/jfrog bt config --user=$BINTRAY_USER --key=$BINTRAY_API_KEY --licenses="Apache-2.0"
             /tmp/jfrog bt u "/tmp/workspace/release/jars/*" $BINTRAY_URL $PATH
             /tmp/jfrog bt gsv $BINTRAY_URL --passphrase=$BINTRAY_GPG_PWD
             /tmp/jfrog bt vp $BINTRAY_URL
@@ -433,7 +433,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install gettext
             export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-            echo '{"username": "$SONATYPE_USER","password": "$SONATYPE_PASSWORD","close": "0"}' > req.template
+            echo '{"username": "$SONATYPE_USER","password": "$SONATYPE_PASSWORD","close": "1"}' > req.template
             envsubst < req.template > request
             sudo curl -u $BINTRAY_USER:$BINTRAY_API_KEY --header "Content-Type: application/json" --data '@./request' --request POST https://api.bintray.com/maven_central_sync/testmonkeys/maven/maui/versions/$MAVEN_RELEASE_VERSION
             rm request
