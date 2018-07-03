@@ -367,7 +367,7 @@ jobs:
             mvn clean package -DskipTests=true
             mkdir ~/repo/maui/releasePackage
             mkdir -p /tmp/workspace/release/jars
-            mv ~/repo/maui/target/*.jar /tmp/release/
+            mv ~/repo/maui/target/*.jar /tmp/workspace/release/jars/
             export POM_NAME_1='/tmp/workspace/release/jars/maui-'
             export POM_NAME_2='.pom'
             export POM_FULL_NAME="$POM_NAME_1$MAVEN_RELEASE_VERSION$POM_NAME_2"
