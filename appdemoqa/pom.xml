@@ -6,7 +6,7 @@
 
     <groupId>org.testmonkeys</groupId>
     <artifactId>app-demoqa</artifactId>
-    <version>5.1.7-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.version>3.6.1</maven.compiler.version>
