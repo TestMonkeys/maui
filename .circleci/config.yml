@@ -98,72 +98,7 @@ jobs:
             paths:
               - ~/.m2
             key: maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
-#      - run:
-#          name: Install Firfox
-#          command: |
-#            firefox -v | more
-#            which firefox
-#
-#      - run:
-#          name: Install gecko driver
-#          command: |
-#            sudo wget https://github.com/mozilla/geckodriver/releases/download/v0.17.0/geckodriver-v0.17.0-linux64.tar.gz
-#            sudo tar -xvzf geckodriver*
-#            sudo chmod +x geckodriver
-#            sudo mv geckodriver /usr/bin/
-#
-#      - run:
-#          name: Install fluxbox
-#          command: sudo apt-get install fluxbox
-#
-#      - run:
-#          name: start xvfb
-#          command: |
-#            export DISPLAY=:99
-#            Xvfb :99 -ac -screen 1 1024x768x24 & fluxbox &
-#          background: true
-#
-#      - run:
-#          name: Install phantomJS
-#          command: |
-#            wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
-#            bzip2 -d phantomjs-2.1.1-linux-x86_64.tar.bz2
-#            tar -xvf phantomjs-2.1.1-linux-x86_64.tar
-#            sudo cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
-#            phantomjs -v
-#
-#      - run: mvn install -DskipTests=true -DfailIfNoTests=false
-#
-#      - run:
-#          name: UI Tests
-#          command: mvn test -Dwebdriver.chrome.driver=/usr/bin/chromedriver -Dwebdriver.gecko.driver=/usr/bin/geckodriver
-#
-#      - save_cache:
-#          paths:
-#            - ~/.m2
-#          key: v1-dependencies-{{ checksum "pom.xml" }}
-#
-#
-#      - run:
-#          name: Save test results
-#          command: |
-#             mkdir -p ~/junit/
-#             find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/junit/ \;
-#          when: always
-#
-#      - store_test_results:
-#          path: ~/junit
-#
-#      - run:
-#          command: |
-#            touch ~/repo/junit-tests/target/mvnrelease.out
-#            touch ~/repo/junit-tests/target/circleTag.out
-#            echo $CIRCLE_TAG > ~/repo/junit-tests/target/circleTag.out
-#            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-#            echo $MAVEN_RELEASE_VERSION > ~/repo/junit-tests/target/mvnrelease.out
-#
-#      - store_artifacts:
-#                path: ~/repo/junit-tests/target
+
 
 ##################################################################
 ##
@@ -345,12 +280,6 @@ jobs:
     working_directory: ~/repo
 
     steps:
-#      - restore_cache:
-#            keys:
-#              - source-v1-{{ .Branch }}-{{ .Revision }}
-#              - source-v1-{{ .Branch }}-
-#              - source-v1-
-
       - checkout
 
       - restore_cache:
@@ -386,17 +315,6 @@ jobs:
           root: *workspace_root
           paths:
             - release/jars/
-
-      - run:
-          name: Setting new development version as per tag
-          command: |
-            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-            export MAVEN_SNAPSHOT='-SNAPSHOT'
-            export DEVELOPMENT_VERSION="$MAVEN_RELEASE_VERSION$MAVEN_SNAPSHOT"
-            touch ~/repo/maui/target/devTag.out
-                        echo $DEVELOPMENT_VERSION > ~/repo/maui/target/devTag.out
-            mvn versions:set -DnewVersion=$DEVELOPMENT_VERSION -f maui/pom.xml
-            mvn versions:commit
 
       - store_artifacts:
           path: ~/repo/maui/target
@@ -442,7 +360,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install gettext
             export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-            echo '{"username": "$SONATYPE_USER","password": "$SONATYPE_PASSWORD","close": "0"}' > req.template
+            echo '{"username": "$SONATYPE_USER","password": "$SONATYPE_PASSWORD","close": "1"}' > req.template
             envsubst < req.template > request
             sudo curl -u $BINTRAY_USER:$BINTRAY_API_KEY --header "Content-Type: application/json" --data '@./request' --request POST https://api.bintray.com/maven_central_sync/testmonkeys/maven/maui/versions/$MAVEN_RELEASE_VERSION
             rm request
