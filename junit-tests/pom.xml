@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <artifactId>maui</artifactId>
-        <groupId>org.testmonkeys</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
+    <groupId>org.testmonkeys</groupId>
+    <version>0.0.1-SNAPSHOT</version>
     <artifactId>junit-tests</artifactId>
 
     <properties>
@@ -30,14 +26,14 @@
         </dependency>
         <dependency>
             <groupId>org.testmonkeys</groupId>
-            <artifactId>maui-framework</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>maui</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testmonkeys</groupId>
             <artifactId>app-demoqa</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>0.0.1-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -102,14 +98,64 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
                 <configuration>
                     <includes>
                         <include>org/testmonkeys/webpages/tests/htmlelement/*.java</include>
                         <include>org/testmonkeys/webpages/tests/popups/*.java</include>
-                            <include>org/testmonkeys/webpages/tests/elements/*.java</include>
+                        <include>org/testmonkeys/webpages/tests/elements/*.java</include>
                     </includes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>browser</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.22.0</version>
+                        <configuration>
+                            <includes>
+                                <include>org/testmonkeys/webpages/tests/popups/*.java</include>
+                                <include>org/testmonkeys/webpages/tests/htmlelement/*.java</include>
+                                <include>org/testmonkeys/webpages/tests/elements/*.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>browser-headless</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.22.0</version>
+                        <configuration>
+                            <includes>
+                                <include>org/testmonkeys/webpages/tests/htmlelement/*.java</include>
+                                <include>org/testmonkeys/webpages/tests/elements/*.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

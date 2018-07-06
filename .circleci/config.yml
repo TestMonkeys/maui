@@ -1,18 +1,78 @@
-# Java Maven CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-java/ for more details
-#
 version: 2
+references:
+  workspace_root: &workspace_root
+    /tmp/workspace
+
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+
+
+workflows:
+  version: 2
+  build-test:
+    jobs:
+      - build
+      - test-chrome:
+          requires:
+            - build
+      - test-phantomjs:
+          requires:
+            - build
+  release:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - test-chrome:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - test-phantomjs:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - create-package:
+          requires:
+            - test-chrome
+            - test-phantomjs
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - bintray-upload:
+          requires:
+            - create-package
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+
+
 jobs:
+##################################################################
+##
+##BUILD JOB
+##
+##################################################################
   build:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8u141-browsers
-      #- image: selenium/standalone-chrome:3.1.0
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
 
     working_directory: ~/repo
 
@@ -25,40 +85,52 @@ jobs:
     steps:
       - checkout
 
+      - restore_cache:
+            keys:
+              # when lock file changes, use increasingly general patterns to restore cache
+              - maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
+              - maven-repo-v1-{{ .Branch }}-
+              - maven-repo-v1-
+
+      - run: mvn install -DskipTests=true -DfailIfNoTests=false
+
+      - save_cache:
+            paths:
+              - ~/.m2
+            key: maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
+
+
+##################################################################
+##
+##TEST-CHROME JOB
+##
+##################################################################
+  test-chrome:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8u141-browsers
+
+    working_directory: ~/repo
+
+    environment:
+      # Customize the JVM maximum heap limit
+      MAVEN_OPTS: -Xmx3200m
+
+
+
+    steps:
+
+      - checkout
+
+      - restore_cache:
+            keys:
+              # when lock file changes, use increasingly general patterns to restore cache
+              - maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
+              - maven-repo-v1-{{ .Branch }}-
+              - maven-repo-v1-
+
       - run:
-          name: Install Firfox
-          command: |
-            firefox -v | more
-            which firefox
-
-
-#      - restore_cache:
-#                keys:
-#                - v1-dependencies-{{ checksum "pom.xml" }}
-#                # fallback to using the latest cache if no exact match is found
-#                - v1-dependencies-
-#
-#      - run: mvn dependency:go-offline
-#      # Download and cache dependencies
-#      - restore_cache:
-#          keys:
-#          - v1-dependencies-{{ checksum "pom.xml" }}
-#          # fallback to using the latest cache if no exact match is found
-#          - v1-dependencies-
-#      - run:
-#          name: Install latest version of ChromeDriver Sample
-#          command: |
-#            sudo wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-#            sudo sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-#            sudo apt-get update
-#            sudo apt-get install google-chrome-unstable
-#           command google-chrome --version
-
-
-
-
-      - run:
-          name: chrome version
+          name: Install latest Chrome browser
           command: |
             wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
             sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
@@ -84,14 +156,6 @@ jobs:
             sudo apt-get -y install imagemagick x11-apps
 
       - run:
-          name: Install gecko driver
-          command: |
-            sudo wget https://github.com/mozilla/geckodriver/releases/download/v0.17.0/geckodriver-v0.17.0-linux64.tar.gz
-            sudo tar -xvzf geckodriver*
-            sudo chmod +x geckodriver
-            sudo mv geckodriver /usr/bin/
-
-      - run:
           name: Install fluxbox
           command: sudo apt-get install fluxbox
 
@@ -103,27 +167,14 @@ jobs:
           background: true
 
       - run:
-          name: Install phantomJS
-          command: |
-            wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
-            bzip2 -d phantomjs-2.1.1-linux-x86_64.tar.bz2
-            tar -xvf phantomjs-2.1.1-linux-x86_64.tar
-            sudo cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
-            phantomjs -v
-
-      - run: mvn install -DskipTests=true -DfailIfNoTests=false
-
-      - run:
           name: UI Tests
-          command: mvn test -Dwebdriver.chrome.driver=/usr/bin/chromedriver -Dwebdriver.gecko.driver=/usr/bin/geckodriver
+          command: mvn test -Pbrowser -Dwebdriver.chrome.driver=/usr/bin/chromedriver -Dwebdriver.gecko.driver=/usr/bin/geckodriver
 
       - save_cache:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
-      - store_artifacts:
-          path: ~/repo/junit-tests/target
 
       - run:
           name: Save test results
@@ -134,6 +185,182 @@ jobs:
 
       - store_test_results:
           path: ~/junit
-      # run tests!
-      #- run: mvn integration-test
 
+      - run:
+          command: |
+            touch ~/repo/junit-tests/target/mvnrelease.out
+            touch ~/repo/junit-tests/target/circleTag.out
+            echo $CIRCLE_TAG > ~/repo/junit-tests/target/circleTag.out
+            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
+            echo $MAVEN_RELEASE_VERSION > ~/repo/junit-tests/target/mvnrelease.out
+
+      - store_artifacts:
+                path: ~/repo/junit-tests/target
+
+##################################################################
+##
+##TEST-PHATNOMJS JOB
+##
+##################################################################
+  test-phantomjs:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8u141-browsers
+
+    working_directory: ~/repo
+
+    environment:
+      # Customize the JVM maximum heap limit
+      MAVEN_OPTS: -Xmx3200m
+
+    steps:
+
+      - checkout
+
+      - restore_cache:
+            keys:
+              # when lock file changes, use increasingly general patterns to restore cache
+              - maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
+              - maven-repo-v1-{{ .Branch }}-
+              - maven-repo-v1-
+
+      - run:
+          name: Install phantomJS
+          command: |
+            wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
+            bzip2 -d phantomjs-2.1.1-linux-x86_64.tar.bz2
+            tar -xvf phantomjs-2.1.1-linux-x86_64.tar
+            sudo cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
+            phantomjs -v
+
+
+
+      - run:
+          name: UI Tests
+          command: mvn test -Pbrowser-headless -Dbrowser=phantomjs
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+
+
+      - run:
+          name: Save test results
+          command: |
+             mkdir -p ~/junit/
+             find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/junit/ \;
+          when: always
+
+      - store_test_results:
+          path: ~/junit
+
+      - run:
+          command: |
+            touch ~/repo/junit-tests/target/mvnrelease.out
+            touch ~/repo/junit-tests/target/circleTag.out
+            echo $CIRCLE_TAG > ~/repo/junit-tests/target/circleTag.out
+            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
+            echo $MAVEN_RELEASE_VERSION > ~/repo/junit-tests/target/mvnrelease.out
+
+      - store_artifacts:
+                path: ~/repo/junit-tests/target
+
+
+##################################################################
+##
+##CREATE PACKAGE JOB
+##
+##################################################################
+  create-package:
+    docker:
+          # specify the version you desire here
+          - image: circleci/openjdk:8u141-browsers
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+            keys:
+              # when lock file changes, use increasingly general patterns to restore cache
+              - maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
+              - maven-repo-v1-{{ .Branch }}-
+              - maven-repo-v1-
+
+
+      - run:
+          name: Updating Maui version as per tag
+          command: |
+            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
+            mvn versions:set -DnewVersion=$MAVEN_RELEASE_VERSION -f maui/pom.xml
+            mvn versions:commit
+
+      - run:
+          name: Building packages
+          command: |
+            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
+            cd maui
+            mvn clean package -DskipTests=true
+            mkdir ~/repo/maui/releasePackage
+            mkdir -p /tmp/workspace/release/jars
+            mv ~/repo/maui/target/*.jar /tmp/workspace/release/jars/
+            export POM_NAME_1='/tmp/workspace/release/jars/maui-'
+            export POM_NAME_2='.pom'
+            export POM_FULL_NAME="$POM_NAME_1$MAVEN_RELEASE_VERSION$POM_NAME_2"
+            cp ~/repo/maui/pom.xml $POM_FULL_NAME
+
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - release/jars/
+
+      - store_artifacts:
+          path: ~/repo/maui/target
+
+##################################################################
+##
+##BINTRAY UPLOAD JOB
+##
+##################################################################
+  bintray-upload:
+    docker:
+            # specify the version you desire here
+      - image: circleci/openjdk:8u141-browsers
+
+    working_directory: ~/repo
+
+    steps:
+      - *attach_workspace
+
+      - run:
+          name: install Bintray CLI
+          command: |
+            cd /tmp
+            sudo curl -fL https://getcli.jfrog.io | sh
+
+      - run:
+          name: upload artifacts to bintray
+          command: |
+            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
+            export MAUI_URL='testmonkeys/maven/maui/'
+            export MAUI_PACKAGE='org/testmonkeys/maui/'
+            export VCS_URL='https://github.com/TestMonkeys/maui.git'
+            export BINTRAY_URL="$MAUI_URL$MAVEN_RELEASE_VERSION"
+            export SEPARATOR='/'
+            export PATH="$MAUI_PACKAGE$MAVEN_RELEASE_VERSION$SEPARATOR"
+            /tmp/jfrog bt config --user=$BINTRAY_USER --key=$BINTRAY_API_KEY --licenses="Apache-2.0"
+            /tmp/jfrog bt u "/tmp/workspace/release/jars/*" $BINTRAY_URL $PATH
+            /tmp/jfrog bt gsv $BINTRAY_URL --passphrase=$BINTRAY_GPG_PWD
+            /tmp/jfrog bt vp $BINTRAY_URL
+      - run:
+          name: Sync to Maven Central
+          command: |
+            sudo apt-get update
+            sudo apt-get install gettext
+            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
+            echo '{"username": "$SONATYPE_USER","password": "$SONATYPE_PASSWORD","close": "1"}' > req.template
+            envsubst < req.template > request
+            sudo curl -u $BINTRAY_USER:$BINTRAY_API_KEY --header "Content-Type: application/json" --data '@./request' --request POST https://api.bintray.com/maven_central_sync/testmonkeys/maven/maui/versions/$MAVEN_RELEASE_VERSION
+            rm request
