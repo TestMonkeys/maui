@@ -51,7 +51,7 @@ public class PageInitializer {
 
         Type genericType = field.getGenericType();
 
-        if (genericType != null && GroupComponent.class.equals(elementType)) {
+        if (genericType != null && GroupComponent.class.isAssignableFrom(elementType)) {
             Type[] params = ((ParameterizedType) genericType).getActualTypeArguments();
             if (params.length != 0) {
                 Type genericParam = params[0];
