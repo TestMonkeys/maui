@@ -168,7 +168,8 @@ jobs:
 
       - run:
           name: UI Tests
-          command: mvn test -Pbrowser -Dwebdriver.chrome.driver=/usr/bin/chromedriver -Dwebdriver.gecko.driver=/usr/bin/geckodriver
+          command: mvn test -Pbrowser -Dwebdriver.chrome.driver=/usr/bin/chromedriver -DforkCount=6 
+
 
       - save_cache:
           paths:
@@ -237,7 +238,7 @@ jobs:
 
       - run:
           name: UI Tests
-          command: mvn test -Pbrowser-headless -Dbrowser=phantomjs
+          command: mvn test -Pbrowser-headless -Dbrowser=phantomjs -DforkCount=6 
 
       - save_cache:
           paths:
