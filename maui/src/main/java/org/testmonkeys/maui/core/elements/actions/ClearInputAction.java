@@ -13,4 +13,9 @@ public class ClearInputAction extends AbstractVoidAction {
     protected void executeVoidAction(WebElement webElement) {
         webElement.clear();
     }
+
+    @Override
+    protected String describeAction() {
+        return "Performing Clear on " + component;
+    }
 }
