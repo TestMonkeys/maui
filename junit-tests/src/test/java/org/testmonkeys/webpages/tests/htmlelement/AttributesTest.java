@@ -36,4 +36,12 @@ public class AttributesTest extends AbstractHtmlElementPageTest {
         List<HtmlAttribute> attrs = page.firstName2().getHtmlElement().getAttributes();
         assertThat("attributes size", attrs.size(), is(0));
     }
+
+    @Test
+    public void testInputClear() {
+        page.firstName().type("test_here");
+        page.firstName().clear();
+        assertThat(page.firstName().getText(), is(""));
+
+    }
 }
