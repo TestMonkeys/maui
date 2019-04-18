@@ -168,7 +168,7 @@ jobs:
 
       - run:
           name: UI Tests
-          command: mvn test -Pbrowser -Dwebdriver.chrome.driver=/usr/bin/chromedriver -DforkCount=6  -DreuseForks=true
+          command: mvn test -Pbrowser -Dwebdriver.chrome.driver=/usr/bin/chromedriver -DforkCount=3  -DreuseForks=true
 
 
       - save_cache:
