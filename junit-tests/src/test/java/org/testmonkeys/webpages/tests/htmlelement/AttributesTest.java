@@ -42,6 +42,5 @@ public class AttributesTest extends AbstractHtmlElementPageTest {
         page.firstName().type("test_here");
         page.firstName().clear();
         assertThat(page.firstName().getText(), is(""));
-
     }
 }
