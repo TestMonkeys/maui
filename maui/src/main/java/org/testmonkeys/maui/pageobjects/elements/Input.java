@@ -1,5 +1,6 @@
 package org.testmonkeys.maui.pageobjects.elements;
 
+import org.testmonkeys.maui.core.elements.actions.ClearInputAction;
 import org.testmonkeys.maui.core.elements.actions.GetAttributeValueAction;
 import org.testmonkeys.maui.core.elements.actions.SendKeysAction;
 
@@ -14,6 +15,10 @@ public class Input extends AbstractComponent implements FillableComponent<String
 
     public String getText() {
         return (new GetAttributeValueAction(this, "value").execute());
+    }
+
+    public void clear() {
+        new ClearInputAction(this).execute();
     }
 
     @Override
