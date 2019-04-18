@@ -41,6 +41,6 @@ public class AttributesTest extends AbstractHtmlElementPageTest {
     public void testInputClear() {
         page.firstName2().type("test_here");
         page.firstName2().clear();
-        assertThat(page.firstName().getText(), is(""));
+        assertThat(page.firstName2().getText(), is(""));
     }
 }
