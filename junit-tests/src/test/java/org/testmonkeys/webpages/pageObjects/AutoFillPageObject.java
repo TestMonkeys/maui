@@ -1,12 +1,12 @@
 package org.testmonkeys.webpages.pageObjects;
 
-import org.testmonkeys.koshmar.pageobjects.AbstractEntityPage;
-import org.testmonkeys.koshmar.pageobjects.AbstractPage;
-import org.testmonkeys.koshmar.pageobjects.ElementAccessor;
-import org.testmonkeys.koshmar.pageobjects.PageAccessor;
-import org.testmonkeys.koshmar.pageobjects.elements.CheckBox;
-import org.testmonkeys.koshmar.pageobjects.elements.Input;
-import org.testmonkeys.koshmar.pageobjects.entitymapping.MapsToField;
+import org.testmonkeys.maui.pageobjects.AbstractEntityPage;
+import org.testmonkeys.maui.pageobjects.AbstractPage;
+import org.testmonkeys.maui.pageobjects.ElementAccessor;
+import org.testmonkeys.maui.pageobjects.PageAccessor;
+import org.testmonkeys.maui.pageobjects.elements.CheckBox;
+import org.testmonkeys.maui.pageobjects.elements.Input;
+import org.testmonkeys.maui.pageobjects.entitymapping.MapsToField;
 import org.testmonkeys.webpages.tests.entitymapping.UserEntity;
 
 @PageAccessor(name = "HtmlElements", url = "")
