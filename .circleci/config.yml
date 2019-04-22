@@ -175,7 +175,7 @@ jobs:
             cd ~/repo/junit-tests/src/test/resources/WebPages
             pwd
             python -m SimpleHTTPServer 8080 &
-            curl localhost:8080
+#            curl localhost:8080
 
       - run:
           name: UI Tests
@@ -242,7 +242,7 @@ jobs:
             cd ~/repo/junit-tests/src/test/resources/WebPages
             pwd
             python -m SimpleHTTPServer 8080 &
-            curl localhost:8080
+#            curl localhost:8080
 
 
       - run:
@@ -319,7 +319,7 @@ jobs:
             cd ~/repo/junit-tests/src/test/resources/WebPages
             pwd
             sudo python -m SimpleHTTPServer 8080 &
-            curl localhost:8080
+#            curl localhost:8080
 
       - run:
           name: UI Tests
