@@ -20,9 +20,9 @@ workflows:
       - test-phantomjs:
           requires:
             - build
-#      - test-browserstack:
-#          requires:
-#            - build
+      - test-browserstack:
+          requires:
+            - build
   release:
     jobs:
       - build:
@@ -174,12 +174,15 @@ jobs:
           command: |
             cd ~/repo/junit-tests/src/test/resources/WebPages
             pwd
-            python -m SimpleHTTPServer 8080 &
+            python -m SimpleHTTPServer 8080 > server.out &
+          background: true
 #            curl localhost:8080
 
       - run:
           name: UI Tests
-          command: mvn test -Pbrowser -Dwebdriver.chrome.driver=/usr/bin/chromedriver -Dwebdriver.gecko.driver=/usr/bin/geckodriver
+          command: |
+            mvn test -Pbrowser -Dwebdriver.chrome.driver=/usr/bin/chromedriver -Dwebdriver.gecko.driver=/usr/bin/geckodriver
+            cat ~/repo/junit-tests/src/test/resources/WebPages/server.out
 
       - save_cache:
           paths:
@@ -239,10 +242,8 @@ jobs:
           name: Start local webServer
           command: |
             cd ~/repo/junit-tests/src/test/resources/WebPages
-            cd ~/repo/junit-tests/src/test/resources/WebPages
-            pwd
-            python -m SimpleHTTPServer 8080 &
-#            curl localhost:8080
+            python -m SimpleHTTPServer 8080 > server.out &
+          background: true
 
 
       - run:
@@ -317,9 +318,8 @@ jobs:
           name: Start local webServer
           command: |
             cd ~/repo/junit-tests/src/test/resources/WebPages
-            pwd
-            sudo python -m SimpleHTTPServer 8080 &
-#            curl localhost:8080
+            python -m SimpleHTTPServer 8080 > server.out &
+          background: true
 
       - run:
           name: UI Tests
