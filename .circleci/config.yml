@@ -318,7 +318,7 @@ jobs:
           command: |
             cd ~/repo/junit-tests/src/test/resources/WebPages
             pwd
-            python -m SimpleHTTPServer 8080 &
+            sudo python -m SimpleHTTPServer 8080 &
             curl localhost:8080
 
       - run:
