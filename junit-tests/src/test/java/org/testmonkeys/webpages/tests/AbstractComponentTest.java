@@ -2,6 +2,7 @@ package org.testmonkeys.webpages.tests;
 
 import com.automation.remarks.junit.VideoRule;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ abstract public class AbstractComponentTest {
     @After
     public void cleanup() {
         browser.quit();
+    }
+
+    @AfterClass
+    public static void cleanupClass() {
         DriverFactory.stopLocals();
     }
 }

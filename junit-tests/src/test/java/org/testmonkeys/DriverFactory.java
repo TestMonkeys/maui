@@ -125,14 +125,17 @@ public class DriverFactory {
 //            capabilities.setCapability("app", app);
 //        }
 
-        if(capabilities.getCapability("browserstack.local") != null && capabilities.getCapability("browserstack.local").toString() == "true"){
-            local = new Local();
-            Map<String, String> options = new HashMap<String, String>();
-            options.put("key", accessKey);
-            try {
-                local.start(options);
-            } catch (Exception e) {
-                e.printStackTrace();
+        if(capabilities.getCapability("browserstack.local") != null &&
+                capabilities.getCapability("browserstack.local").toString() == "true"){
+            if (local==null || !local.isRunning()) {
+                local = new Local();
+                Map<String, String> options = new HashMap<String, String>();
+                options.put("key", accessKey);
+                try {
+                    local.start(options);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 

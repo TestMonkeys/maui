@@ -1,10 +1,5 @@
 package org.testmonkeys;
 
-
-
-import com.google.gson.JsonObject;
-
-import jdk.nashorn.internal.parser.JSONParser;
 import org.json.JSONObject;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
