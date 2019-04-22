@@ -314,16 +314,21 @@ jobs:
             sudo cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
             phantomjs -v
 
-      - run:
-          name: Start local webServer
-          command: |
-            cd ~/repo/junit-tests/src/test/resources/WebPages
-            sudo python -m SimpleHTTPServer 8080 > server.out &
-          background: true
+#      - run:
+#          name: Start local webServer
+#          command: |
+#            cd ~/repo/junit-tests/src/test/resources/WebPages
+#            sudo python -m SimpleHTTPServer 8080 > server.out &
+#          background: true
 
       - run:
           name: UI Tests
-          command: mvn test -Pbrowser-headless -Dbrowser=phantomjs
+          command: |
+            cd ~/repo/junit-tests/src/test/resources/WebPages
+            sudo python -m SimpleHTTPServer 8080 > server.out &
+            cd ~/repo
+            mvn test -Pbrowser-headless -Dbrowser=phantomjs
+
 
       - save_cache:
           paths:
