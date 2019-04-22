@@ -20,9 +20,9 @@ workflows:
       - test-phantomjs:
           requires:
             - build
-      - test-browserstack:
-          requires:
-            - build
+#      - test-browserstack:
+#          requires:
+#            - build
   release:
     jobs:
       - build:
@@ -173,7 +173,9 @@ jobs:
           name: Start local webServer
           command: |
             cd ~/repo/junit-tests/src/test/resources/WebPages
+            pwd
             python -m SimpleHTTPServer 8080 &
+            curl localhost:8080
 
       - run:
           name: UI Tests
@@ -237,8 +239,10 @@ jobs:
           name: Start local webServer
           command: |
             cd ~/repo/junit-tests/src/test/resources/WebPages
+            cd ~/repo/junit-tests/src/test/resources/WebPages
+            pwd
             python -m SimpleHTTPServer 8080 &
-
+            curl localhost:8080
 
 
       - run:
@@ -313,7 +317,9 @@ jobs:
           name: Start local webServer
           command: |
             cd ~/repo/junit-tests/src/test/resources/WebPages
+            pwd
             python -m SimpleHTTPServer 8080 &
+            curl localhost:8080
 
       - run:
           name: UI Tests
