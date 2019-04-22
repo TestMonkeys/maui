@@ -20,9 +20,9 @@ workflows:
       - test-phantomjs:
           requires:
             - build
-#      - test-browserstack:
-#          requires:
-#            - build
+      - test-browserstack:
+          requires:
+            - build
   release:
     jobs:
       - build:
