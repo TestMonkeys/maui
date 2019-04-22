@@ -56,18 +56,7 @@ public class DriverFactory {
                 cap = DesiredCapabilities.firefox();
                 cap.setCapability("binary", "/usr/bin/firefox");
                 cap.setCapability("marionette", false);
-
                 return new FirefoxDriver(cap);
-            case "brwserstack":
-                DesiredCapabilities capabilities = new DesiredCapabilities();
-                local = new Local();
-                String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
-                String username = System.getenv("BROWSERSTACK_USERNAME");
-
-                Map<String, String> options = new HashMap<String, String>();
-                options.put("key", accessKey);
-                local.start(options);
-                return new RemoteWebDriver(new URL("http://"+username+":"+accessKey+"@hub-cloud.browserstack.com/wd/hub"), capabilities);
             default:
                 throw new RuntimeException("Unsupported browser[" + browser + "]");
         }
@@ -93,21 +82,6 @@ public class DriverFactory {
             browserstackOptions.put(key,browserStackCapabilities.get(key));
         }
 
-
-
-//        capabilities.setCapability("browserName", "Chrome");
-//        capabilities.setCapability("browserVersion", "62.0");
-//
-//        browserstackOptions.put("os", "Windows");
-//        browserstackOptions.put("osVersion", "10");
-//        browserstackOptions.put("resolution", "1280x800");
-//        browserstackOptions.put("projectName", "Maui");
-//        browserstackOptions.put("buildName", "b67");
-//        browserstackOptions.put("local", "false");
-//        browserstackOptions.put("seleniumVersion", "3.4.0");
-//        HashMap<String, Object> chromeOptions = new HashMap<String, Object>();
-//        chromeOptions.put("driver", "2.34");
-//        browserstackOptions.put("chrome", chromeOptions);
         capabilities.setCapability("bstack:options", browserstackOptions);
 
         String username = System.getenv("BROWSERSTACK_USERNAME");
@@ -119,11 +93,6 @@ public class DriverFactory {
         if(accessKey == null) {
             accessKey = (String) config.get("key");
         }
-
-//        String app = System.getenv("BROWSERSTACK_APP_ID");
-//        if(app != null && !app.isEmpty()) {
-//            capabilities.setCapability("app", app);
-//        }
 
         if(capabilities.getCapability("browserstack.local") != null &&
                 capabilities.getCapability("browserstack.local").toString() == "true"){
@@ -141,6 +110,21 @@ public class DriverFactory {
 
 
         return new RemoteWebDriver(new URL("http://"+username+":"+accessKey+"@"+config.get("server")+"/wd/hub"), capabilities);
+    }
+
+    public static WebDriver initLocalDriver(JSONObject config) throws Exception {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        String webDriverName = (String) config.get("webDriver");
+
+        switch (webDriverName){
+            case "ChromeDriver":
+                return new ChromeDriver(capabilities);
+            case "PhantomJSDriver":
+                new PhantomJSDriver(capabilities);
+            default:
+                throw new IllegalArgumentException("WebDriver "+webDriverName+" is not yet supported");
+        }
+
     }
 
     public static WebDriver initDriver(String browser, String mode, DesiredCapabilities caps) {

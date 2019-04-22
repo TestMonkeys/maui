@@ -184,7 +184,7 @@ jobs:
             cd ~/repo/junit-tests/src/test/resources/WebPages
             sudo python -m SimpleHTTPServer 8080 > server.out &
             cd ~/repo
-            mvn test -Pbrowser -Dwebdriver.chrome.driver=/usr/bin/chromedriver -Dwebdriver.gecko.driver=/usr/bin/geckodriver
+            mvn test -Pbrowser -Dselenium.profile=local -Dbrowser.profile=properties/local-chrome-window -Dwebdriver.chrome.driver=/usr/bin/chromedriver
             cat ~/repo/junit-tests/src/test/resources/WebPages/server.out
 
       - save_cache:
@@ -255,7 +255,7 @@ jobs:
             cd ~/repo/junit-tests/src/test/resources/WebPages
             sudo python -m SimpleHTTPServer 8080 > server.out &
             cd ~/repo
-            mvn test -Pbrowser -Dprofile.name=properties/bs-chrome-latest
+            mvn test -Pbrowser -Dselenium.profile=browserStack -Dbrowser.profile=properties/bs-chrome-latest
 
       - save_cache:
           paths:
@@ -329,7 +329,7 @@ jobs:
             cd ~/repo/junit-tests/src/test/resources/WebPages
             sudo python -m SimpleHTTPServer 8080 > server.out &
             cd ~/repo
-            mvn test -Pbrowser-headless -Dbrowser=phantomjs
+            mvn test -Pbrowser-headless  -Dselenium.profile=local -Dbrowser.profile=properties/local-phantomjs-default
 
 
       - save_cache:

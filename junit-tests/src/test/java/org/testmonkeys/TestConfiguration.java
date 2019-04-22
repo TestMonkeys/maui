@@ -20,9 +20,9 @@ import static java.io.File.separator;
 
 @Configuration
 @ComponentScan(basePackages = "org.testmonkeys")
-@PropertySource(
-        value = {"file:properties/driver.properties"},
-        ignoreResourceNotFound = true)
+//@PropertySource(
+//        value = {"file:properties/driver.properties"},
+//        ignoreResourceNotFound = true)
 public class TestConfiguration {
 
 
@@ -41,34 +41,49 @@ public class TestConfiguration {
 
     @Bean
     @Scope("prototype")
-    public WebDriver webDriver(@Value("${browser}") String browser,
-                               @Value("${browser.mode}") String mode ) throws IOException {
-        String profileName = System.getProperty("profile.name");
-        if (profileName!=null && !profileName.isEmpty()) {
-            File file = new File(profileName);
-            FileInputStream fis = new FileInputStream(file);
-            byte[] data = new byte[(int) file.length()];
-            fis.read(data);
-            fis.close();
+    public WebDriver webDriver(@Value("${selenium.profile}") String seleniumProfile,
+                               @Value("${browser.profile}") String browserProfile ) throws Exception {
+        switch (seleniumProfile){
+            case "local":
+                Properties properties = new Properties();
+                properties.load(new FileInputStream("properties/driver.properties"));
 
-            String str = new String(data, "UTF-8");
+//                DesiredCapabilities capabilities = new DesiredCapabilities(browser, "", Platform.ANY);
+//                for (Object key : properties.keySet()) {
+//                    capabilities.setCapability(String.valueOf(key), properties.getProperty(String.valueOf(key)));
+//                }
 
-            JSONObject config = new JSONObject(str);
+                File file = new File(browserProfile);
+                FileInputStream fis = new FileInputStream(file);
+                byte[] data = new byte[(int) file.length()];
+                fis.read(data);
+                fis.close();
 
-            return DriverFactory.initDriver(config);
+                String str = new String(data, "UTF-8");
+
+                JSONObject config = new JSONObject(str);
+                return DriverFactory.initLocalDriver(config);
+            case "browserStack":
+                if (browserProfile==null || browserProfile.isEmpty())
+                    throw new IllegalArgumentException("Browser Profile argument should be provided");
+                file = new File(browserProfile);
+                fis = new FileInputStream(file);
+                data = new byte[(int) file.length()];
+                fis.read(data);
+                fis.close();
+
+                str = new String(data, "UTF-8");
+
+                config = new JSONObject(str);
+
+                return DriverFactory.initDriver(config);
+            default:
+                throw new IllegalArgumentException("Selenium Profile argument should be provided");
         }
 
 
 
-        Properties properties = new Properties();
-        properties.load(new FileInputStream("properties/driver.properties"));
 
-        DesiredCapabilities capabilities = new DesiredCapabilities(browser, "", Platform.ANY);
-        for (Object key : properties.keySet()) {
-            capabilities.setCapability(String.valueOf(key), properties.getProperty(String.valueOf(key)));
-        }
-
-        return DriverFactory.initDriver(browser, mode, capabilities);
 
     }
 
