@@ -11,7 +11,7 @@ import org.testmonkeys.sut.demoqa.HomePage;
 public class GroupComponentTest {
 
     @Test
-    public void genericComponent() {
+    public void genericComponent() throws Exception {
 
         Browser browser = new Browser(DriverFactory.initDriver("chrome"));
         //browser.goTo("http://www.demoqa.com");

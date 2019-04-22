@@ -1,7 +1,11 @@
 package org.testmonkeys;
 
+import com.browserstack.local.Local;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,13 +14,27 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
 
 import static org.openqa.selenium.remote.BrowserType.CHROME;
 import static org.openqa.selenium.remote.BrowserType.PHANTOMJS;
 
 public class DriverFactory {
 
-    public static WebDriver initDriver(String browser) {
+    private static Local local;
+
+    public static Local getLocal(){
+        return local;
+    }
+
+    public static WebDriver initDriver(String browser) throws Exception {
         DesiredCapabilities cap;
         switch (browser.toLowerCase()) {
             case CHROME:
@@ -40,9 +58,86 @@ public class DriverFactory {
                 cap.setCapability("marionette", false);
 
                 return new FirefoxDriver(cap);
+            case "brwserstack":
+                DesiredCapabilities capabilities = new DesiredCapabilities();
+                local = new Local();
+                String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
+                String username = System.getenv("BROWSERSTACK_USERNAME");
+
+                Map<String, String> options = new HashMap<String, String>();
+                options.put("key", accessKey);
+                local.start(options);
+                return new RemoteWebDriver(new URL("http://"+username+":"+accessKey+"@hub-cloud.browserstack.com/wd/hub"), capabilities);
             default:
                 throw new RuntimeException("Unsupported browser[" + browser + "]");
         }
+    }
+
+
+    public static WebDriver initDriver(JSONObject config) throws MalformedURLException {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+
+
+        JSONObject commonCapabilities = (JSONObject) config.get("capabilities");
+        Iterator it  = commonCapabilities.keySet().iterator();
+        while (it.hasNext()) {
+            String key=(String)it.next();
+            capabilities.setCapability(key, commonCapabilities.get(key));
+        }
+
+        HashMap<String, Object> browserstackOptions = new HashMap<String, Object>();
+        JSONObject browserStackCapabilities = (JSONObject) config.get("browserstack");
+        it  = browserStackCapabilities.keySet().iterator();
+        while (it.hasNext()) {
+            String key = it.next().toString();
+            browserstackOptions.put(key,browserStackCapabilities.get(key));
+        }
+
+
+
+//        capabilities.setCapability("browserName", "Chrome");
+//        capabilities.setCapability("browserVersion", "62.0");
+//
+//        browserstackOptions.put("os", "Windows");
+//        browserstackOptions.put("osVersion", "10");
+//        browserstackOptions.put("resolution", "1280x800");
+//        browserstackOptions.put("projectName", "Maui");
+//        browserstackOptions.put("buildName", "b67");
+//        browserstackOptions.put("local", "false");
+//        browserstackOptions.put("seleniumVersion", "3.4.0");
+//        HashMap<String, Object> chromeOptions = new HashMap<String, Object>();
+//        chromeOptions.put("driver", "2.34");
+//        browserstackOptions.put("chrome", chromeOptions);
+        capabilities.setCapability("bstack:options", browserstackOptions);
+
+        String username = System.getenv("BROWSERSTACK_USERNAME");
+        if(username == null) {
+            username = (String) config.get("user");
+        }
+
+        String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
+        if(accessKey == null) {
+            accessKey = (String) config.get("key");
+        }
+
+//        String app = System.getenv("BROWSERSTACK_APP_ID");
+//        if(app != null && !app.isEmpty()) {
+//            capabilities.setCapability("app", app);
+//        }
+
+        if(capabilities.getCapability("browserstack.local") != null && capabilities.getCapability("browserstack.local").toString() == "true"){
+            local = new Local();
+            Map<String, String> options = new HashMap<String, String>();
+            options.put("key", accessKey);
+            try {
+                local.start(options);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return new RemoteWebDriver(new URL("http://"+username+":"+accessKey+"@"+config.get("server")+"/wd/hub"), capabilities);
     }
 
     public static WebDriver initDriver(String browser, String mode, DesiredCapabilities caps) {
@@ -65,5 +160,15 @@ public class DriverFactory {
             capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         }
         return new ChromeDriver(capabilities);
+    }
+
+    public static void stopLocals()  {
+        if (local!=null) {
+            try {
+                local.stop();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -1,5 +1,11 @@
 package org.testmonkeys;
 
+
+
+import com.google.gson.JsonObject;
+
+import jdk.nashorn.internal.parser.JSONParser;
+import org.json.JSONObject;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -8,7 +14,9 @@ import org.springframework.context.annotation.*;
 import org.testmonkeys.maui.core.browser.Browser;
 import org.testmonkeys.DriverFactory;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -21,6 +29,7 @@ import static java.io.File.separator;
         value = {"file:properties/driver.properties"},
         ignoreResourceNotFound = true)
 public class TestConfiguration {
+
 
     //TODO remove this ugly stuff when the defect on video library will be fixed
     @Bean
@@ -38,7 +47,24 @@ public class TestConfiguration {
     @Bean
     @Scope("prototype")
     public WebDriver webDriver(@Value("${browser}") String browser,
-                               @Value("${browser.mode}") String mode) throws IOException {
+                               @Value("${browser.mode}") String mode ) throws IOException {
+        String profileName = System.getProperty("profile.name");
+        if (profileName!=null && !profileName.isEmpty()) {
+            File file = new File(profileName);
+            FileInputStream fis = new FileInputStream(file);
+            byte[] data = new byte[(int) file.length()];
+            fis.read(data);
+            fis.close();
+
+            String str = new String(data, "UTF-8");
+
+            JSONObject config = new JSONObject(str);
+
+            return DriverFactory.initDriver(config);
+        }
+
+
+
         Properties properties = new Properties();
         properties.load(new FileInputStream("properties/driver.properties"));
 
@@ -48,6 +74,7 @@ public class TestConfiguration {
         }
 
         return DriverFactory.initDriver(browser, mode, capabilities);
+
     }
 
     @Bean

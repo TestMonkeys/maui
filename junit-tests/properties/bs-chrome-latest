@@ -1,0 +1,13 @@
+{
+  "server": "hub-cloud.browserstack.com",
+  "capabilities": {
+    "browserName": "Chrome",
+    "browserstack.debug": true,
+    "browserstack.local": true
+  },
+  "browserstack": {
+    "local": true,
+    "os":"Windows",
+    "seleniumVersion":"3.4.0"
+  }
+}
