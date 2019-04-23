@@ -19,7 +19,8 @@ public class AbstractHtmlElementPageTest extends AbstractComponentTest {
     @Before
     public void beforeScenario() throws IOException {
         pageFactory = new PageFactory(browser, new PageScanner("org.testmonkeys.webpages"),
-                "file:///" + htmlPage.getFile().getAbsolutePath());
+                "http://localhost:8080/HtmlStyleElementsPage.html");
+                //"file:///" + htmlPage.getFile().getAbsolutePath());
         page = pageFactory.createPage(HtmlElementsPageObject.class);
         page.open();
     }
