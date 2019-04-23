@@ -120,7 +120,7 @@ public class DriverFactory {
             case "ChromeDriver":
                 return new ChromeDriver(capabilities);
             case "PhantomJSDriver":
-                new PhantomJSDriver(capabilities);
+                return new PhantomJSDriver(capabilities);
             default:
                 throw new IllegalArgumentException("WebDriver "+webDriverName+" is not yet supported");
         }
