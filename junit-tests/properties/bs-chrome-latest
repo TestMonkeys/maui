@@ -1,5 +1,10 @@
 {
   "server": "hub-cloud.browserstack.com",
+  "mauiProperties":{
+       "elementTimeout":10,
+       "pageTimeout":10,
+       "timeoutTimeUnit":"SECONDS"
+     }
   "capabilities": {
     "browserName": "Chrome",
     "browserstack.debug": true,

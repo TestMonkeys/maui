@@ -9,10 +9,7 @@ import org.springframework.context.annotation.*;
 import org.testmonkeys.maui.core.browser.Browser;
 import org.testmonkeys.DriverFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -89,10 +86,65 @@ public class TestConfiguration {
 
     @Bean
     @Scope("prototype")
-    public Browser browser(WebDriver webDriver,
-                           @Value("${browser.timeout.unit}") TimeUnit unit,
-                           @Value("${browser.element.timeout}") int elementTimeout,
-                           @Value("${browser.page.timeout}") int pageTimeout) {
-        return new Browser(webDriver, unit, elementTimeout, pageTimeout);
+    public Browser browser(@Value("${selenium.profile}") String seleniumProfile,
+                           @Value("${browser.profile}") String browserProfile ) throws Exception {
+//        WebDriver webDriver,
+//    }
+//                           @Value("${browser.timeout.unit}") TimeUnit unit,
+//                           @Value("${browser.element.timeout}") int elementTimeout,
+//                           @Value("${browser.page.timeout}") int pageTimeout) {
+        if (seleniumProfile==null || seleniumProfile.isEmpty()){
+            throw new IllegalArgumentException("Selenium profile should be provided by -Dselenium.profile parameter");
+        }
+        if (browserProfile==null || browserProfile.isEmpty()){
+            throw new IllegalArgumentException("Browser profile should be provided by -Dbrowser.profile parameter");
+        }
+        JSONObject config = readProfile(browserProfile);
+        WebDriver driver;
+
+        switch (seleniumProfile){
+            case "local":
+                driver= DriverFactory.initLocalDriver(config);
+                break;
+            case "browserStack":
+                driver= DriverFactory.initDriver(config);
+                break;
+            default:
+                throw new IllegalArgumentException("Selenium Profile argument should be provided");
+        }
+        MauiConfigProperties mauiConfig=readMauiConfigProps(config);
+
+        return new Browser(driver, mauiConfig.timeoutTimeUnit, mauiConfig.elementTimeout, mauiConfig.pageTimeout);
+    }
+
+    private JSONObject readProfile(String profile) throws IOException {
+        try {
+            File file = new File(profile);
+            FileInputStream fis = new FileInputStream(file);
+            byte[] data = new byte[(int) file.length()];
+            fis.read(data);
+            fis.close();
+
+            String str = new String(data, "UTF-8");
+
+            return new JSONObject(str);
+        } catch (IOException e){
+            throw new IOException("Could not read profile: "+profile,e);
+        }
+    }
+
+    private MauiConfigProperties readMauiConfigProps(JSONObject config) throws IOException {
+        MauiConfigProperties props=new MauiConfigProperties();
+        JSONObject mauiConfig = (JSONObject) config.get("mauiProperties");
+        props.elementTimeout= (int) mauiConfig.get("elementTimeout");
+        props.pageTimeout = (int) mauiConfig.get("pageTimeout");
+        props.timeoutTimeUnit = TimeUnit.valueOf((String) mauiConfig.get("timeoutTimeUnit"));
+        return props;
+    }
+
+    private class MauiConfigProperties{
+        public TimeUnit timeoutTimeUnit;
+        public int elementTimeout;
+        public int pageTimeout;
     }
 }
