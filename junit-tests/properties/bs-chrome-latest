@@ -4,7 +4,7 @@
        "elementTimeout":10,
        "pageTimeout":10,
        "timeoutTimeUnit":"SECONDS"
-     }
+     },
   "capabilities": {
     "browserName": "Chrome",
     "browserstack.debug": true,
