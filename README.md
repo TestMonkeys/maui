@@ -2,5 +2,5 @@ MAUI is a wrapper framework for selenium with the aim of providing an easier way
 
 Is Compatible with:
 
-<a href="www.browserstack.com" target="_blank"><img src="https://github.com/TestMonkeys/maui/blob/browserStackIntegration/.browserStack/Browserstack-logo.svg" 
+<a href="http://www.browserstack.com" target="_blank"><img src="https://github.com/TestMonkeys/maui/blob/browserStackIntegration/.browserStack/Browserstack-logo.svg" 
 alt="BrowserStack" width="240"  /></a>
