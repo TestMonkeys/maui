@@ -22,7 +22,7 @@ public class AbstractPopUpPageTest extends AbstractComponentTest {
     @Before
     public void beforeScenario() throws IOException {
         pageFactory = new PageFactory(browser, new PageScanner("org.testmonkeys.webpages"),
-                "http://localhost:8080/JSPopUpPage.html");
+                "http://localhost:8080/testpages/JSPopUpPage.html");
 //                "file:///" + htmlPage.getFile().getAbsolutePath());
         popUpPage = pageFactory.createPage(JsPopUpPage.class);
         popUpPage.open();
