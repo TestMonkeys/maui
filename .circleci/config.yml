@@ -170,22 +170,9 @@ jobs:
           background: true
 
       - run:
-          name: Start local webServer
-          command: |
-            cd ~/repo/junit-tests/src/test/resources/WebPages
-            pwd
-            sudo python -m SimpleHTTPServer 8080 > server.out &
-          background: true
-#            curl localhost:8080
-
-      - run:
           name: UI Tests
           command: |
-            cd ~/repo/junit-tests/src/test/resources/WebPages
-            sudo python -m SimpleHTTPServer 8080 > server.out &
-            cd ~/repo
             mvn test -Pbrowser -Dselenium.profile=local -Dbrowser.profile=properties/local-chrome-window -Dwebdriver.chrome.driver=/usr/bin/chromedriver
-            cat ~/repo/junit-tests/src/test/resources/WebPages/server.out
 
       - save_cache:
           paths:
@@ -242,19 +229,8 @@ jobs:
               - maven-repo-v1-
 
       - run:
-          name: Start local webServer
-          command: |
-            cd ~/repo/junit-tests/src/test/resources/WebPages
-            sudo python -m SimpleHTTPServer 8080 > server.out &
-          background: true
-
-
-      - run:
           name: UI Tests
           command: |
-            cd ~/repo/junit-tests/src/test/resources/WebPages
-            sudo python -m SimpleHTTPServer 8080 > server.out &
-            cd ~/repo
             mvn test -Pbrowser -Dselenium.profile=browserStack -Dbrowser.profile=properties/bs-chrome-latest
 
       - save_cache:
@@ -326,9 +302,6 @@ jobs:
       - run:
           name: UI Tests
           command: |
-            cd ~/repo/junit-tests/src/test/resources/WebPages
-            sudo python -m SimpleHTTPServer 8080 > server.out &
-            cd ~/repo
             mvn test -Pbrowser-headless  -Dselenium.profile=local -Dbrowser.profile=properties/local-phantomjs-default
 
 
