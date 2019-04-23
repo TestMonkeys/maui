@@ -1,0 +1,8 @@
+{
+  "webDriver": "ChromeDriver",
+  "mauiProperties":{
+    "elementTimeout":10,
+    "pageTimeout":10,
+    "timeoutTimeUnit":"SECONDS"
+  }
+}
