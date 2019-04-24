@@ -12,6 +12,7 @@
         <module>maui</module>
         <module>appdemoqa</module>
         <module>junit-tests</module>
+        <module>maui-driverfactory</module>
 
     </modules>
 

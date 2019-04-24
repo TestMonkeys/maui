@@ -1,0 +1,4 @@
+!!org.testmonkeys.maui.driverfactory.DriverConfiguration
+browserName: CHROME
+
+driverLocation: LOCAL
