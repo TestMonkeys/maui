@@ -18,7 +18,7 @@ public class AbstractRegistrationPageTest extends AbstractComponentTest {
     @Before
     public void beforeScenario() throws IOException {
         pageFactory = new PageFactory(browser, new PageScanner("org.testmonkeys.sut"),
-                "http://localhost:8080");
+                "http://localhost:8080/testpages");
         registrationPage = pageFactory.createPage(RegistrationPage.class);
         registrationPage.open();
     }
