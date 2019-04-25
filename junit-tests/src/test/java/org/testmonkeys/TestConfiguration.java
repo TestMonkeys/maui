@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.testmonkeys.maui.core.browser.Browser;
 import org.testmonkeys.DriverFactory;
+import org.testmonkeys.maui.driverfactory.DriverProvider;
 
 import java.io.*;
 import java.util.Properties;
@@ -35,33 +36,37 @@ public class TestConfiguration {
 
     @Bean
     @Scope("prototype")
-    public Browser browser(@Value("${selenium.profile}") String seleniumProfile,
+    public Browser browser(//@Value("${selenium.profile}") String seleniumProfile,
                            @Value("${browser.profile}") String browserProfile ) throws Exception {
-        if (seleniumProfile==null || seleniumProfile.isEmpty()){
-            throw new IllegalArgumentException("Selenium profile should be provided by -Dselenium.profile parameter");
-        }
+//        if (seleniumProfile==null || seleniumProfile.isEmpty()){
+//            throw new IllegalArgumentException("Selenium profile should be provided by -Dselenium.profile parameter");
+//        }
         if (browserProfile==null || browserProfile.isEmpty()){
             throw new IllegalArgumentException("Browser profile should be provided by -Dbrowser.profile parameter");
         }
-        JSONObject config = readProfile(browserProfile);
-        WebDriver driver;
+//        JSONObject config = readProfile(browserProfile);
+//        WebDriver driver;
+//
+//        switch (seleniumProfile){
+//            case "local":
+//                driver= DriverFactory.initLocalDriver(config);
+//                break;
+//            case "browserStack":
+//                driver= DriverFactory.initDriver(config);
+//                break;
+//            default:
+//                throw new IllegalArgumentException("Selenium Profile argument should be provided");
+//        }
+//        MauiConfigProperties mauiConfig=readMauiConfigProps(config);
+        readProfile(browserProfile);
+        DriverProvider provider=new DriverProvider();
+        WebDriver driver= provider.createNewDriver(browserProfile);
 
-        switch (seleniumProfile){
-            case "local":
-                driver= DriverFactory.initLocalDriver(config);
-                break;
-            case "browserStack":
-                driver= DriverFactory.initDriver(config);
-                break;
-            default:
-                throw new IllegalArgumentException("Selenium Profile argument should be provided");
-        }
-        MauiConfigProperties mauiConfig=readMauiConfigProps(config);
-
-        return new Browser(driver, mauiConfig.timeoutTimeUnit, mauiConfig.elementTimeout, mauiConfig.pageTimeout);
+        return new Browser(driver, TimeUnit.SECONDS, 10, 10);
+                //mauiConfig.timeoutTimeUnit, mauiConfig.elementTimeout, mauiConfig.pageTimeout);
     }
 
-    private JSONObject readProfile(String profile) throws IOException {
+    private void readProfile(String profile) throws IOException {
         try {
             File file = new File(profile);
             FileInputStream fis = new FileInputStream(file);
@@ -70,8 +75,8 @@ public class TestConfiguration {
             fis.close();
 
             String str = new String(data, "UTF-8");
-
-            return new JSONObject(str);
+            System.out.println(str);
+           // return new JSONObject(str);
         } catch (IOException e){
             throw new IOException("Could not read profile: "+profile,e);
         }

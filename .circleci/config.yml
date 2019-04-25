@@ -14,12 +14,12 @@ workflows:
   build-test:
     jobs:
       - build
-      - test-chrome:
-          requires:
-            - build
-      - test-phantomjs:
-          requires:
-            - build
+#      - test-chrome:
+#          requires:
+#            - build
+#      - test-phantomjs:
+#          requires:
+#            - build
       - test-browserstack:
           requires:
             - build
@@ -240,7 +240,7 @@ jobs:
       - run:
           name: UI Tests
           command: |
-            mvn test -Pbrowser -Dselenium.profile=browserStack -Dbrowser.profile=properties/bs-chrome-latest
+            mvn test -Pbrowser -Dbrowser.profile=profiles/bs-chrome-latest.yaml
 
       - save_cache:
           paths:

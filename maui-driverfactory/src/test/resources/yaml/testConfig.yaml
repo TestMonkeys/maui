@@ -7,3 +7,5 @@ chromeOptions:
      - --arg1
      - --arg2
 
+capabilities:
+    key: value
