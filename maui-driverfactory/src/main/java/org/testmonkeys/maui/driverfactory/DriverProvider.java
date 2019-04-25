@@ -1,30 +1,34 @@
 package org.testmonkeys.maui.driverfactory;
 
 import org.openqa.selenium.WebDriver;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Driver;
 
 public class DriverProvider {
 
-//    public WebDriver createNewDriver(String profilePath){
-//
-//    }
-//
-//    private JSONObject readProfile(String profile) throws IOException {
-//        try {
-//            File file = new File(profile);
-//            FileInputStream fis = new FileInputStream(file);
-//            byte[] data = new byte[(int) file.length()];
-//            fis.read(data);
-//            fis.close();
-//
-//            String str = new String(data, "UTF-8");
-//
-//            return new JSONObject(str);
-//        } catch (IOException e){
-//            throw new IOException("Could not read profile: "+profile,e);
-//        }
-//    }
+    public WebDriver createNewDriver(String profilePath){
+        Yaml yaml = new Yaml(new Constructor(DriverConfiguration.class));
+
+        InputStream inputStream = this.getClass()
+                .getClassLoader()
+                .getResourceAsStream("yaml/testConfig.yaml");
+        DriverConfiguration dc = yaml.load(inputStream);
+        return createNewDriver(dc);
+    }
+
+    private WebDriver createNewDriver(DriverConfiguration dc) {
+        switch (dc.getDriverLocation()){
+            case LOCAL:
+                return new LocalFactory().getWebDriver(dc);
+            default: throw new Error("No Factory defined for driver location: "+dc.getDriverLocation());
+        }
+    }
+
+
 }
