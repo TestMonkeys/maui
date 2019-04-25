@@ -1,14 +1,11 @@
 package org.testmonkeys.maui.driverfactory.builders.browserstack;
 
-import javafx.util.Pair;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testmonkeys.maui.driverfactory.BrowserStackAuth;
 import org.testmonkeys.maui.driverfactory.BrowserStackConfig;
-import org.testmonkeys.maui.driverfactory.ChromeOptionsConfig;
 import org.testmonkeys.maui.driverfactory.DriverConfiguration;
 import org.testmonkeys.maui.driverfactory.builders.WebDriverBuilder;
 
