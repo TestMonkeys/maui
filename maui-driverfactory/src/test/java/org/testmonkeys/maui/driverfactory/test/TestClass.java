@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class TestClass {
 
-    @Test
+    //@Test
     public void generateYaml() throws IOException {
         DriverConfiguration dc=new DriverConfiguration();
         dc.setBrowserName(BrowserName.CHROME);
@@ -26,7 +26,7 @@ public class TestClass {
         System.out.println(writer);
     }
 
-    @Test
+    //@Test
     public void generateBSYaml() throws IOException {
         DriverConfiguration dc=new DriverConfiguration();
         dc.setBrowserName(BrowserName.CHROME);
@@ -50,7 +50,7 @@ public class TestClass {
         System.out.println(writer);
     }
 
-    @Test
+    //@Test
     public void parseYaml(){
         //String value="browserName: CHROME\r\n driverMode: LOCAL";
         Yaml yaml = new Yaml(new Constructor(DriverConfiguration.class));
@@ -62,7 +62,7 @@ public class TestClass {
         System.out.println(dc);
     }
 
-    @Test
+    //@Test
     public void parseBSYaml(){
         //String value="browserName: CHROME\r\n driverMode: LOCAL";
         Yaml yaml = new Yaml(new Constructor(DriverConfiguration.class));
@@ -74,7 +74,7 @@ public class TestClass {
         System.out.println(dc);
     }
 
-    @Test
+   // @Test
     public void parseYaml1(){
         //String value="browserName: CHROME\r\n driverMode: LOCAL";
         DriverProvider dp = new DriverProvider();
