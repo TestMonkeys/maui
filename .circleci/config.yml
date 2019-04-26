@@ -14,9 +14,9 @@ workflows:
   build-test:
     jobs:
       - build
-#      - test-chrome:
-#          requires:
-#            - build
+      - test-chrome:
+          requires:
+            - build
 #      - test-phantomjs:
 #          requires:
 #            - build
@@ -181,7 +181,7 @@ jobs:
       - run:
           name: UI Tests
           command: |
-            mvn test -Pbrowser -Dselenium.profile=local -Dbrowser.profile=properties/local-chrome-window -Dwebdriver.chrome.driver=/usr/bin/chromedriver
+            mvn test -Pbrowser -Dbrowser.profile=profiles/local-chrome.yaml -Dwebdriver.chrome.driver=/usr/bin/chromedriver
 
       - save_cache:
           paths:
@@ -238,8 +238,18 @@ jobs:
               - maven-repo-v1-
 
       - run:
+          name: Browser Stack Local Setup
+          command: |
+            sudo wget https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
+            sudo unzip BrowserStackLocal-linux-x64.zip
+            sudo rm BrowserStackLocal-linux-x64.zip
+            sudo mv BrowserStackLocal /usr/bin/
+            sudo chmod 777 /usr/bin/BrowserStackLocal
+
+      - run:
           name: UI Tests
           command: |
+            /usr/bin/BrowserStackLocal --key ${BROWSERSTACK_ACCESS_KEY} --local-identifier Test123 &
             mvn test -Pbrowser -Dbrowser.profile=profiles/bs-chrome-latest.yaml
 
       - save_cache:
