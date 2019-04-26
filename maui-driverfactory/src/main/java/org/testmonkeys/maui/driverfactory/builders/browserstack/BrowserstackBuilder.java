@@ -62,6 +62,7 @@ public class BrowserstackBuilder implements WebDriverBuilder {
         capabilities.setCapability("browserstack.local",configuration.getBrowserStack().isLocal());
         addOptionIfSet(browserstackOptions,"os",configuration.getBrowserStack().getOs());
         addOptionIfSet(browserstackOptions,"seleniumVersion",configuration.getBrowserStack().getSeleniumVersion());
+
        return capabilities;
     }
 

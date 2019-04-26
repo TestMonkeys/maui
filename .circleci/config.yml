@@ -249,7 +249,7 @@ jobs:
       - run:
           name: UI Tests
           command: |
-            /usr/bin/BrowserStackLocal --key ${BROWSERSTACK_ACCESS_KEY} --local-identifier Test123 &
+            /usr/bin/BrowserStackLocal --key ${BROWSERSTACK_ACCESS_KEY} &
             mvn test -Pbrowser -Dbrowser.profile=profiles/bs-chrome-latest.yaml
 
       - save_cache:
