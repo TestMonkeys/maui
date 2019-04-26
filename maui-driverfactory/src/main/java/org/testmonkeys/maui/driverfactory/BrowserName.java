@@ -2,5 +2,9 @@ package org.testmonkeys.maui.driverfactory;
 
 public enum BrowserName {
     CHROME,
-    FIREFOX
+    FIREFOX,
+    SAFARI,
+    OPERA,
+    EDGE,
+    IE
 }

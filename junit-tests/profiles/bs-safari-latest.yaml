@@ -1,0 +1,11 @@
+browserName: SAFARI
+driverLocation: BROWSERSTACK
+
+browserStack:
+  auth:
+    server: hub-cloud.browserstack.com
+    userEnvVar: BROWSERSTACK_USERNAME
+    keyEnvVar: BROWSERSTACK_ACCESS_KEY
+  os: OS X
+  local: true
+  seleniumVersion: 3.4.0

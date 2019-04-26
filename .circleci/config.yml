@@ -91,6 +91,12 @@ workflows:
       - test-browserstack-firefox-latest:
           requires:
             - build
+      - test-browserstack-safari-latest:
+          requires:
+            - build
+      - test-browserstack-edge-latest:
+          requires:
+            - build
 
   release:
     jobs:
@@ -283,6 +289,18 @@ jobs:
     <<: *docker_setup
     environment:
       BROWSERPROFILE: bs-firefox-latest.yaml
+    <<: *browserstack_run
+
+  test-browserstack-edge-latest:
+    <<: *docker_setup
+    environment:
+      BROWSERPROFILE: bs-edge-latest.yaml
+    <<: *browserstack_run
+
+  test-browserstack-safari-latest:
+    <<: *docker_setup
+    environment:
+      BROWSERPROFILE: bs-safari-latest.yaml
     <<: *browserstack_run
 
 ##################################################################

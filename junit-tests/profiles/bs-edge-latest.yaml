@@ -1,0 +1,11 @@
+browserName: EDGE
+driverLocation: BROWSERSTACK
+
+browserStack:
+  auth:
+    server: hub-cloud.browserstack.com
+    userEnvVar: BROWSERSTACK_USERNAME
+    keyEnvVar: BROWSERSTACK_ACCESS_KEY
+  os: Windows
+  local: true
+  seleniumVersion: 3.4.0
