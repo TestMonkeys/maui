@@ -35,6 +35,7 @@ browserstack_run: &browserstack_run
         name: UI Tests
         command: |
           /usr/bin/BrowserStackLocal --key ${BROWSERSTACK_ACCESS_KEY} &
+          sleep 10
           mvn test -Pbrowser -Dbrowser.profile=profiles/${BROWSERPROFILE}
 
     - save_cache:
