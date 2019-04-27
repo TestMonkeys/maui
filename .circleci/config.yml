@@ -30,12 +30,12 @@ browserstack_run: &browserstack_run
           sudo rm BrowserStackLocal-linux-x64.zip
           sudo mv BrowserStackLocal /usr/bin/
           sudo chmod 777 /usr/bin/BrowserStackLocal
+          /usr/bin/BrowserStackLocal --key ${BROWSERSTACK_ACCESS_KEY} &
+        background: true
 
     - run:
         name: UI Tests
         command: |
-          /usr/bin/BrowserStackLocal --key ${BROWSERSTACK_ACCESS_KEY} &
-          sleep 10
           mvn test -Pbrowser -Dbrowser.profile=profiles/${BROWSERPROFILE}
 
     - save_cache:
