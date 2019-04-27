@@ -1,5 +1,6 @@
 package org.testmonkeys.maui.pageobjects.elements.html;
 
+import com.gargoylesoftware.htmlunit.javascript.host.html.HTMLAllCollection;
 import org.testmonkeys.maui.core.elements.actions.ExecuteJSScript;
 import org.testmonkeys.maui.pageobjects.elements.AbstractComponent;
 
@@ -31,9 +32,14 @@ public class HtmlElement {
 
         List<HtmlAttribute> attributes = new ArrayList<>();
         try{
-            Map<String,Map<String, String>> elementAttributes= (Map<String, Map<String, String>>) result;
+            Map<String,Map<String,String>> elementAttributes= (Map<String, Map<String, String>>) result;
             for (String key : elementAttributes.keySet()) {
-                attributes.add(getAttribute(elementAttributes.get(key)));
+                try {
+                    Map<String, String> finalMap = elementAttributes.get(key);
+                    attributes.add(getAttribute(finalMap));
+                }catch (Exception e){
+
+                }
             }
             return attributes;
         } catch (Exception e){
