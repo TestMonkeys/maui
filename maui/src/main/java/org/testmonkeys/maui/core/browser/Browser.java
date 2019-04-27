@@ -33,7 +33,11 @@ public class Browser implements LocatesElements {
 
     public Browser(WebDriver driver, TimeUnit unit, int elementTimeout, int pageTimeout) {
         this.driver = driver;
-        this.driver.manage().timeouts().pageLoadTimeout(pageTimeout, unit);
+        try {
+            this.driver.manage().timeouts().pageLoadTimeout(pageTimeout, unit);
+        } catch (Exception e){
+            logger.warn("Could not set timeouts for webdriver",e);
+        }
         //TODO maximize based on external parameter
         //this.driver.manage().window().maximize();
         dynamicWaiter = initWaitter(elementTimeout, 1, unit);

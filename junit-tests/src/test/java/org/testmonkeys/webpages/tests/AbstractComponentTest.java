@@ -8,11 +8,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.testmonkeys.DriverFactory;
 import org.testmonkeys.TestConfiguration;
 import org.testmonkeys.maui.core.browser.Browser;
-
-import java.sql.Driver;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = TestConfiguration.class)
@@ -28,8 +25,5 @@ abstract public class AbstractComponentTest {
         browser.quit();
     }
 
-    @AfterClass
-    public static void cleanupClass() {
-        DriverFactory.stopLocals();
-    }
+
 }

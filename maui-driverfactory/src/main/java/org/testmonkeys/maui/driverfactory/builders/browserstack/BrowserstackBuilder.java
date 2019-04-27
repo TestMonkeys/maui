@@ -30,12 +30,15 @@ public class BrowserstackBuilder implements WebDriverBuilder {
     private URL getGridUrl(BrowserStackAuth auth) {
         if (auth.getServer()==null || auth.getServer().isEmpty())
             throw new IllegalArgumentException("BrowserStack server is not set");
-        String username = System.getenv(auth.getUserEnvVar());
+        String username = null;
+        if (auth.getUserEnvVar()!=null)
+            username = System.getenv(auth.getUserEnvVar());
         if(username == null) {
             username = auth.getUser();
         }
-
-        String accessKey = System.getenv(auth.getKeyEnvVar());
+        String accessKey =null;
+        if (auth.getKeyEnvVar()!=null)
+            accessKey = System.getenv(auth.getKeyEnvVar());
         if(accessKey == null) {
             accessKey = auth.getKey();
         }
@@ -57,9 +60,12 @@ public class BrowserstackBuilder implements WebDriverBuilder {
                capabilities.setCapability(key, configuration.getCapabilities().get(key));
            }
         }
+        capabilities.setCapability("browserstack.use_w3c",true);
+
         capabilities.setBrowserName(configuration.getBrowserName().toString());
         HashMap<String,Object> browserstackOptions = new HashMap<>();
-        capabilities.setCapability("browserstack.local", configuration.getBrowserStack().isLocal());
+        addOptionIfSet(browserstackOptions,"seleniumVersion","3.4.0");
+        addOptionIfSet(browserstackOptions,"local", String.valueOf(configuration.getBrowserStack().isLocal()));
         addOptionIfSet(browserstackOptions,"os",configuration.getBrowserStack().getOs());
         addOptionIfSet(browserstackOptions,"seleniumVersion",configuration.getBrowserStack().getSeleniumVersion());
         capabilities.setCapability("bstack:options", browserstackOptions);

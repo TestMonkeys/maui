@@ -30,6 +30,16 @@ public class HtmlElement {
         Object result = new ExecuteJSScript(component, GET_ATTRIBUTE).execute();
 
         List<HtmlAttribute> attributes = new ArrayList<>();
+        try{
+            Map<String,Map<String, String>> elementAttributes= (Map<String, Map<String, String>>) result;
+            for (String key : elementAttributes.keySet()) {
+                attributes.add(getAttribute(elementAttributes.get(key)));
+            }
+            return attributes;
+        } catch (Exception e){
+
+        }
+
         try {
             ArrayList<Map<String, String>> elementAttributes = (ArrayList<Map<String, String>>) result;
             for (Map<String, String> elementAttribute : elementAttributes) {

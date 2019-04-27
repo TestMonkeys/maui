@@ -1,13 +1,10 @@
 package org.testmonkeys;
 
 import org.json.JSONObject;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.testmonkeys.maui.core.browser.Browser;
-import org.testmonkeys.DriverFactory;
 import org.testmonkeys.maui.driverfactory.DriverProvider;
 
 import java.io.*;
