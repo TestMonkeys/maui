@@ -86,7 +86,7 @@ workflows:
 #      - test-phantomjs:
 #          requires:
 #            - build
-      - test-bstack-chrome:
+      - test-bstack-chrome-latest:
           requires:
             - build
       - test-bstack-firefox-latest:
@@ -315,11 +315,11 @@ jobs:
     <<: *browserstack_run
 
 
-  test-bstack-chrome:
+  test-bstack-chrome-latest:
     <<: *docker_setup
-      environment:
-        BROWSERPROFILE: bs-chrome-latest.yaml
-        BROWSERSTACK_LOCAL_IDENTIFIER: ch1
+    environment:
+      BROWSERPROFILE: bs-chrome-latest.yaml
+      BROWSERSTACK_LOCAL_IDENTIFIER: ch1
     <<: *browserstack_run
 
   ##################################################################
