@@ -8,6 +8,7 @@ public class BrowserStackConfig {
     private String os;
     private String seleniumVersion;
     private boolean local;
+    private String localIdentifierVar;
 
     public String getBrowser() {
         return browser;
@@ -47,5 +48,13 @@ public class BrowserStackConfig {
 
     public void setAuth(BrowserStackAuth auth) {
         this.auth = auth;
+    }
+
+    public String getLocalIdentifierVar() {
+        return localIdentifierVar;
+    }
+
+    public void setLocalIdentifierVar(String localIdentifierVar) {
+        this.localIdentifierVar = localIdentifierVar;
     }
 }

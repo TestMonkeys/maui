@@ -8,4 +8,5 @@ browserStack:
     keyEnvVar: BROWSERSTACK_ACCESS_KEY
   os: OS X
   local: true
+  localIdentifierVar: BROWSERSTACK_LOCAL_IDENTIFIER
   seleniumVersion: 3.4.0
