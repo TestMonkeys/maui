@@ -30,7 +30,7 @@ browserstack_run: &browserstack_run
           sudo rm BrowserStackLocal-linux-x64.zip
           sudo mv BrowserStackLocal /usr/bin/
           sudo chmod 777 /usr/bin/BrowserStackLocal
-          /usr/bin/BrowserStackLocal --key ${BROWSERSTACK_ACCESS_KEY} &
+          /usr/bin/BrowserStackLocal --key ${BROWSERSTACK_ACCESS_KEY} --local-identifier ${BROWSERSTACK_LOCAL_IDENTIFIER} &
         background: true
 
     - run:
