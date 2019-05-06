@@ -36,6 +36,7 @@ browserstack_run: &browserstack_run
     - run:
         name: UI Tests
         command: |
+          sleep 30
           mvn test -Pbrowser -Dbrowser.profile=profiles/${BROWSERPROFILE}
 
     - save_cache:
