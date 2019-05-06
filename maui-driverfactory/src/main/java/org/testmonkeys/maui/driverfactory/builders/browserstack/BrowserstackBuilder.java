@@ -60,20 +60,24 @@ public class BrowserstackBuilder implements WebDriverBuilder {
                capabilities.setCapability(key, configuration.getCapabilities().get(key));
            }
         }
-        capabilities.setCapability("browserstack.use_w3c",true);
+        //capabilities.setCapability("browserstack.use_w3c",true);
 
         capabilities.setBrowserName(configuration.getBrowserName().toString());
         HashMap<String,Object> browserstackOptions = new HashMap<>();
-        addOptionIfSet(browserstackOptions,"seleniumVersion","3.4.0");
-        addOptionIfSet(browserstackOptions,"local", String.valueOf(configuration.getBrowserStack().isLocal()));
-        addOptionIfSet(browserstackOptions,"os",configuration.getBrowserStack().getOs());
-        addOptionIfSet(browserstackOptions,"seleniumVersion",configuration.getBrowserStack().getSeleniumVersion());
+//        addOptionIfSet(browserstackOptions,"seleniumVersion","3.4.0");
+//        addOptionIfSet(browserstackOptions,"local", String.valueOf(configuration.getBrowserStack().isLocal()));
+//        addOptionIfSet(browserstackOptions,"os",configuration.getBrowserStack().getOs());
+//        addOptionIfSet(browserstackOptions,"seleniumVersion",configuration.getBrowserStack().getSeleniumVersion());
+        capabilities.setCapability("browserstack.seleniumVersion","3.4.0");
+        capabilities.setCapability("browserstack.local", String.valueOf(configuration.getBrowserStack().isLocal()));
+        capabilities.setCapability("browserstack.os",configuration.getBrowserStack().getOs());
+       // capabilities.setCapability("browserstack.seleniumVersion",configuration.getBrowserStack().getSeleniumVersion());
         String localIdentifier="";
         if (configuration.getBrowserStack().getLocalIdentifierVar()!=null && !configuration.getBrowserStack().getLocalIdentifierVar().isEmpty())
             localIdentifier= System.getenv(configuration.getBrowserStack().getLocalIdentifierVar());
         if (!localIdentifier.isEmpty())
             capabilities.setCapability("browserstack.localIdentifier",localIdentifier);
-        capabilities.setCapability("bstack:options", browserstackOptions);
+//        capabilities.setCapability("bstack:options", browserstackOptions);
        return capabilities;
     }
 
