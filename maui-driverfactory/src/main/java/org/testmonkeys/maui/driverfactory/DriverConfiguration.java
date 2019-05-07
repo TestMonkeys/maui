@@ -6,6 +6,7 @@ public class DriverConfiguration {
 
     private DriverMode driverLocation;
     private BrowserName browserName;
+    private String browserVersion;
     private ChromeOptionsConfig chromeOptions;
     private HashMap<String,Object> capabilities;
     private BrowserStackConfig browserStack;
@@ -48,5 +49,13 @@ public class DriverConfiguration {
 
     public void setBrowserStack(BrowserStackConfig browserStack) {
         this.browserStack = browserStack;
+    }
+
+    public String getBrowserVersion() {
+        return browserVersion;
+    }
+
+    public void setBrowserVersion(String browserVersion) {
+        this.browserVersion = browserVersion;
     }
 }

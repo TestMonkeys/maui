@@ -1,0 +1,15 @@
+browserName: IE
+browserVersion: 6
+driverLocation: BROWSERSTACK
+
+
+browserStack:
+  auth:
+    server: hub-cloud.browserstack.com
+    userEnvVar: BROWSERSTACK_USERNAME
+    keyEnvVar: BROWSERSTACK_ACCESS_KEY
+  os: Windows
+  osVersion: XP
+  local: true
+  localIdentifierVar: BROWSERSTACK_LOCAL_IDENTIFIER
+  seleniumVersion: 3.4.0

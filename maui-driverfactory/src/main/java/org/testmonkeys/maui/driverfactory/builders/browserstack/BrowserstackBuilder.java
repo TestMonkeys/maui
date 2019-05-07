@@ -63,10 +63,13 @@ public class BrowserstackBuilder implements WebDriverBuilder {
         capabilities.setCapability("browserstack.use_w3c",true);
 
         capabilities.setBrowserName(configuration.getBrowserName().toString());
+        if (configuration.getBrowserVersion()!=null && !configuration.getBrowserVersion().isEmpty())
+            capabilities.setCapability("browserVersion",configuration.getBrowserVersion());
         HashMap<String,Object> browserstackOptions = new HashMap<>();
         addOptionIfSet(browserstackOptions,"seleniumVersion","3.4.0");
         addOptionIfSet(browserstackOptions,"local", String.valueOf(configuration.getBrowserStack().isLocal()));
         addOptionIfSet(browserstackOptions,"os",configuration.getBrowserStack().getOs());
+        addOptionIfSet(browserstackOptions,"osVersion",configuration.getBrowserStack().getOsVersion());
         addOptionIfSet(browserstackOptions,"seleniumVersion",configuration.getBrowserStack().getSeleniumVersion());
 //        capabilities.setCapability("browserstack.seleniumVersion","3.4.0");
 //        capabilities.setCapability("browserstack.local", String.valueOf(configuration.getBrowserStack().isLocal()));

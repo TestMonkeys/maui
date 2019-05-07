@@ -98,6 +98,9 @@ workflows:
       - test-bstack-edge-latest:
           requires:
             - build
+      - test-bstack-IE6-WinXP:
+          requires:
+            - build
 
   release:
     jobs:
@@ -320,6 +323,14 @@ jobs:
     environment:
       BROWSERPROFILE: bs-chrome-latest.yaml
       BROWSERSTACK_LOCAL_IDENTIFIER: ch1
+    <<: *browserstack_run
+
+
+  test-bstack-IE6-WinXP:
+    <<: *docker_setup
+    environment:
+      BROWSERPROFILE: bs-IE6-WinXP.yaml
+      BROWSERSTACK_LOCAL_IDENTIFIER: ie6
     <<: *browserstack_run
 
   ##################################################################
