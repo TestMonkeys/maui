@@ -77,7 +77,7 @@ public class BrowserstackBuilder implements WebDriverBuilder {
             localIdentifier= System.getenv(configuration.getBrowserStack().getLocalIdentifierVar());
         if (!localIdentifier.isEmpty()) {
             System.out.println("identifier is"+localIdentifier);
-            addOptionIfSet(browserstackOptions,"browserstack.localIdentifier", localIdentifier);
+            addOptionIfSet(browserstackOptions,"localIdentifier", localIdentifier);
         }
         capabilities.setCapability("bstack:options", browserstackOptions);
        return capabilities;
