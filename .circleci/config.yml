@@ -29,7 +29,7 @@ browserstack_run: &browserstack_run
           sudo rm BrowserStackLocal-linux-x64.zip
           sudo mv BrowserStackLocal /usr/bin/
           sudo chmod 777 /usr/bin/BrowserStackLocal
-          /usr/bin/BrowserStackLocal --key ${BROWSERSTACK_ACCESS_KEY} --local-identifier ${BROWSERSTACK_LOCAL_IDENTIFIER} &
+          /usr/bin/BrowserStackLocal --key ${BROWSERSTACK_ACCESS_KEY} --local-identifier ${BROWSERSTACK_LOCAL_IDENTIFIER} --verbose 3 > ~/repo/junit-tests/target/bstack.out&
         background: true
 
     - run:
