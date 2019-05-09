@@ -1,7 +1,7 @@
 docker_setup: &docker_setup
   docker:
     # specify the version you desire here
-    - image: circleci/openjdk:8u141-browsers
+    - image: costea32/testmonkeys:browserstack-local
 
   working_directory: ~/repo
 
@@ -20,17 +20,6 @@ browserstack_run: &browserstack_run
           - maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
           - maven-repo-v1-{{ .Branch }}-
           - maven-repo-v1-
-
-    - run:
-        name: Browser Stack Local Setup
-        command: |
-          sudo wget https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
-          sudo unzip BrowserStackLocal-linux-x64.zip
-          sudo rm BrowserStackLocal-linux-x64.zip
-          sudo mv BrowserStackLocal /usr/bin/
-          sudo chmod 777 /usr/bin/BrowserStackLocal
-
-
 
     - run:
         name: UI Tests
