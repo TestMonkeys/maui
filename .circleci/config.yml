@@ -1,7 +1,7 @@
 docker_setup: &docker_setup
   docker:
     # specify the version you desire here
-    - image: costea32/testmonkeys:browserstack-local
+    - image: costea32/testmonkeys:browserstack-local-1
 
   working_directory: ~/repo
 
