@@ -19,17 +19,17 @@ public class TestConfiguration {
 
 
     //TODO remove this ugly stuff when the defect on video library will be fixed
-    @Bean
-    public Properties loadTestProperties() throws IOException {
-        FileInputStream inputStream = new FileInputStream("properties/test.properties");
-        Properties properties = new Properties();
-        properties.load(inputStream);
-        for (Object key : properties.keySet()) {
-            System.setProperty((String) key, properties.getProperty((String) key));
-        }
-        System.setProperty("video.folder", System.getProperty("user.dir") + separator + "target" + separator + "video");
-        return properties;
-    }
+//    @Bean
+//    public Properties loadTestProperties() throws IOException {
+//        FileInputStream inputStream = new FileInputStream("properties/test.properties");
+//        Properties properties = new Properties();
+//        properties.load(inputStream);
+//        for (Object key : properties.keySet()) {
+//            System.setProperty((String) key, properties.getProperty((String) key));
+//        }
+//        System.setProperty("video.folder", System.getProperty("user.dir") + separator + "target" + separator + "video");
+//        return properties;
+//    }
 
     @Bean
     @Scope("prototype")

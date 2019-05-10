@@ -15,8 +15,8 @@ import org.testmonkeys.maui.core.browser.Browser;
 @ContextConfiguration(classes = TestConfiguration.class)
 abstract public class AbstractComponentTest {
 
-    @Rule
-    public VideoRule videoRule = new VideoRule();
+//    @Rule
+//    public VideoRule videoRule = new VideoRule();
     @Autowired
     protected Browser browser;
 
