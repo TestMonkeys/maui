@@ -37,7 +37,7 @@ public class BrowserstackBuilder implements WebDriverBuilder {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
-                if (count>=3)
+                if (count>=10)
                     throw new Error(e);
             }
         }
