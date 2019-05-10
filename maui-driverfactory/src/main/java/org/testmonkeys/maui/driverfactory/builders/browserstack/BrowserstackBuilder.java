@@ -23,8 +23,25 @@ public class BrowserstackBuilder implements WebDriverBuilder {
 
         DesiredCapabilities capabilities = getCapabilities(driverConfiguration);
         URL gridUrl = getGridUrl(bsConfig.getAuth());
+        WebDriver driver=null;
+        int count=0;
+        while (driver==null){
+            try{
+                count++;
+                driver= new RemoteWebDriver(gridUrl,capabilities);
+            } catch (Throwable e){
 
-        return new RemoteWebDriver(gridUrl,capabilities);
+                e.printStackTrace();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                if (count>=3)
+                    throw new Error(e);
+            }
+        }
+        return driver;
     }
 
     private URL getGridUrl(BrowserStackAuth auth) {
