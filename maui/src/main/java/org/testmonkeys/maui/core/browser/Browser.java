@@ -2,12 +2,11 @@ package org.testmonkeys.maui.core.browser;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testmonkeys.maui.core.browser.popups.BrowserPopUps;
 import org.testmonkeys.maui.core.elements.location.LocatesElements;
 import org.testmonkeys.maui.core.elements.location.Locator;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -18,9 +17,9 @@ public class Browser implements LocatesElements {
 
     private WebDriver driver;
     private FluentWait<WebDriver> dynamicWaiter;
-    private int pageTimeout;
-    private int elementTimeout;
-    private TimeUnit unit;
+    private int pageTimeout = 10;
+    private int elementTimeout = 10;
+    private TimeUnit unit = TimeUnit.SECONDS;
     private int step = 1;
     private BrowserPopUps browserPopUps = new BrowserPopUps(this);
 
@@ -28,15 +27,18 @@ public class Browser implements LocatesElements {
         this.driver = driver;
         //TODO maximize based on external parameter
         //this.driver.manage().window().maximize();
-        dynamicWaiter = initWaitter(10, step, TimeUnit.SECONDS);
+        dynamicWaiter = initWaitter(elementTimeout, step, this.unit);
     }
 
     public Browser(WebDriver driver, TimeUnit unit, int elementTimeout, int pageTimeout) {
         this.driver = driver;
+        this.elementTimeout = elementTimeout;
+        this.unit = unit;
+        this.pageTimeout = pageTimeout;
         this.driver.manage().timeouts().pageLoadTimeout(pageTimeout, unit);
         //TODO maximize based on external parameter
         //this.driver.manage().window().maximize();
-        dynamicWaiter = initWaitter(elementTimeout, 1, unit);
+        dynamicWaiter = initWaitter(elementTimeout, step, unit);
     }
 
     public byte[] takeScreenshot() {
