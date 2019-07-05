@@ -1,7 +1,6 @@
 package org.testmonkeys;
 
 import com.browserstack.local.Local;
-import com.gargoylesoftware.htmlunit.BrowserVersion;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.openqa.selenium.Dimension;
@@ -11,8 +10,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -86,8 +83,6 @@ public class DriverFactory {
         switch (webDriverName){
             case "ChromeDriver":
                 return new ChromeDriver(capabilities);
-            case "PhantomJSDriver":
-                return new PhantomJSDriver(capabilities);
             default:
                 throw new IllegalArgumentException("WebDriver "+webDriverName+" is not yet supported");
         }

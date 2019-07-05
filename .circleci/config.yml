@@ -17,9 +17,6 @@ workflows:
       - test-chrome:
           requires:
             - build
-      - test-phantomjs:
-          requires:
-            - build
       - test-browserstack:
           requires:
             - build
@@ -32,14 +29,6 @@ workflows:
             branches:
               ignore: /.*/
       - test-chrome:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
-      - test-phantomjs:
           requires:
             - build
           filters:
