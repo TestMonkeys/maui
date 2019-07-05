@@ -39,7 +39,6 @@ workflows:
       - create-package:
           requires:
             - test-chrome
-            - test-phantomjs
           filters:
             tags:
               only: /^v.*/
