@@ -77,8 +77,12 @@ public abstract class AbstractComponent implements Component {
 
         if (parent == null)
             webElement = browser.findElement(locator);
-        else
+        else {
+            if (parent instanceof LazyLoading) {
+                browser.getDynamicWaiter().until(p -> ((LazyLoading) parent).isReady());
+            }
             webElement = parent.findElement(locator);
+        }
         return webElement;
     }
 

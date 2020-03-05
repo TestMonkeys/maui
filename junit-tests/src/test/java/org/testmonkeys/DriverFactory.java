@@ -1,40 +1,29 @@
 package org.testmonkeys;
 
 import com.browserstack.local.Local;
-import org.json.JSONArray;
 import org.json.JSONObject;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Properties;
-
-import static org.openqa.selenium.remote.BrowserType.CHROME;
-import static org.openqa.selenium.remote.BrowserType.PHANTOMJS;
 
 public class DriverFactory {
 
     private static Local local;
 
-    public static WebDriver initDriver(JSONObject config) throws MalformedURLException {
+    public static WebDriver initDriver(JSONObject config) throws Exception {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
 
         JSONObject commonCapabilities = (JSONObject) config.get("capabilities");
-        Iterator it  = commonCapabilities.keySet().iterator();
+        Iterator it = commonCapabilities.keySet().iterator();
         while (it.hasNext()) {
-            String key=(String)it.next();
+            String key = (String) it.next();
             capabilities.setCapability(key, commonCapabilities.get(key));
         }
 
@@ -93,7 +82,7 @@ public class DriverFactory {
         if (local!=null) {
             try {
                 local.stop();
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
