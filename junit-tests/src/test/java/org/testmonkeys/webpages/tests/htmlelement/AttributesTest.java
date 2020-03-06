@@ -39,7 +39,7 @@ public class AttributesTest extends AbstractHtmlElementPageTest {
         assertThat("id attr", htmlElement.getAttribute("id"), is("name_3_firstname"));
         assertThat("class attr", htmlElement.getAttribute("class"), is("input_fields  piereg_validate[required] input_fields"));
         assertThat("type attr", htmlElement.getAttribute("type"), is("text"));
-        assertThat("disabled attr", htmlElement.getAttribute("disabled"), is(""));
+        assertThat("disabled attr", htmlElement.getAttribute("disabled"), is("true"));
     }
 
     @Test
