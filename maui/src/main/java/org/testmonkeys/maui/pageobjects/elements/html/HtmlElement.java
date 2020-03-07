@@ -43,6 +43,16 @@ public class HtmlElement {
     }
 
     /**
+     * Gets html attribute value for this element
+     *
+     * @param attributeName name of the attribute to be retrieved
+     * @return String value of attribute
+     */
+    public String getAttribute(String attributeName) {
+        return component.find().getAttribute(attributeName);
+    }
+
+    /**
      * Parses the HashMap of each attribute and builds an the HtmlAttribute model
      *
      * @param attributeDetails hash map of attribute properties
