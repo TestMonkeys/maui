@@ -1,6 +1,5 @@
 package org.testmonkeys.webpages.pageObjects;
 
-import org.testmonkeys.maui.core.page.Page;
 import org.testmonkeys.maui.pageobjects.AbstractPage;
 import org.testmonkeys.maui.pageobjects.ElementAccessor;
 import org.testmonkeys.maui.pageobjects.PageAccessor;
@@ -13,28 +12,42 @@ public class HtmlElementsPageObject extends AbstractPage {
     @ElementAccessor(elementName = "header", byXPath = "//h1")
     private GenericWebElement header;
 
-    @ElementAccessor(elementName="input",byId = "name_3_firstname")
+    @ElementAccessor(elementName = "input", byId = "name_3_firstname")
     private Input firstName;
 
-    @ElementAccessor(elementName="input2",byXPath = "//div[@id='attributesTest']/input[1]")
+    @ElementAccessor(elementName = "input2", byXPath = "//div[@id='attributesTest']/input[1]")
     private Input firstName2;
 
-    @ElementAccessor(elementName = "element3", byId="styled_input")
+    @ElementAccessor(elementName = "element3", byId = "styled_input")
     private Input styledInput;
 
-    public Input firstName(){
+    @ElementAccessor(elementName = "element4", byId = "noDisplay_input")
+    private Input noDisplayInput;
+
+    @ElementAccessor(elementName = "element5", byId = "hidden_input")
+    private Input hiddenInput;
+
+    public Input firstName() {
         return firstName;
     }
 
-    public Input firstName2(){
+    public Input firstName2() {
         return firstName2;
     }
 
-    public Input styledInput(){
+    public Input styledInput() {
         return styledInput;
     }
 
     public GenericWebElement header() {
         return header;
+    }
+
+    public Input getNoDisplayInput() {
+        return noDisplayInput;
+    }
+
+    public Input getHiddenInput() {
+        return hiddenInput;
     }
 }
