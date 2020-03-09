@@ -2,6 +2,7 @@ package org.testmonkeys.webpages.tests.htmlelement;
 
 import org.junit.Test;
 import org.testmonkeys.maui.pageobjects.elements.html.HtmlAttribute;
+import org.testmonkeys.maui.pageobjects.elements.html.HtmlElement;
 import org.testmonkeys.webpages.tests.AbstractHtmlElementPageTest;
 
 import java.util.List;
@@ -29,6 +30,16 @@ public class AttributesTest extends AbstractHtmlElementPageTest {
         assertThat("class attr", attrs, hasItem(new HtmlAttribute("class", "input_fields  piereg_validate[required] input_fields")));
         assertThat("type attr", attrs, hasItem(new HtmlAttribute("type", "text")));
         assertThat("disabled attr", attrs, hasItem(new HtmlAttribute("disabled", "")));
+    }
+
+    @Test
+    public void get_singleAttributes() {
+        HtmlElement htmlElement = page.firstName().getHtmlElement();
+        assertThat("value attr", htmlElement.getAttribute("value"), is(""));
+        assertThat("id attr", htmlElement.getAttribute("id"), is("name_3_firstname"));
+        assertThat("class attr", htmlElement.getAttribute("class"), is("input_fields  piereg_validate[required] input_fields"));
+        assertThat("type attr", htmlElement.getAttribute("type"), is("text"));
+        assertThat("disabled attr", htmlElement.getAttribute("disabled"), is("true"));
     }
 
     @Test

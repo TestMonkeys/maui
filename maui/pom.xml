@@ -40,8 +40,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.6.1</maven.compiler.version>
         <logback.version>1.2.3</logback.version>
-        <selenium.version>3.4.0</selenium.version>
-        <reflections.version>0.9.10</reflections.version>
+        <selenium.version>3.141.59</selenium.version>
+        <selenium.chromedriver.version>3.141.59</selenium.chromedriver.version>
+        <reflections.version>0.9.11</reflections.version>
         <maven.compiler.version>3.6.1</maven.compiler.version>
         <slf4jVersion>1.7.25</slf4jVersion>
     </properties>
@@ -60,7 +61,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
-            <version>${selenium.version}</version>
+            <version>${selenium.chromedriver.version}</version>
         </dependency>
         <dependency>
             <groupId>org.reflections</groupId>

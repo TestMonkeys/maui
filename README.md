@@ -1,2 +1,6 @@
-#koshmar
-[![CircleCI](https://circleci.com/gh/TestMonkeys/koshmar.svg?style=svg)](https://circleci.com/gh/TestMonkeys/koshmar)
+MAUI is a wrapper framework for selenium with the aim of providing an easier way of automating and executing tests.
+
+Is Compatible with:
+
+<a href="http://www.browserstack.com" target="_blank"><img src="https://github.com/TestMonkeys/maui/blob/browserStackIntegration/.browserStack/Browserstack-logo.svg" 
+alt="BrowserStack" width="240"  /></a>

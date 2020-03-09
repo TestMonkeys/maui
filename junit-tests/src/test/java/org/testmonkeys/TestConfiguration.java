@@ -1,5 +1,6 @@
 package org.testmonkeys;
 
+import org.json.JSONObject;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -8,8 +9,7 @@ import org.springframework.context.annotation.*;
 import org.testmonkeys.maui.core.browser.Browser;
 import org.testmonkeys.DriverFactory;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -17,10 +17,8 @@ import static java.io.File.separator;
 
 @Configuration
 @ComponentScan(basePackages = "org.testmonkeys")
-@PropertySource(
-        value = {"file:properties/driver.properties"},
-        ignoreResourceNotFound = true)
 public class TestConfiguration {
+
 
     //TODO remove this ugly stuff when the defect on video library will be fixed
     @Bean
@@ -37,25 +35,60 @@ public class TestConfiguration {
 
     @Bean
     @Scope("prototype")
-    public WebDriver webDriver(@Value("${browser}") String browser,
-                               @Value("${browser.mode}") String mode) throws IOException {
-        Properties properties = new Properties();
-        properties.load(new FileInputStream("properties/driver.properties"));
-
-        DesiredCapabilities capabilities = new DesiredCapabilities(browser, "", Platform.ANY);
-        for (Object key : properties.keySet()) {
-            capabilities.setCapability(String.valueOf(key), properties.getProperty(String.valueOf(key)));
+    public Browser browser(@Value("${selenium.profile}") String seleniumProfile,
+                           @Value("${browser.profile}") String browserProfile ) throws Exception {
+        if (seleniumProfile==null || seleniumProfile.isEmpty()){
+            throw new IllegalArgumentException("Selenium profile should be provided by -Dselenium.profile parameter");
         }
+        if (browserProfile==null || browserProfile.isEmpty()){
+            throw new IllegalArgumentException("Browser profile should be provided by -Dbrowser.profile parameter");
+        }
+        JSONObject config = readProfile(browserProfile);
+        WebDriver driver;
 
-        return DriverFactory.initDriver(browser, mode, capabilities);
+        switch (seleniumProfile){
+            case "local":
+                driver= DriverFactory.initLocalDriver(config);
+                break;
+            case "browserStack":
+                driver= DriverFactory.initDriver(config);
+                break;
+            default:
+                throw new IllegalArgumentException("Selenium Profile argument should be provided");
+        }
+        MauiConfigProperties mauiConfig=readMauiConfigProps(config);
+
+        return new Browser(driver, mauiConfig.timeoutTimeUnit, mauiConfig.elementTimeout, mauiConfig.pageTimeout);
     }
 
-    @Bean
-    @Scope("prototype")
-    public Browser browser(WebDriver webDriver,
-                           @Value("${browser.timeout.unit}") TimeUnit unit,
-                           @Value("${browser.element.timeout}") int elementTimeout,
-                           @Value("${browser.page.timeout}") int pageTimeout) {
-        return new Browser(webDriver, unit, elementTimeout, pageTimeout);
+    private JSONObject readProfile(String profile) throws IOException {
+        try {
+            File file = new File(profile);
+            FileInputStream fis = new FileInputStream(file);
+            byte[] data = new byte[(int) file.length()];
+            fis.read(data);
+            fis.close();
+
+            String str = new String(data, "UTF-8");
+
+            return new JSONObject(str);
+        } catch (IOException e){
+            throw new IOException("Could not read profile: "+profile,e);
+        }
+    }
+
+    private MauiConfigProperties readMauiConfigProps(JSONObject config) throws IOException {
+        MauiConfigProperties props=new MauiConfigProperties();
+        JSONObject mauiConfig = (JSONObject) config.get("mauiProperties");
+        props.elementTimeout= (int) mauiConfig.get("elementTimeout");
+        props.pageTimeout = (int) mauiConfig.get("pageTimeout");
+        props.timeoutTimeUnit = TimeUnit.valueOf((String) mauiConfig.get("timeoutTimeUnit"));
+        return props;
+    }
+
+    private class MauiConfigProperties{
+        public TimeUnit timeoutTimeUnit;
+        public int elementTimeout;
+        public int pageTimeout;
     }
 }
