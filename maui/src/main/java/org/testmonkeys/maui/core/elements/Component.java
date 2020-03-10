@@ -26,4 +26,9 @@ public interface Component extends LocatesElements {
     List<WebElement> findAll();
 
     void setName(String name);
+
+    boolean isDisplayed();
+
+    boolean isEnabled();
+
 }

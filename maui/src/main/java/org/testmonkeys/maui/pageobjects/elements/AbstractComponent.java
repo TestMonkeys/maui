@@ -149,4 +149,18 @@ public abstract class AbstractComponent implements Component {
                 ", \"" + this.getLocator().getLocatorValue() +
                 "\"])";
     }
+
+    @Override
+    public boolean isDisplayed() {
+        try {
+            return find().isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return find().isEnabled();
+    }
 }
