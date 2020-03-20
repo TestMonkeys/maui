@@ -11,4 +11,6 @@ public interface LocatesElements {
     WebElement findElement(Locator locator);
 
     List<WebElement> findElements(Locator locator);
+
+    WebElement instantFind(Locator locator);
 }

@@ -19,6 +19,8 @@ public interface Component extends LocatesElements {
 
     WebElement find();
 
+    WebElement instantFind();
+
     Browser getBrowser();
 
     void setBrowser(Browser browser);

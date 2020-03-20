@@ -59,6 +59,11 @@ public class Browser implements LocatesElements {
         return dynamicWaiter.until(webDriver -> webDriver.findElements(locator.getSeleniumLocator()));
     }
 
+    @Override
+    public WebElement instantFind(Locator locator) {
+        return driver.findElement(locator.getSeleniumLocator());
+    }
+
     private FluentWait<WebDriver> initWaitter(int timeout, int step, TimeUnit unit) {
         return new FluentWait<>(this.driver)
                 .withTimeout(timeout, unit)
