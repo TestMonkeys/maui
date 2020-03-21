@@ -14,6 +14,6 @@
     "local": true,
     "os":"OS X",
     "osVersion":"Catalina",
-    "seleniumVersion":"3.5.2"
+    "seleniumVersion":"3.141.59"
   }
 }
