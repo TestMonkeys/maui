@@ -13,7 +13,7 @@
   "browserstack": {
     "local": true,
     "os":"OS X",
-    "osVersion":"Catalina",
+    "osVersion":"Mojave",
     "seleniumVersion":"3.141.59"
   }
 }
