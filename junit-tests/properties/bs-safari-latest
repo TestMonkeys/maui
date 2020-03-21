@@ -1,0 +1,19 @@
+{
+  "server": "hub-cloud.browserstack.com",
+  "mauiProperties":{
+       "elementTimeout":10,
+       "pageTimeout":10,
+       "timeoutTimeUnit":"SECONDS"
+     },
+  "capabilities": {
+    "browserName": "Safari",
+    "browserstack.debug": true,
+    "browserstack.local": true
+  },
+  "browserstack": {
+    "local": true,
+    "os":"OS X",
+    "osVersion":"Catalina",
+    "seleniumVersion":"3.5.2"
+  }
+}
