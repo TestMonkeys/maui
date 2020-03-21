@@ -31,14 +31,6 @@ public class HtmlElement {
 
         List<HtmlAttribute> attributes = new ArrayList<>();
         try {
-            Map<String, Map<String, String>> elementAttributes = (Map<String, Map<String, String>>) result;
-            for (Map<String, String> elementAttribute : elementAttributes.values()) {
-                attributes.add(getAttribute(elementAttribute));
-            }
-        } catch (Exception e) {
-            throw new JSInteractionException("Could not parse annotations", e);
-        }
-        try {
             ArrayList<Map<String, String>> elementAttributes = (ArrayList<Map<String, String>>) result;
             for (Map<String, String> elementAttribute : elementAttributes) {
                 attributes.add(getAttribute(elementAttribute));
