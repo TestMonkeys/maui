@@ -27,17 +27,22 @@ public class HtmlElement {
      * @return List of HtmlAttribute
      */
     public List<HtmlAttribute> getAttributes() {
-        Object result = new ExecuteJSScript(component, GET_ATTRIBUTE).execute();
+        Object jsResult = new ExecuteJSScript(component, GET_ATTRIBUTE).execute();
 
-        List<HtmlAttribute> attributes = new ArrayList<>();
+        Map<String, String> result;
         try {
-            ArrayList<Map<String, String>> elementAttributes = (ArrayList<Map<String, String>>) result;
-            for (Map<String, String> elementAttribute : elementAttributes) {
-                attributes.add(getAttribute(elementAttribute));
-            }
-        } catch (Exception e) {
-            throw new JSInteractionException("Could not parse annotations", e);
+            result = (Map<String, String>) jsResult;
+        } catch (ClassCastException e) {
+            throw new JSInteractionException("Could not parse attributes object", e);
         }
+        List<HtmlAttribute> attributes = new ArrayList<>();
+             for (String keys : result.keySet()) {
+                 HtmlAttribute attribute = new HtmlAttribute();
+                 attribute.setName(keys);
+                 attribute.setValue(result.get(keys));
+                attributes.add(attribute);
+            }
+
 
         return attributes;
     }
@@ -52,26 +57,6 @@ public class HtmlElement {
         return component.find().getAttribute(attributeName);
     }
 
-    /**
-     * Parses the HashMap of each attribute and builds an the HtmlAttribute model
-     *
-     * @param attributeDetails hash map of attribute properties
-     * @return HtmlAttribute
-     */
-    private HtmlAttribute getAttribute(Map<String, String> attributeDetails) {
-        HtmlAttribute attribute = new HtmlAttribute();
-        if (attributeDetails.containsKey("name")) {
-            attribute.setName(attributeDetails.get("name"));
-        } else {
-            throw new JSInteractionException("Could not understand the attribute list");
-        }
-
-        if (attributeDetails.containsKey("value")) {
-            attribute.setValue(attributeDetails.get("value"));
-        }
-
-        return attribute;
-    }
 
     /**
      * Gets the computed style of the element. This will include both the style declared on the element

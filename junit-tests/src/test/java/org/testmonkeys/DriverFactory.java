@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.safari.SafariOptions;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -74,6 +76,11 @@ public class DriverFactory {
             case "ChromeDriver":
                 WebDriverManager.chromedriver().setup();
                 return new ChromeDriver(capabilities);
+            case "Safari":
+                SafariOptions safariOptions = new SafariOptions();
+
+
+                return new SafariDriver(safariOptions);
             default:
                 throw new IllegalArgumentException("WebDriver "+webDriverName+" is not yet supported");
         }
