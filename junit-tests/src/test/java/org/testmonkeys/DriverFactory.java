@@ -1,6 +1,7 @@
 package org.testmonkeys;
 
 import com.browserstack.local.Local;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.json.JSONObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -71,6 +72,7 @@ public class DriverFactory {
 
         switch (webDriverName){
             case "ChromeDriver":
+                WebDriverManager.chromedriver().setup();
                 return new ChromeDriver(capabilities);
             default:
                 throw new IllegalArgumentException("WebDriver "+webDriverName+" is not yet supported");
