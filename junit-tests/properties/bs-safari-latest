@@ -1,0 +1,19 @@
+{
+  "server": "hub-cloud.browserstack.com",
+  "mauiProperties":{
+       "elementTimeout":20,
+       "pageTimeout":10,
+       "timeoutTimeUnit":"SECONDS"
+     },
+  "capabilities": {
+    "browserName": "Safari",
+    "browserstack.debug": true,
+    "browserstack.local": true
+  },
+  "browserstack": {
+    "local": true,
+    "os":"OS X",
+    "osVersion":"Mojave",
+    "seleniumVersion":"3.141.59"
+  }
+}

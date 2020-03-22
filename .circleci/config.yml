@@ -17,9 +17,14 @@ workflows:
       - test-chrome:
           requires:
             - build
+      - test-browserstack-safari:
+          requires:
+            - build
       - test-browserstack:
           requires:
             - build
+            - test-browserstack-safari
+
   release:
     jobs:
       - build:
@@ -255,7 +260,67 @@ jobs:
             echo $MAVEN_RELEASE_VERSION > ~/repo/junit-tests/target/mvnrelease.out
 
       - store_artifacts:
-                path: ~/repo/junit-tests/target
+          path: ~/repo/junit-tests/target
+
+
+  ##################################################################
+  ##
+  ##TEST-BROWSERSTACK Safari
+  ##
+  ##################################################################
+  test-browserstack-safari:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8u141-browsers
+
+    working_directory: ~/repo
+
+    environment:
+      # Customize the JVM maximum heap limit
+      MAVEN_OPTS: -Xmx3200m
+
+    steps:
+
+      - checkout
+
+      - restore_cache:
+          keys:
+            # when lock file changes, use increasingly general patterns to restore cache
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+
+      - run:
+          name: UI Tests
+          command: |
+            mvn test  -DfailIfNoTests=false -Dtest=!org.testmonkeys.webpages.tests.popups.Js*,!Abstract*,!OuterHtmlTests#set_outerHtml -Pbrowser -Dselenium.profile=browserStack -Dbrowser.profile=properties/bs-safari-latest
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+
+
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/junit/
+            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/junit/ \;
+          when: always
+
+      - store_test_results:
+          path: ~/junit
+
+      - run:
+          command: |
+            touch ~/repo/junit-tests/target/mvnrelease.out
+            touch ~/repo/junit-tests/target/circleTag.out
+            echo $CIRCLE_TAG > ~/repo/junit-tests/target/circleTag.out
+            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
+            echo $MAVEN_RELEASE_VERSION > ~/repo/junit-tests/target/mvnrelease.out
+
+      - store_artifacts:
+          path: ~/repo/junit-tests/target
 
 
   ##################################################################
