@@ -27,6 +27,9 @@ public class HtmlElementsPageObject extends AbstractPage {
     @ElementAccessor(elementName = "element5", byId = "hidden_input")
     private Input hiddenInput;
 
+    @ElementAccessor(elementName = "element13NonExisting", byId = "element13NonExisting")
+    private Input nonExistingInput;
+
     public Input firstName() {
         return firstName;
     }
@@ -49,5 +52,9 @@ public class HtmlElementsPageObject extends AbstractPage {
 
     public Input getHiddenInput() {
         return hiddenInput;
+    }
+
+    public Input getNonExistingInput() {
+        return nonExistingInput;
     }
 }

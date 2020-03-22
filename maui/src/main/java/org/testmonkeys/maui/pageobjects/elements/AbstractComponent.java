@@ -70,6 +70,21 @@ public abstract class AbstractComponent implements Component {
     }
 
     @Override
+    public WebElement instantFind() {
+        if (parent == null)
+            webElement = browser.instantFind(locator);
+        else {
+            webElement = parent.instantFind(locator);
+        }
+        return webElement;
+    }
+
+    @Override
+    public WebElement instantFind(Locator locator) {
+        return instantFind().findElement(locator.getSeleniumLocator());
+    }
+
+    @Override
     public WebElement find() {
         if (webElement != null && isAlive(webElement)) {
             return webElement;
@@ -153,7 +168,7 @@ public abstract class AbstractComponent implements Component {
     @Override
     public boolean isDisplayed() {
         try {
-            return find().isDisplayed();
+            return instantFind().isDisplayed();
         } catch (Exception e) {
             return false;
         }

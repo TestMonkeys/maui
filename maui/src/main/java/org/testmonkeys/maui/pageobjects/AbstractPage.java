@@ -66,6 +66,11 @@ public abstract class AbstractPage implements Page {
     }
 
     @Override
+    public WebElement instantFind(Locator locator) {
+        return browser.instantFind(locator);
+    }
+
+    @Override
     public List<WebElement> findElements(Locator locator) {
         return browser.findElements(locator);
     }

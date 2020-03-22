@@ -1,15 +1,17 @@
 package org.testmonkeys;
 
 import org.json.JSONObject;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.testmonkeys.maui.core.browser.Browser;
-import org.testmonkeys.DriverFactory;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -35,6 +37,7 @@ public class TestConfiguration {
 
     @Bean
     @Scope("prototype")
+    //@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
     public Browser browser(@Value("${selenium.profile}") String seleniumProfile,
                            @Value("${browser.profile}") String browserProfile ) throws Exception {
         if (seleniumProfile==null || seleniumProfile.isEmpty()){
