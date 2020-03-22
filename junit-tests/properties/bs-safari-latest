@@ -1,7 +1,7 @@
 {
   "server": "hub-cloud.browserstack.com",
   "mauiProperties":{
-       "elementTimeout":10,
+       "elementTimeout":20,
        "pageTimeout":10,
        "timeoutTimeUnit":"SECONDS"
      },
