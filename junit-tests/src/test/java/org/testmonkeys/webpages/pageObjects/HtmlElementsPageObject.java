@@ -18,6 +18,9 @@ public class HtmlElementsPageObject extends AbstractPage {
     @ElementAccessor(elementName = "input2", byXPath = "//div[@id='attributesTest']/input[1]")
     private Input firstName2;
 
+    @ElementAccessor(elementName = "module", byXPath = "//div[@id='attributesTest']")
+    private TestModule module;
+
     @ElementAccessor(elementName = "element3", byId = "styled_input")
     private Input styledInput;
 
@@ -49,5 +52,9 @@ public class HtmlElementsPageObject extends AbstractPage {
 
     public Input getHiddenInput() {
         return hiddenInput;
+    }
+
+    public TestModule getModule() {
+        return module;
     }
 }
