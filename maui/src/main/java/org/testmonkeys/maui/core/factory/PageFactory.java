@@ -1,14 +1,12 @@
 package org.testmonkeys.maui.core.factory;
 
-import org.testmonkeys.maui.core.elements.Component;
-import org.testmonkeys.maui.pageobjects.PageAccessor;
 import org.testmonkeys.maui.core.browser.Browser;
 import org.testmonkeys.maui.core.page.Page;
 import org.testmonkeys.maui.core.utils.ReflectionUtils;
+import org.testmonkeys.maui.pageobjects.PageAccessor;
+import org.testmonkeys.maui.pageobjects.elements.AbstractComponent;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -35,17 +33,18 @@ public class PageFactory {
         return createPage(page);
     }
 
-    public <T extends Component> T getElement(Page page, String elementName) {
-        List<Field> fields = reflectionUtils.extractFieldsByPredicate(page.getClass(), field -> field.getName().equalsIgnoreCase(elementName));
-        if (fields.isEmpty())
-            return null;
-        fields.get(0).setAccessible(true);
-        try {
-            return (T) fields.get(0).get(page);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
+    /**
+     * Finds instance of element by accessor name from a parent page. The search is recursive
+     * and will try to find the element in sub-modules as well. In case there are more than one elements
+     * with the same declared name - the first one found will be returned
+     *
+     * @param page        Parent page instance to search the element in
+     * @param elementName declared element accessor name
+     * @param <T>
+     * @return Instance of found element
+     */
+    public <T extends AbstractComponent> T getElement(Page page, String elementName) {
+        return scanner.findPageElementByName(page, elementName);
     }
 
     public <T extends Page> T createPage(Class<T> type) {
