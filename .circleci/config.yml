@@ -169,12 +169,13 @@ jobs:
             pwd
             sudo python -m SimpleHTTPServer 8080 > server.out &
           background: true
-#            curl localhost:8080
+      #            curl localhost:8080
 
       - run:
           name: UI Tests
           command: |
-            mvn test -Pbrowser -Dselenium.profile=local -Dbrowser.profile=properties/local-chrome-window -Dwebdriver.chrome.driver=/usr/bin/chromedriver -DforkCount=3  -DreuseForks=true
+            mvn test -Pbrowser -Dselenium.profile=local -Dbrowser.profile=properties/local-chrome-window -Dwebdriver.chrome.driver=/usr/bin/chromedriver
+      # -DforkCount=3  -DreuseForks=true
 
       - save_cache:
           paths:
