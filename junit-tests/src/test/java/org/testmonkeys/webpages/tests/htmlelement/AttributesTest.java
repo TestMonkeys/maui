@@ -1,6 +1,5 @@
 package org.testmonkeys.webpages.tests.htmlelement;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.testmonkeys.maui.pageobjects.elements.html.HtmlAttribute;
 import org.testmonkeys.maui.pageobjects.elements.html.HtmlElement;
@@ -24,7 +23,7 @@ public class AttributesTest extends AbstractHtmlElementPageTest {
     //      disabled>
     //    <input/>
     @Test
-    @Ignore
+
     public void get_hasAttributes() {
         List<HtmlAttribute> attrs = page.firstName().getHtmlElement().getAttributes();
         assertThat("value attr", attrs, hasItem(new HtmlAttribute("value", "")));
@@ -45,7 +44,7 @@ public class AttributesTest extends AbstractHtmlElementPageTest {
     }
 
     @Test
-    @Ignore //todo fix
+    //@Ignore //todo fix
     public void get_noAttributes() {
         List<HtmlAttribute> attrs = page.firstName2().getHtmlElement().getAttributes();
         assertThat("attributes size", attrs.size(), is(0));

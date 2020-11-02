@@ -14,9 +14,9 @@ workflows:
   build-test:
     jobs:
       - build
-      #      - test-chrome:
-      #          requires:
-      #            - build
+      - test-chrome:
+          requires:
+            - build
       #      - test-browserstack-safari:
       #          requires:
       #            - build
@@ -162,19 +162,19 @@ jobs:
             Xvfb :99 -ac -screen 1 1024x768x24 & fluxbox &
           background: true
 
-      - run:
-          name: Start local webServer
-          command: |
-            cd ~/repo/junit-tests/src/test/resources/WebPages
-            pwd
-            sudo python -m SimpleHTTPServer 8080 > server.out &
-          background: true
+      #      - run:
+      #          name: Start local webServer
+      #          command: |
+      #            cd ~/repo/junit-tests/src/test/resources/WebPages
+      #            pwd
+      #            sudo python -m SimpleHTTPServer 8080 > server.out &
+      #          background: true
       #            curl localhost:8080
 
       - run:
           name: UI Tests
           command: |
-            mvn test -Pbrowser -Dselenium.profile=local -Dbrowser.profile=properties/local-chrome-window -Dwebdriver.chrome.driver=/usr/bin/chromedriver
+            mvn clean test -Pbrowser -Dselenium.profile=local -Dbrowser.profile=properties/local-chrome-window -Dwebdriver.chrome.driver=/usr/bin/chromedriver
       # -DforkCount=3  -DreuseForks=true
 
       - save_cache:
@@ -234,7 +234,7 @@ jobs:
       - run:
           name: UI Tests
           command: |
-            mvn test -Pbrowser -Dselenium.profile=browserStack -Dbrowser.profile=properties/bs-chrome-latest
+            mvn clean test -Pbrowser -Dselenium.profile=browserStack -Dbrowser.profile=properties/bs-chrome-latest
 
       - save_cache:
           paths:

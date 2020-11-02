@@ -8,13 +8,13 @@
     <artifactId>junit-tests</artifactId>
 
     <properties>
-        <springVersion>4.3.7.RELEASE</springVersion>
-        <junitVersion>4.12</junitVersion>
+        <springVersion>4.3.0</springVersion>
+        <junitVersion>4.13.1</junitVersion>
         <cucumberVersion>1.2.5</cucumberVersion>
         <slf4jVersion>1.7.25</slf4jVersion>
         <maven.compiler.version>3.6.1</maven.compiler.version>
         <assertj.version>3.8.0</assertj.version>
-        <spring.version>5.1.6.RELEASE</spring.version>
+        <spring.version>5.3.0</spring.version>
     </properties>
 
     <dependencies>

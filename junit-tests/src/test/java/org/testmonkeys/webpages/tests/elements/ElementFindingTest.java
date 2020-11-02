@@ -1,6 +1,5 @@
 package org.testmonkeys.webpages.tests.elements;
 
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -17,7 +16,7 @@ public class ElementFindingTest extends AbstractHtmlElementPageTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    @Ignore //todo: fix
+    //@Ignore //todo: fix
     public void element_inside_module() {
         Component c = pageFactory.getElement(page, "inside module");
         assertThat("element found", c, notNullValue());
@@ -25,7 +24,7 @@ public class ElementFindingTest extends AbstractHtmlElementPageTest {
     }
 
     @Test
-    @Ignore //todo: fix
+    //@Ignore //todo: fix
     public void element_on_page() {
         Component c = pageFactory.getElement(page, "element3");
         assertThat("element found", c, notNullValue());
@@ -33,7 +32,7 @@ public class ElementFindingTest extends AbstractHtmlElementPageTest {
     }
 
     @Test
-    @Ignore //todo fix test
+    //@Ignore //todo fix test
     public void element_not_found() {
         expectedException.expect(RuntimeException.class);
         Component c = pageFactory.getElement(page, "element3456");
