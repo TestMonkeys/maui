@@ -5,6 +5,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.json.JSONObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
@@ -72,17 +73,19 @@ public class DriverFactory {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         String webDriverName = (String) config.get("webDriver");
 
-        switch (webDriverName){
+        switch (webDriverName) {
             case "ChromeDriver":
                 WebDriverManager.chromedriver().setup();
-                return new ChromeDriver(capabilities);
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--no-sandbox", "--disable-dev-shm-usage");
+                return new ChromeDriver(chromeOptions);
             case "Safari":
                 SafariOptions safariOptions = new SafariOptions();
 
 
                 return new SafariDriver(safariOptions);
             default:
-                throw new IllegalArgumentException("WebDriver "+webDriverName+" is not yet supported");
+                throw new IllegalArgumentException("WebDriver " + webDriverName + " is not yet supported");
         }
 
     }
