@@ -1,9 +1,9 @@
 package org.testmonkeys.webpages.tests;
 
-import com.automation.remarks.junit.VideoRule;
+//import com.automation.remarks.junit.VideoRule;
+
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -12,14 +12,12 @@ import org.testmonkeys.DriverFactory;
 import org.testmonkeys.TestConfiguration;
 import org.testmonkeys.maui.core.browser.Browser;
 
-import java.sql.Driver;
-
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = TestConfiguration.class)
 abstract public class AbstractComponentTest {
 
-    @Rule
-    public VideoRule videoRule = new VideoRule();
+    //    @Rule
+//    public VideoRule videoRule = new VideoRule();
     @Autowired
     protected Browser browser;
 
