@@ -151,16 +151,16 @@ jobs:
       #            sudo apt-get install xvfb
       #            sudo apt-get -y install imagemagick x11-apps
 
-      - run:
-          name: Install fluxbox
-          command: sudo apt-get install fluxbox
-
-      - run:
-          name: start xvfb
-          command: |
-            export DISPLAY=:99
-            Xvfb :99 -ac -screen 1 1024x768x24 & fluxbox &
-          background: true
+      #      - run:
+      #          name: Install fluxbox
+      #          command: sudo apt-get install fluxbox
+      #
+      #      - run:
+      #          name: start xvfb
+      #          command: |
+      #            export DISPLAY=:99
+      #            Xvfb :99 -ac -screen 1 1024x768x24 & fluxbox &
+      #          background: true
 
       #      - run:
       #          name: Start local webServer
