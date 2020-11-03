@@ -104,7 +104,7 @@ jobs:
   test-chrome:
     docker:
       # specify the version you desire here
-      - image: circleci/openjdk:8u141-browsers
+      - image: circleci/openjdk:9.0.4-12-jdk-browsers
 
     working_directory: ~/repo
 
