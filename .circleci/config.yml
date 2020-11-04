@@ -23,7 +23,7 @@ workflows:
       - test-browserstack:
           requires:
             - build
-  #            - test-browserstack-safari
+            - test-browserstack-safari
 
   release:
     jobs:
