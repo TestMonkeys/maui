@@ -4,7 +4,12 @@ package org.testmonkeys.webpages.tests;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Rule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -18,11 +23,24 @@ abstract public class AbstractComponentTest {
 
     //    @Rule
 //    public VideoRule videoRule = new VideoRule();
+    @Rule(order = Integer.MIN_VALUE)
+    public TestWatcher watchman = new TestWatcher() {
+        @Override
+        protected void failed(Throwable e, Description description) {
+            WebDriver driver = browser.getDriver();
+            JavascriptExecutor jse = (JavascriptExecutor) driver;
+            jse.executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\":\"failed\", \"reason\": \"" + description.toString() + "\"}}");
+        }
+
+    };
+
     @Autowired
     protected Browser browser;
 
     @After
     public void cleanup() {
+
+
         browser.quit();
     }
 
