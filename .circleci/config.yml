@@ -17,9 +17,9 @@ workflows:
       - test-chrome:
           requires:
             - build
-      #      - test-browserstack-safari:
-      #          requires:
-      #            - build
+      - test-browserstack-safari:
+          requires:
+            - build
       - test-browserstack:
           requires:
             - build
