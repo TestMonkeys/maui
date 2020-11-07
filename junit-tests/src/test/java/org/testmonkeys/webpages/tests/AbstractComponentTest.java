@@ -23,15 +23,21 @@ abstract public class AbstractComponentTest {
 
     //    @Rule
 //    public VideoRule videoRule = new VideoRule();
-    @Rule(order = Integer.MIN_VALUE)
+    @Rule(order = 1)
     public TestWatcher watchman = new TestWatcher() {
         @Override
         protected void failed(Throwable e, Description description) {
             WebDriver driver = browser.getDriver();
             JavascriptExecutor jse = (JavascriptExecutor) driver;
             jse.executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\":\"failed\", \"reason\": \"" + description.toString() + "\"}}");
+            browser.quit();
         }
 
+        @Override
+        protected void finished(Description description) {
+            super.finished(description);
+            browser.quit();
+        }
     };
 
     @Autowired
@@ -41,7 +47,7 @@ abstract public class AbstractComponentTest {
     public void cleanup() {
 
 
-        browser.quit();
+        //browser.quit();
     }
 
     @AfterClass
