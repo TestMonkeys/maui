@@ -6,6 +6,7 @@ The key features that maui offers are: Modularization and Element Type definitio
 check out the demo projects that are using maui: 
 
 * [Test.Bash AutomationWeek Challenge](https://github.com/TestMonkeys/Test.Bash-Online---WebUi-Automation-Challenge---Intermediate)
+* [CafeTownSend Demo TAS](https://github.com/monofrei/cafetownsend-atf)
 
 # Features:
 ## PageObjects Definition
