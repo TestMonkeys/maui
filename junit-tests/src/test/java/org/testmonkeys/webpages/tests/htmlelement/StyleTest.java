@@ -1,5 +1,6 @@
 package org.testmonkeys.webpages.tests.htmlelement;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.testmonkeys.maui.pageobjects.elements.html.HtmlAttribute;
 import org.testmonkeys.webpages.tests.AbstractHtmlElementPageTest;
@@ -28,6 +29,7 @@ public class StyleTest extends AbstractHtmlElementPageTest {
     }
 
     @Test
+    @Ignore
     public void get_noAttributes() {
         List<HtmlAttribute> attrs = page.firstName2().getHtmlElement().getAttributes();
         assertThat("attributes size", attrs.size(), is(0));
