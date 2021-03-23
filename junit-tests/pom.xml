@@ -9,7 +9,7 @@
 
     <properties>
         <springVersion>4.3.7.RELEASE</springVersion>
-        <junitVersion>4.12</junitVersion>
+        <junitVersion>4.13.1</junitVersion>
         <cucumberVersion>1.2.5</cucumberVersion>
         <slf4jVersion>1.7.25</slf4jVersion>
         <maven.compiler.version>3.6.1</maven.compiler.version>
