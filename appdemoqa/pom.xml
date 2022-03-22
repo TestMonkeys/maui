@@ -16,6 +16,7 @@
         <dependency>
             <groupId>org.testmonkeys</groupId>
             <artifactId>maui</artifactId>
+            <version>0.0.37-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
