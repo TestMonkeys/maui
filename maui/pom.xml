@@ -33,7 +33,7 @@
 
     <groupId>org.testmonkeys</groupId>
     <artifactId>maui</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.37-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -115,8 +115,63 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <releaseProfiles>gpg-sign</releaseProfiles>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>gpg-sign</id>
+            <!--
+            only sign during deploy phase
+            -->
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <configuration>
+                                    <gpgArguments>
+                                        <arg>--pinentry-mode</arg>
+                                        <arg>loopback</arg>
+                                    </gpgArguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.12</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>rso</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+<!--                            uncomment after testing-->
+<!--                            <autoReleaseAfterClose>true</autoReleaseAfterClose>-->
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <properties>
+                <!--suppress UnresolvedMavenProperty -->
+                <!-- property taken from circle ci environment properties -->
+                <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>
