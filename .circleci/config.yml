@@ -1,4 +1,7 @@
-version: 2
+version: 2.1
+orbs:
+  circleci-maven-release-orb: sonatype-nexus-community/circleci-maven-release-orb@0.0.16
+
 references:
   workspace_root: &workspace_root
     /tmp/workspace
@@ -10,7 +13,7 @@ references:
 
 
 workflows:
-  version: 2
+  version: 2.1
   build-test:
     jobs:
       - build
