@@ -37,6 +37,7 @@ workflows:
       - circleci-maven-release-orb/run-maven-release:
           requires:
             - test-chrome
+          mvn-release-perform-command: mvn --batch-mode  release:perform -Darguments=-DskipTests -s .circleci/.maven.xml
           ssh-fingerprints: 'a5:27:08:2f:b8:1f:69:b6:31:4a:67:25:fd:5b:53:46'
 
 
