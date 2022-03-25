@@ -26,9 +26,9 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:git@github.com/TestMonkeys/maui.git</connection>
-        <developerConnection>scm:git:git@github.com/TestMonkeys/maui.git</developerConnection>
-        <url>git@github.com/TestMonkeys/maui.git</url>
+        <connection>scm:git:git@github.com:TestMonkeys/maui.git</connection>
+        <developerConnection>scm:git:git@github.com:TestMonkeys/maui.git</developerConnection>
+        <url>https://github.com/TestMonkeys/maui.git</url>
     </scm>
 
     <groupId>org.testmonkeys</groupId>
