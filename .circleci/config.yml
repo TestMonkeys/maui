@@ -37,7 +37,7 @@ workflows:
       - circleci-maven-release-orb/run-maven-release:
           requires:
             - test-chrome
-          ssh-fingerprints: 'a5:27:08:2f:b8:1f:69:b6:31:4a:67:25:fd:5b:53:46'
+          ssh-fingerprints: 'eb:68:0f:0d:67:85:b4:58:cc:10:9c:05:a3:84:4c:cc'
 
 
 
