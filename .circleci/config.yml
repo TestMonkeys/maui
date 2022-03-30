@@ -17,12 +17,12 @@ workflows:
   build-test:
     jobs:
       - build
-      #      - test-chrome:
-      #          requires:
-      #            - build
-      #      - test-browserstack-safari:
-      #          requires:
-      #            - build
+      - test-chrome:
+          requires:
+            - build
+      - test-browserstack-safari:
+          requires:
+            - build
       - test-browserstack:
           requires:
             - build
@@ -33,7 +33,7 @@ workflows:
       - test-chrome:
           filters:
             branches:
-              only: releasePluginTest
+              only: master
       - circleci-maven-release-orb/run-maven-release:
           requires:
             - test-chrome

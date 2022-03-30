@@ -299,8 +299,7 @@
                         <configuration>
                             <serverId>rso</serverId>
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-<!--                            uncomment after testing-->
-<!--                            <autoReleaseAfterClose>true</autoReleaseAfterClose>-->
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
                 </plugins>
