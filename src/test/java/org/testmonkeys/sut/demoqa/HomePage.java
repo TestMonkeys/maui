@@ -6,8 +6,6 @@ import org.testmonkeys.maui.pageobjects.PageAccessor;
 import org.testmonkeys.maui.pageobjects.elements.Button;
 import org.testmonkeys.maui.pageobjects.elements.GroupComponent;
 
-import java.awt.*;
-
 @PageAccessor(name = "Home Page", url="/")
 public class HomePage extends AbstractPage {
 
