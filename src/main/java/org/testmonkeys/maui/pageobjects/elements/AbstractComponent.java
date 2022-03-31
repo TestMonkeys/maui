@@ -122,9 +122,6 @@ public abstract class AbstractComponent implements Component {
 
     protected boolean isAlive(WebElement webElement) {
         boolean alive;
-//        if (webElement==null)
-//            alive= false;
-//
         try {
             webElement.isDisplayed();
 
@@ -132,7 +129,7 @@ public abstract class AbstractComponent implements Component {
         } catch (Exception e) {
             alive = false;
         }
-        getLogger().info("element is alive=" + alive + "; " + this);
+        getLogger().trace("element is alive=" + alive + "; " + this);
         return alive;
     }
 
