@@ -1,6 +1,5 @@
 package org.testmonkeys.maui.pageobjects.elements;
 
-import org.openqa.selenium.WebElement;
 import org.testmonkeys.maui.core.elements.actions.ClickAction;
 
 public class CheckBox extends AbstractComponent {
@@ -14,8 +13,7 @@ public class CheckBox extends AbstractComponent {
      * If the checkbox is already checked no action will be taken
      */
     public void check() {
-        WebElement element = this.find();
-        if (!element.isSelected()) {
+        if (!isChecked()) {
             new ClickAction(this).execute();
         }
     }
@@ -25,8 +23,7 @@ public class CheckBox extends AbstractComponent {
      * If the checkbox is already unchecked no action will be taken
      */
     public void uncheck() {
-        WebElement element = this.find();
-        if (element.isSelected()) {
+        if (isChecked()) {
             new ClickAction(this).execute();
         }
     }
