@@ -28,12 +28,12 @@
         <connection>scm:git:git@github.com:TestMonkeys/maui.git</connection>
         <developerConnection>scm:git:git@github.com:TestMonkeys/maui.git</developerConnection>
         <url>https://github.com/TestMonkeys/maui.git</url>
-      <tag>HEAD</tag>
+      <tag>v0.0.42</tag>
   </scm>
 
     <groupId>org.testmonkeys</groupId>
     <artifactId>maui</artifactId>
-    <version>0.0.42-SNAPSHOT</version>
+    <version>0.0.42</version>
     <packaging>jar</packaging>
 
     <properties>
