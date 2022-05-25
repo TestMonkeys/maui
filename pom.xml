@@ -33,7 +33,7 @@
 
     <groupId>org.testmonkeys</groupId>
     <artifactId>maui</artifactId>
-    <version>0.0.42-SNAPSHOT</version>
+    <version>0.0.43-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
